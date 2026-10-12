@@ -1,0 +1,378 @@
+# Graphs, sets and Boolean clauses
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Reuse generate-and-test for independent sets, covers, domination, hitting sets and satisfiability. Work from small complete examples to encoding exercises.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Reuse generate-and-test on graphs](#reuse-generate-and-test-on-graphs)
+- [Choose an exact hitting set](#choose-an-exact-hitting-set)
+- [Choose nonadjacent vertices](#choose-nonadjacent-vertices)
+- [Cover every graph edge](#cover-every-graph-edge)
+- [Reach every vertex from a selected set](#reach-every-vertex-from-a-selected-set)
+- [Satisfy a collection of clauses](#satisfy-a-collection-of-clauses)
+
+## Reuse generate-and-test on graphs
+
+### What you will learn
+
+Encode independence, coverage and domination over the same small graph.
+
+### Find an independent pair
+
+On a three-vertex path, an independent set of size two can contain only the endpoints. Edges are listed once; the constraint checks either selected endpoint through the body.
+
+```elixir
+result =
+  Clingo.solve!(
+    ~S"""
+    vertex(1..3). edge(1,2). edge(2,3).
+    2 { picked(V) : vertex(V) } 2.
+    :- edge(U,V), picked(U), picked(V).
+    #show picked/1.
+    """,
+    models: :all
+  )
+
+[%{shown: ["picked(1)", "picked(3)"]}] = result.models
+Course.display(result)
+```
+
+### Change the property, keep the generator
+
+A one-vertex cover must meet every edge. A one-vertex dominating set must reach every vertex, including itself. These are different definitions, though vertex 2 is the unique answer to both on this path.
+
+```elixir
+domain = "vertex(1..3). edge(1,2). edge(2,3). 1 { picked(V) : vertex(V) } 1. #show picked/1."
+cover = Clingo.solve!(domain <> " :- edge(U,V), not picked(U), not picked(V).", models: :all)
+
+dominating =
+  Clingo.solve!(
+    domain <>
+      " adjacent(U,V) :- edge(U,V). adjacent(V,U) :- edge(U,V). reached(V) :- picked(V). reached(V) :- picked(U), adjacent(U,V). :- vertex(V), not reached(V).",
+    models: :all
+  )
+
+[%{shown: ["picked(2)"]}] = cover.models
+[%{shown: ["picked(2)"]}] = dominating.models
+Course.display(cover)
+```
+
+### Try it yourself
+
+Add edge(1,3). to the independent-pair example. Can two vertices still be picked?
+
+<details>
+<summary>Hint and expected result</summary>
+
+The graph becomes a triangle. Every pair is adjacent, so the program becomes unsatisfiable. This is a valid result, not a parsing failure.
+
+</details>
+
+## Choose an exact hitting set
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/modeling", __DIR__))
+```
+
+Select elements so that every input set contains exactly one selected member. This is stricter than merely hitting every set. The input facts define the instance; the next editable cell is the encoding you must complete. Show solutions through `select/1`.
+
+The starter is intentionally incomplete. A satisfiable run of that starter does not establish that it solves the exercise. The reference encoding later in the notebook provides a comparison once you have written your own rules.
+
+```elixir
+Course.write(workdir, "instances/instance-hitting.lp", ~S"""
+set(1). element(1,a). element(1,b). element(1,c).
+set(2). element(2,a). element(2,c). element(2,d).
+set(3). element(3,b). element(3,c).
+""")
+```
+
+### Complete the rules
+
+Keep the input format and `select/1` output contract. Start with a rule that generates candidates, then exclude candidates that break the conditions above.
+
+```elixir
+~S"""
+#show select/1.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance-hitting.lp")], models: :all)
+|> Course.display()
+```
+
+The solve combines the instance file with your inline rules. `files:` supplies the instance; the string supplies the encoding.
+
+### Compare with the reference
+
+Alternative encoding: [hitting.lp](../assets/modeling/solutions/hitting.lp). [Test input](../assets/modeling/instances/instance-hitting.lp).
+
+Compare your encoding with this readable reference. The collection files provide another formulation; compare projected model sets rather than enumeration order.
+
+```elixir
+~S"""
+{ select(E) : element(_,E) }.
+:- set(S), #count { E : element(S,E), select(E) } != 1.
+#show select/1.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance-hitting.lp")], models: :all)
+|> Course.display()
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Choose nonadjacent vertices
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/modeling", __DIR__))
+```
+
+Choose at least the required number of vertices, with no input edge joining two chosen vertices. The input facts define the instance; the next editable cell is the encoding you must complete. Show solutions through `select/1`.
+
+The starter is intentionally incomplete. A satisfiable run of that starter does not establish that it solves the exercise. The reference encoding later in the notebook provides a comparison once you have written your own rules.
+
+```elixir
+Course.write(workdir, "instances/instance-independent.lp", ~S"""
+vertex(1). vertex(2). vertex(3). vertex(4). vertex(5). vertex(6).
+edge(1,2). edge(1,3). edge(2,4). edge(3,5). edge(4,5). edge(4,6).
+threshold(3).
+""")
+```
+
+### Complete the rules
+
+Keep the input format and `select/1` output contract. Start with a rule that generates candidates, then exclude candidates that break the conditions above.
+
+```elixir
+~S"""
+#show select/1.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance-independent.lp")], models: :all)
+|> Course.display()
+```
+
+The solve combines the instance file with your inline rules. `files:` supplies the instance; the string supplies the encoding.
+
+### Compare with the reference
+
+Alternative encoding: [independent.lp](../assets/modeling/solutions/independent.lp). [Test input](../assets/modeling/instances/instance-independent.lp).
+
+Compare your encoding with this readable reference. The collection files provide another formulation; compare projected model sets rather than enumeration order.
+
+```elixir
+~S"""
+T { select(V) : vertex(V) } :- threshold(T).
+:- edge(U,V), select(U), select(V).
+#show select/1.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance-independent.lp")], models: :all)
+|> Course.display()
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Cover every graph edge
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/modeling", __DIR__))
+```
+
+Choose no more than the allowed number of vertices. Every edge must have at least one chosen endpoint. The input facts define the instance; the next editable cell is the encoding you must complete. Show solutions through `select/1`.
+
+The starter is intentionally incomplete. A satisfiable run of that starter does not establish that it solves the exercise. The reference encoding later in the notebook provides a comparison once you have written your own rules.
+
+```elixir
+Course.write(workdir, "instances/instance-cover.lp", ~S"""
+vertex(1). vertex(2). vertex(3). vertex(4). vertex(5). vertex(6).
+edge(1,2). edge(1,3). edge(2,4). edge(3,5). edge(4,5). edge(4,6).
+threshold(3).
+""")
+```
+
+### Complete the rules
+
+Keep the input format and `select/1` output contract. Start with a rule that generates candidates, then exclude candidates that break the conditions above.
+
+```elixir
+~S"""
+#show select/1.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance-cover.lp")], models: :all)
+|> Course.display()
+```
+
+The solve combines the instance file with your inline rules. `files:` supplies the instance; the string supplies the encoding.
+
+### Compare with the reference
+
+Alternative encoding: [cover.lp](../assets/modeling/solutions/cover.lp). [Test input](../assets/modeling/instances/instance-independent.lp).
+
+Compare your encoding with this readable reference. The collection files provide another formulation; compare projected model sets rather than enumeration order.
+
+```elixir
+~S"""
+0 { select(V) : vertex(V) } T :- threshold(T).
+:- edge(U,V), not select(U), not select(V).
+#show select/1.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance-cover.lp")], models: :all)
+|> Course.display()
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Reach every vertex from a selected set
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/modeling", __DIR__))
+```
+
+Choose a bounded set of vertices such that every vertex is selected or adjacent to a selected vertex. The input facts define the instance; the next editable cell is the encoding you must complete. Show solutions through `select/1`.
+
+The starter is intentionally incomplete. A satisfiable run of that starter does not establish that it solves the exercise. The reference encoding later in the notebook provides a comparison once you have written your own rules.
+
+```elixir
+Course.write(workdir, "instances/instance-dominating.lp", ~S"""
+vertex(1). vertex(2). vertex(3). vertex(4). vertex(5). vertex(6).
+edge(1,2). edge(1,3). edge(2,4). edge(3,5). edge(4,5). edge(4,6).
+threshold(2).
+""")
+```
+
+### Complete the rules
+
+Keep the input format and `select/1` output contract. Start with a rule that generates candidates, then exclude candidates that break the conditions above.
+
+```elixir
+~S"""
+#show select/1.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance-dominating.lp")], models: :all)
+|> Course.display()
+```
+
+The solve combines the instance file with your inline rules. `files:` supplies the instance; the string supplies the encoding.
+
+### Compare with the reference
+
+Alternative encoding: [dominating.lp](../assets/modeling/solutions/dominating.lp). [Test input](../assets/modeling/instances/instance-dominating.lp).
+
+Compare your encoding with this readable reference. The collection files provide another formulation; compare projected model sets rather than enumeration order.
+
+```elixir
+~S"""
+0 { select(V) : vertex(V) } T :- threshold(T).
+near(V,V) :- vertex(V).
+near(U,V) :- edge(U,V).
+near(V,U) :- edge(U,V).
+dominated(V) :- select(U), near(U,V).
+:- vertex(V), not dominated(V).
+#show select/1.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance-dominating.lp")], models: :all)
+|> Course.display()
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Satisfy a collection of clauses
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/modeling", __DIR__))
+```
+
+Assign each propositional variable a consistent truth value. Every clause needs at least one true signed literal. The input facts define the instance; the next editable cell is the encoding you must complete. Show solutions through `holds/2`.
+
+The starter is intentionally incomplete. A satisfiable run of that starter does not establish that it solves the exercise. The reference encoding later in the notebook provides a comparison once you have written your own rules.
+
+```elixir
+Course.write(workdir, "instances/instance-satisfiability.lp", ~S"""
+clause(1). literal(1,pos,a). literal(1,pos,b).
+clause(2). literal(2,neg,a). literal(2,neg,b). literal(2,pos,c).
+clause(3). literal(3,neg,b). literal(3,neg,c).
+""")
+```
+
+### Complete the rules
+
+Keep the input format and `holds/2` output contract. Start with a rule that generates candidates, then exclude candidates that break the conditions above.
+
+```elixir
+~S"""
+#show holds/2.
+"""
+|> Clingo.solve!(
+  files: [Path.join(workdir, "instances/instance-satisfiability.lp")],
+  models: :all
+)
+|> Course.display()
+```
+
+The solve combines the instance file with your inline rules. `files:` supplies the instance; the string supplies the encoding.
+
+### Compare with the reference
+
+Alternative encoding: [satisfiability.lp](../assets/modeling/solutions/satisfiability.lp). [Test input](../assets/modeling/instances/instance-satisfiability.lp).
+
+Compare your encoding with this readable reference. The collection files provide another formulation; compare projected model sets rather than enumeration order.
+
+```elixir
+~S"""
+variable(A) :- literal(_,_,A).
+1 { holds(pos,A); holds(neg,A) } 1 :- variable(A).
+:- clause(C), not 1 { holds(Sign,A) : literal(C,Sign,A) }.
+#show holds/2.
+"""
+|> Clingo.solve!(
+  files: [Path.join(workdir, "instances/instance-satisfiability.lp")],
+  models: :all
+)
+|> Course.display()
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```

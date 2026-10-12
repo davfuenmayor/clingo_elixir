@@ -1,0 +1,732 @@
+# Domains, grounding and arithmetic
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Bind variables to finite domains, parameterize programs, and develop a course-selection model. The next notebook applies aggregates to the same timetable.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Ground finite domains safely](#ground-finite-domains-safely)
+- [Ground rules over a domain](#ground-rules-over-a-domain)
+- [Compare remaining language constructs](#compare-remaining-language-constructs)
+- [Develop a course-selection model](#develop-a-course-selection-model)
+
+## Ground finite domains safely
+
+### What you will learn
+
+Use ranges and arithmetic while keeping variables grounded by a domain.
+
+### Instantiate a finite domain
+
+Grounding replaces variables with terms from their domains. The range introduces four numbers. Integer division truncates: the doubled values divided by three are 0, 1, 2 and 2.
+
+```elixir
+result =
+  Clingo.solve!(
+    ~S"""
+    number(1..4).
+    quotient(N,2*N/3) :- number(N).
+    #show quotient/2.
+    """,
+    models: :all
+  )
+
+[%{shown: ["quotient(1,0)", "quotient(2,1)", "quotient(3,2)", "quotient(4,2)"]}] = result.models
+Course.display(result)
+```
+
+### Bind variables before testing absence
+
+The unsafe version has no positive domain for Item. That is a grounding error, not an unsatisfiable result. Supplying item/1 makes the intended universe explicit and derives missing(blue).
+
+```elixir
+diagnostic = Course.expect_error(fn -> Clingo.solve!("missing(Item) :- not present(Item).") end)
+true = is_binary(diagnostic.expected_error)
+
+result =
+  Clingo.solve!(
+    "item(red;blue). present(red). missing(Item) :- item(Item), not present(Item). #show missing/1."
+  )
+
+[%{shown: ["missing(blue)"]}] = result.models
+Course.display(result)
+```
+
+### Try it yourself
+
+Change number(1..4). to number(1..6). Predict the two new quotient atoms before evaluation.
+
+<details>
+<summary>Hint and expected result</summary>
+
+Integer division gives quotient(5,3) and quotient(6,4). Six numbers now produce six shown quotient atoms.
+
+</details>
+
+## Ground rules over a domain
+
+Follow how finite domain facts instantiate variables in normal rules. A variable name connects positions within its scope; renaming it consistently does not change the model.
+
+The programs below are independent variations. Predict each answer set before running the cell. Edit one program in the list and compare its row again; answer-set order has no meaning.
+
+```elixir
+programs = [
+  ~S"""
+  a(Item) :- b(Item).
+  b(1). b(2).
+  """,
+  ~S"""
+  a(Item) :- b(Item).
+  b(1). b(2). b(3).
+  """,
+  ~S"""
+  a(Item) :- b(Item), c(Item).
+  b(1). b(2).
+  c(1).
+  """,
+  ~S"""
+  a(Item) :- b(Item), c(Item).
+  b(1). b(2).
+  c(1). c(2). c(3).
+  """,
+  ~S"""
+  a(Item) :- b(Item,Other), c(Other).
+  b(1,5). b(2,10).
+  c(10).
+  """,
+  ~S"""
+  a(Item) :- b(Item,Other), c(Other).
+  b(1,5). b(2,10).
+  c(10). c(5).
+  """,
+  ~S"""
+  a(Item) :- b(Item), Other=Item+1, not b(Other).
+  b(1). b(2).
+  """,
+  ~S"""
+  a(Item) :- b(Item), Other=Item+1, not b(Other).
+  b(1). b(3).
+  """,
+  ~S"""
+  a(Item) :- b(Item), not c(Item).
+  b(1). b(2). c(1).
+  """,
+  ~S"""
+  a(Item) :- b(Item), not c(Item).
+  b(1). b(2). c(1).
+  b(3). c(2).
+  """,
+  ~S"""
+  a(Item) :- b(Item,Other), not c(Other).
+  b(1,5). b(2,10). c(10).
+  """,
+  ~S"""
+  a(Item) :- b(Item,Other), not c(Other).
+  b(1,5). b(2,10).
+  """,
+  ~S"""
+  a(Item) :- b(Item,Other), c(Other).
+  b(1,2). b(2,3).
+  c(2).
+  """,
+  ~S"""
+  a(Item) :- b(Item,Other), c(Other).
+  b(1,2). b(2,3).
+  c(2). c(3).
+  """,
+  ~S"""
+  a(Item) :- b(Item), Other = Item+1, not b(Other).
+  b(1). b(2). b(3).
+  """,
+  ~S"""
+  a(Item) :- b(Item), Other = Item+1, not b(Other).
+  b(1). b(5).
+  """
+]
+
+programs
+|> Enum.with_index(1)
+|> Enum.map(fn {program, index} ->
+  result = Clingo.solve!(program, models: :all)
+
+  %{
+    example: index,
+    program: program,
+    shown_sets: inspect(Enum.sort(Enum.map(result.models, & &1.shown))),
+    status: result.status,
+    exhausted: result.exhausted
+  }
+end)
+|> Kino.DataTable.new()
+```
+
+## Compare remaining language constructs
+
+Predict each shown model and test it with the native solver. Pay attention to scope, support and set semantics; similar-looking syntax need not impose the same condition.
+
+The cells are independent experiments. `models: :all` exposes every answer set for each finite example; a single empty shown set is still one answer set.
+
+```elixir
+~S"""
+a(Item) :- Item = @get_value().
+"""
+|> Clingo.solve!(models: :all, context: %{"get_value" => fn [] -> [Clingo.Symbol.number(1)] end})
+|> Course.display()
+```
+
+```elixir
+~S"""
+true :- #true.
+notfalse :- not #false.
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+```elixir
+~S"""
+#const n=2.
+a(n).
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+```elixir
+~S"""
+#const n=2.
+a(n).
+"""
+|> Clingo.solve!(models: :all, arguments: ["-c", "n=house"])
+|> Course.display()
+```
+
+```elixir
+~S"""
+a(-1..1).
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+```elixir
+~S"""
+a(1). b(1).
+#show a/1.
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+```elixir
+~S"""
+a(1). b(1).
+#show.
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+```elixir
+~S"""
+a(1). b(1).
+#show.
+#show "wonderful" : a(1), b(1).
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+```elixir
+~S"""
+{ b(1) }.
+{ c(1) }.
+d(1).
+#project b/1.
+"""
+|> Clingo.solve!(models: :all, arguments: ["--project"])
+|> Course.display()
+```
+
+## Develop a course-selection model
+
+```elixir
+workdir = Course.workspace()
+```
+
+This walkthrough uses course credits and lecture times to introduce ASP syntax. It starts with facts and derived properties, then develops selection conditions using finite domains. Most examples avoid recursion so that their consequences are easy to trace.
+
+File-based examples combine the data already written in the workspace with new rules. Inline examples supply their complete program in the string. Intentionally unsafe programs and the unfinished ellipsis example display expected diagnostics rather than successful model tables.
+
+### Read the timetable
+
+Courses have credit values and lectures occupy day/period slots. The first facts describe the available timetable; enrollment facts later describe a proposed selection.
+
+```elixir
+Course.write(workdir, "facts.lp", ~S"""
+credits( asp,9).
+credits(  ml,9).
+credits(ling,6).
+credits(phil,9).
+lecture(asp,thu,3). lecture(asp,fri,3).
+lecture(ml,wed,2). lecture(ml,thu,3). lecture(ml,fri,4).
+lecture(ling,tue,1). lecture(ling,thu,2).
+lecture(phil,tue,3). lecture(phil,wed,4).
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "facts.lp")])
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "enroll.lp", ~S"""
+enroll(asp). enroll(ml). enroll(ling).
+""")
+```
+
+### Bind variables
+
+Rules derive courses, days and slots from lecture facts. Repeated variable names connect argument positions within a rule. Positive domain atoms supply ground values.
+
+```elixir
+Course.write(workdir, "basic_1.lp", ~S"""
+course(C) :- lecture(C,D,P).
+   day(D) :- lecture(C,D,P).
+period(P) :- lecture(C,D,P).
+slot(D,P) :- lecture(C,D,P).
+""")
+```
+
+```elixir
+Course.write(workdir, "basic_2.lp", ~S"""
+some_lecture(D) :- enroll(C), lecture(C,D,P).
+""")
+```
+
+```elixir
+Clingo.solve!(
+  files: [
+    Path.join(workdir, "facts.lp"),
+    Path.join(workdir, "enroll.lp"),
+    Path.join(workdir, "basic_1.lp"),
+    Path.join(workdir, "basic_2.lp")
+  ]
+)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "show_some_lecture.lp", ~S"""
+#show some_lecture/1.
+""")
+```
+
+```elixir
+Clingo.solve!(
+  files: [
+    Path.join(workdir, "facts.lp"),
+    Path.join(workdir, "enroll.lp"),
+    Path.join(workdir, "basic_1.lp"),
+    Path.join(workdir, "basic_2.lp"),
+    Path.join(workdir, "show_some_lecture.lp")
+  ]
+)
+|> Course.display()
+```
+
+#### Give variables a domain
+
+The next example is deliberately unsafe. A variable used only in a head or an unbounded comparison cannot be grounded from a finite positive domain. The diagnostic identifies the offending variables.
+
+> **Note.** This example deliberately contains unsafe variables or an unfinished ellipsis. The cell displays the expected native diagnostic instead of stopping notebook evaluation.
+
+```elixir
+Course.expect_error(fn ->
+  Clingo.solve!(~S"""
+  course(C).
+  some_lecture(DD) :- enroll(C), lecture(C,D,P).
+  """)
+end)
+```
+
+### Calculate integer values
+
+Arithmetic derives workload from credits. With 30 hours per credit, these data yield 900 hours per semester and 42 per week. Integer division truncates the fractional part. Multiplication, remainder, powers and absolute values appear in the following examples.
+
+```elixir
+~S"""
+credits_per_semester(30).
+hours_per_credit(30).
+lecture_weeks(15).
+exam_weeks(6).
+hours_per_semester(Cr * H) :- credits_per_semester(Cr), hours_per_credit(H).
+hours_per_week(H/(L + E)) :- hours_per_semester(H), lecture_weeks(L), exam_weeks(E).
+#show hours_per_semester/1.
+#show hours_per_week/1.
+"""
+|> Clingo.solve!()
+|> Course.display()
+```
+
+```elixir
+~S"""
+left(7).
+right(2).
+minus ( L -  R ) :- left(L), right(R).
+modulo( L \  R ) :- left(L), right(R).
+power ( L ** R ) :- left(L), right(R).
+abs   (|  -  R|) :-          right(R).
+"""
+|> Clingo.solve!()
+|> Course.display()
+```
+
+### Parameterize the input
+
+The `hpc` constant changes hours per credit. In the complete workload program, setting it to 25 gives 750 semester hours and 35 weekly hours for these facts. A `#const` supplies a default; native `arguments:` can override it.
+
+```elixir
+~S"""
+credits_per_semester(30).
+hours_per_credit(hpc).
+"""
+|> Clingo.solve!(arguments: ["-c", "hpc=30"])
+|> Course.display()
+```
+
+```elixir
+~S"""
+credits_per_semester(30).
+hours_per_credit(hpc).
+#const hpc=25.
+"""
+|> Clingo.solve!()
+|> Course.display()
+```
+
+### Compare distinct terms
+
+The first conflict rule also matches a lecture against itself. Require different course IDs to avoid those false conflicts. Symbol ordering is useful for symmetry breaking, but lexical day-name order is not calendar order: use numbers or an explicit position relation.
+
+```elixir
+Course.write(workdir, "comparison_1.lp", ~S"""
+conflict(D,P) :- enroll(C1), lecture(C1,D,P),
+                 enroll(C2), lecture(C2,D,P).
+#show conflict/2.
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "facts.lp"), Path.join(workdir, "enroll.lp")])
+|> Course.display()
+```
+
+```elixir
+Clingo.solve!(
+  files: [
+    Path.join(workdir, "facts.lp"),
+    Path.join(workdir, "enroll.lp"),
+    Path.join(workdir, "comparison_1.lp")
+  ],
+  models: :all
+)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "comparison_2.lp", ~S"""
+conflict(D,P) :- enroll(C1), lecture(C1,D,P),
+                 enroll(C2), lecture(C2,D,P), C1 != C2.
+#show conflict/2.
+""")
+```
+
+```elixir
+Clingo.solve!(
+  files: [
+    Path.join(workdir, "facts.lp"),
+    Path.join(workdir, "enroll.lp"),
+    Path.join(workdir, "comparison_2.lp")
+  ],
+  models: :all
+)
+|> Course.display()
+```
+
+```elixir
+~S"""
+day(mon). day(tue). day(wed). day(thu). day(fri).
+before(D1,D2) :- day(D1), day(D2), D1 < D2.
+#show before/2.
+"""
+|> Clingo.solve!()
+|> Course.display()
+```
+
+```elixir
+~S"""
+day(1). day(2). day(3). day(4). day(5).
+before(D1,D2) :- day(D1), day(D2), D1 < D2.
+#show before/2.
+"""
+|> Clingo.solve!()
+|> Course.display()
+```
+
+```elixir
+~S"""
+day(mon). day(tue). day(wed). day(thu). day(fri).
+position(mon,1). position(tue,2). position(wed,3). position(thu,4). position(fri,5).
+before(D1,D2) :- day(D1), day(D2), position(D1,P1), position(D2,P2), P1 < P2.
+#show before/2.
+"""
+|> Clingo.solve!()
+|> Course.display()
+```
+
+```elixir
+~S"""
+  early(C,D) :- enroll(C), lecture(C,D,1).
+#show early/2.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "facts.lp"), Path.join(workdir, "enroll.lp")])
+|> Course.display()
+```
+
+### Generate finite ranges
+
+Intervals expand to their integer members. Variables may provide bounds when the surrounding rule safely binds them. Multiple intervals generate combinations of their members.
+
+```elixir
+~S"""
+day(1). day(2). day(3). day(4). day(5).
+"""
+|> Clingo.solve!()
+|> Course.display()
+```
+
+```elixir
+~S"""
+day(1..5).
+"""
+|> Clingo.solve!()
+|> Course.display()
+```
+
+```elixir
+~S"""
+day(D) :- D=1..5.
+"""
+|> Clingo.solve!()
+|> Course.display()
+```
+
+```elixir
+~S"""
+min(1). max(5).
+day(Min..Max) :- min(Min), max(Max).
+"""
+|> Clingo.solve!()
+|> Course.display()
+```
+
+```elixir
+~S"""
+min(1). max(5).
+day(D) :- D=Min..Max, min(Min), max(Max).
+"""
+|> Clingo.solve!()
+|> Course.display()
+```
+
+```elixir
+~S"""
+slot(1..5,1..4).
+"""
+|> Clingo.solve!()
+|> Course.display()
+```
+
+```elixir
+~S"""
+slot(D,P) :- D=1..5, P=1..4.
+"""
+|> Clingo.solve!()
+|> Course.display()
+```
+
+### Group alternatives with pools
+
+Semicolon pools abbreviate repeated facts or argument alternatives. They expand into ordinary instances; they do not introduce a special collection value.
+
+```elixir
+~S"""
+day(mon). day(tue). day(wed). day(thu). day(fri).
+"""
+|> Clingo.solve!()
+|> Course.display()
+```
+
+```elixir
+~S"""
+day(mon;tue;wed;thu;fri).
+"""
+|> Clingo.solve!()
+|> Course.display()
+```
+
+```elixir
+~S"""
+period(1..4).
+slot(mon,P;tue,P;wed,P;thu,P;fri,P) :- period(P).
+#show slot/2.
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+### Ask whether a condition is absent
+
+A course with no early lecture is easier to describe by first deriving which courses have an early lecture, then using default negation. Requiring an acceptable lecture on every named weekday asks a different question and can reject otherwise acceptable courses.
+
+```elixir
+~S"""
+nice(C,D) :- lecture(C,D,P), P = 2..4.
+nice(C) :- nice(C,mon), nice(C,tue), nice(C,wed), nice(C,thu), nice(C,fri).
+#show nice/1.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "facts.lp")])
+|> Course.display()
+```
+
+```elixir
+~S"""
+#show lecture/3.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "facts.lp")])
+|> Course.display()
+```
+
+```elixir
+~S"""
+early(C,D) :- lecture(C,D,1).
+nice(C) :- course(C),
+           not early(C,mon), not early(C,tue), not early(C,wed), not early(C,thu), not early(C,fri).
+#show nice/1.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "facts.lp"), Path.join(workdir, "basic_1.lp")])
+|> Course.display()
+```
+
+```elixir
+~S"""
+early(C) :- lecture(C,D,1).
+nice(C) :- course(C), not early(C).
+#show nice/1.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "facts.lp"), Path.join(workdir, "basic_1.lp")])
+|> Course.display()
+```
+
+#### Negation still needs a domain
+
+Deleting the positive course atom leaves the variable unbounded. The expected error illustrates why an absence test is not a replacement for a positive domain.
+
+> **Note.** This example deliberately contains unsafe variables or an unfinished ellipsis. The cell displays the expected native diagnostic instead of stopping notebook evaluation.
+
+```elixir
+Course.expect_error(fn ->
+  Clingo.solve!(
+    ~S"""
+    early(C,D) :- lecture(C,D,1).
+    nice(C) :-
+               not early(C,mon), not early(C,tue), not early(C,wed), not early(C,thu), not early(C,fri).
+    early(C) :- lecture(C,D,1).
+    nice(C) :- not early(C).
+    """,
+    files: [Path.join(workdir, "facts.lp"), Path.join(workdir, "basic_1.lp")]
+  )
+end)
+```
+
+### Ignore an argument
+
+Use `_` when an argument’s actual value is irrelevant. Each anonymous occurrence is independent. In a negated atom, the anonymous position does not introduce a named global variable that must be bound elsewhere.
+
+```elixir
+~S"""
+slot(D,P) :- lecture(C,D,P).
+#show slot/2.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "facts.lp")])
+|> Course.display()
+```
+
+```elixir
+~S"""
+slot(D,P) :- lecture(_,D,P).
+#show slot/2.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "facts.lp")])
+|> Course.display()
+```
+
+#### Understand the anonymous argument
+
+An auxiliary predicate can express the existence test behind an anonymous argument. The next example makes that intermediate relation explicit. Compare its shown result with the shorter rule.
+
+```elixir
+~S"""
+aux_lecture(D,P) :- lecture(Item,D,P).
+slot(D,P) :- aux_lecture(D,P).
+#show slot/2.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "facts.lp")])
+|> Course.display()
+```
+
+```elixir
+~S"""
+early(C) :- lecture(C,D,1).
+nice :- not early(_).
+#show nice/0.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "facts.lp"), Path.join(workdir, "basic_1.lp")])
+|> Course.display()
+```
+
+```elixir
+~S"""
+early(C) :- lecture(C,D,1).
+aux_early :- early(C).
+nice :- not aux_early.
+#show nice/0.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "facts.lp"), Path.join(workdir, "basic_1.lp")])
+|> Course.display()
+```
+
+Continue with [course-selection aggregates](05-aggregates-and-conditionals.livemd#apply-aggregates-to-course-selection) to count courses and lecture tuples.
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```

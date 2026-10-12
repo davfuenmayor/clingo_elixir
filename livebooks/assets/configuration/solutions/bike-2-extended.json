@@ -1,0 +1,27 @@
+{
+  "status": "satisfiable",
+  "exhausted": true,
+  "optimal_cost": null,
+  "models": [
+    [
+      "value(\"frontWheel\",\"W14\")",
+      "value(\"rearWheel\",\"W14\")",
+      "value(\"wheelSupport\",\"True\")"
+    ],
+    [
+      "value(\"frontWheel\",\"W16\")",
+      "value(\"rearWheel\",\"W16\")",
+      "value(\"wheelSupport\",\"True\")"
+    ],
+    [
+      "value(\"frontWheel\",\"W18\")",
+      "value(\"rearWheel\",\"W18\")",
+      "value(\"wheelSupport\",\"False\")"
+    ],
+    [
+      "value(\"frontWheel\",\"W20\")",
+      "value(\"rearWheel\",\"W20\")",
+      "value(\"wheelSupport\",\"False\")"
+    ]
+  ]
+}

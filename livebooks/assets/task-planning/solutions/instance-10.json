@@ -1,0 +1,20 @@
+{
+  "status": "satisfiable",
+  "exhausted": true,
+  "optimal_cost": null,
+  "models": [
+    [
+      "assign(1,1)",
+      "assign(1,2)",
+      "assign(2,1)",
+      "assign(2,2)",
+      "assign(3,1)",
+      "assign(3,3)",
+      "assign(4,3)",
+      "starts(1,1)",
+      "starts(2,6)",
+      "starts(3,4)",
+      "starts(4,1)"
+    ]
+  ]
+}

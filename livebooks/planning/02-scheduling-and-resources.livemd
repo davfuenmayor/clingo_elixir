@@ -1,0 +1,238 @@
+# Scheduling, staffing and resources
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Enforce precedence, resource capacity and cyclic coverage, then explore successive scheduling windows. Project templates remain exercises.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Schedule ordered machine operations](#schedule-ordered-machine-operations)
+- [Schedule tasks and workers](#schedule-tasks-and-workers)
+- [Cover a cyclic staffing schedule](#cover-a-cyclic-staffing-schedule)
+- [Schedule with successive time windows](#schedule-with-successive-time-windows)
+
+## Schedule ordered machine operations
+
+Exercise files: [flowshop.lp](../assets/scheduling/flowshop.lp) · [ins-01-3-2.lp](../assets/scheduling/instance.lp) · [jobshop.lp](../assets/scheduling/jobshop.lp).
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/scheduling", __DIR__))
+```
+
+Two related scheduling models share jobs, machines and operation durations. In permutation flow shop, every job visits machines in the same fixed order and every machine uses the same job permutation. In job shop, each job has its own input operation order and each machine may use a different job permutation.
+
+For both variants, operations of one job obey their sequence and a machine processes at most one operation at a time. Minimize the total completion time. Keep the two formulations distinct when testing the provided instances.
+
+### Read durations and operation order
+
+`job/1`, `machine/1` and `duration/3` describe the shared input. Job shop additionally uses `sequence/3`. Preserve the templates’ `perm` output signatures when representing the selected processing order.
+
+### Complete both encodings
+
+Write the flow-shop and job-shop formulations separately. Start by validating feasible orders, then derive timing and minimize makespan. Compare proven optimal projected models with the corresponding reference solutions.
+
+```elixir
+Course.archive(workdir, "scheduling.zip")
+```
+
+```elixir
+~S"""
+#show perm/2.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instance.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+~S"""
+#show perm/3.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instance.lp")], models: :all)
+|> Course.display()
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Schedule tasks and workers
+
+Exercise files: [instance-10.lp](../assets/task-planning/instances/instance-10.lp) · [instance-10.json](../assets/task-planning/solutions/instance-10.json) · [task-planning.lp](../assets/task-planning/task-planning.lp).
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/task-planning", __DIR__))
+```
+
+Choose start days and worker assignments within the planning horizon. A length-L task starting on day D finishes on D+L-1. Respect deadlines, strict precedence, resource capacities and holidays. Workers cannot serve overlapping tasks. A worker counts toward every category they possess.
+
+Complete the starter encoding before comparing its projected models with the supplied solution data.
+
+### Keep the data contract
+
+Inputs use `final/1`, `task/3`, `before/2`, `uses/2`, `at_most/2`, `worker/2`, `requires/2`, `requires/3` and `holiday/2`. Show `starts/2` and `assign/2`. `requires/2` fixes the total worker count; `requires/3` sets a minimum for a category.
+
+### Develop and check the encoding
+
+Complete the editable encoding below. Compare its shown atom sets with the JSON answers in `solutions`; `optimal_cost` records a proven optimum when present. Download your edits before cleanup.
+
+```elixir
+~S"""
+#show starts/2.
+#show assign/2.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance-10.lp")])
+|> Course.display()
+```
+
+### Check boundary cases
+
+Test the smallest instance first, then check each derived relation. Compare projected model sets and, when optimizing, proven costs.
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Cover a cyclic staffing schedule
+
+Exercise files: [instance-03.lp](../assets/shifts/instances/instance-03.lp) · [shifts.lp](../assets/shifts/shifts.lp) · [instance-03.json](../assets/shifts/solutions/instance-03.json).
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/shifts", __DIR__))
+```
+
+Choose at most the allowed number of distinct start/length shifts. Their starts and lengths must fit an input shift type. Each shift repeats daily with a positive staffing level that may vary by day. Coverage wraps through the final day back to the first. At every slot, staffing must stay within the permitted excess and shortage.
+
+Complete the starter encoding before comparing its projected models with the supplied solution data.
+
+### Keep the data contract
+
+Read `day/1`, `slot/1`, `emp/3`, `type/4`, `exceed/1`, `shorten/1` and `maxshifts/1`. Show `shift(Start,Length,Day,Employees)`. Every chosen start/length pair needs one staffing atom per day. This exercise bounds shift count rather than introducing an unstated optimization objective.
+
+### Complete the model
+
+Implement the conditions in the problem description without hard-coding an instance. Keep the required show signature so results can be compared with the reference data.
+
+### Develop and check the encoding
+
+Complete the editable encoding below. Compare its shown atom sets with the JSON answers in `solutions`; `optimal_cost` records a proven optimum when present. Download your edits before cleanup.
+
+```elixir
+~S"""
+#show shifts/4.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance-03.lp")], models: :all)
+|> Course.display()
+```
+
+### Check boundary cases
+
+Test the smallest instance first, then check each derived relation. Compare projected model sets and, when optimizing, proven costs.
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Schedule with successive time windows
+
+Exercise files: [ins-01-3-2.lp](../assets/scheduling/instance.lp).
+
+```elixir
+workdir =
+  Course.workspace(Path.expand("../assets/scheduling", __DIR__))
+```
+
+The job-shop data describe operations, machines, durations and precedence. Build a schedule by extending or changing a bounded time window, reusing one grounded control where appropriate. A machine must not execute overlapping operations, and each job must respect its operation order.
+
+The `jobshop` function is an exercise skeleton: its loop shows successive solve calls, but you must implement the requested window logic. Repeated satisfiable calls alone do not demonstrate a complete incremental scheduler. Preserve the instance output signature and compare the final schedule with the full-horizon formulation.
+
+### Partition the operations
+
+For each operation, sum the durations of its predecessors in the same job to obtain an earliest-start lower bound. Rank operations by that bound and split them across the requested number of windows. The last window includes the remainder. Schedule only operations in the current or earlier windows.
+
+### Preserve earlier decisions
+
+Ground once. For each window, activate that window and compute an optimal schedule. Before advancing, fix the previous window’s selected `perm/3` atoms. The provided loop does not yet implement those activation and fixing steps.
+
+```elixir
+# Incremental scheduling application skeleton.
+# Complete its time-window logic as requested in the exercise.
+jobshop = fn files, arguments ->
+  Clingo.with_control([arguments: arguments], fn control ->
+    for file <- files, do: Control.load!(control, Path.join(workdir, file))
+    Control.ground!(control)
+    windows = Control.get_const!(control, "w").value
+
+    for window <- 1..windows do
+      %{window: window, search: Control.solve!(control)}
+    end
+  end)
+end
+```
+
+```elixir
+Course.write(workdir, "example.lp", ~S"""
+{ a(Item) : Item=1..w } = 1.
+#minimize{ 1,Item : a(Item) }.
+""")
+```
+
+```elixir
+jobshop.(["example.lp"], ["--opt-mode=optN", "1", "-c", "w=3"])
+```
+
+```elixir
+Course.archive(workdir, "multi-shot.zip")
+```
+
+```elixir
+Course.write(workdir, "multi-jobshop.lp", ~S"""
+est(NextIndex,M,E) :- sequence(NextIndex,M,S), E = #sum{DD,MM,SS : sequence(NextIndex,MM,SS), SS<S, duration(NextIndex,MM,DD)}.
+:- { window(Index) } != 1.
+select(NextIndex,M) :- est(NextIndex,M,E),
+               Pos = #count{JJ,MM: est(JJ,MM,EE), EE<E},
+               O   = #count{JJ,MM: duration(JJ,MM,DD)},
+               window(Index),
+               Pos <= (Index*O)/w.
+:- perm(NextIndex,M,P), not select(NextIndex,M).
+#show perm/3.
+""")
+```
+
+```elixir
+jobshop.(["multi-jobshop.lp", "instance.lp"], ["--opt-mode=optN", "1", "-c", "w=3"])
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```

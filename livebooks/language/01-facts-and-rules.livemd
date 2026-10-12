@@ -1,0 +1,357 @@
+# Facts, rules and alternatives
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Derive consequences from facts, combine conditions, and distinguish a model from its displayed atoms.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Facts, rules and shown answers](#facts-rules-and-shown-answers)
+- [Classify creatures with rules](#classify-creatures-with-rules)
+- [Express alternatives without body disjunction](#express-alternatives-without-body-disjunction)
+- [Derive positive consequences](#derive-positive-consequences)
+
+## Facts, rules and shown answers
+
+### What you will learn
+
+Read a rule, derive an answer and control what the notebook displays.
+
+### Build one complete program
+
+A fact supplies information; a rule derives an atom when every body condition holds. Uppercase names are variables. This example classifies fictional beacons: Cedar is awake, has a small reach and calls. Each solve starts with its own program.
+
+```elixir
+# Facts and rules are ordinary ASP, inside an Elixir string.
+result =
+  Clingo.solve!(
+    ~S"""
+    awake(cedar).
+    awake(birch).
+    awake(maple).
+    reach(cedar, "small").
+    reach(birch, "large").
+    reach(elm, "small").
+    reach(maple, "small").
+    calls(cedar).
+    calls(elm).
+    beacon(Creature) :- awake(Creature), reach(Creature, "small"), calls(Creature).
+    #show beacon/1.
+    """,
+    models: :all
+  )
+
+[%{shown: ["beacon(cedar)"]}] = result.models
+Course.display(result)
+```
+
+### Separate models from display
+
+The rule still derives its answer when a show directive hides every atom. An empty shown list is one model, whereas an inconsistent program has no models. These are different outcomes.
+
+```elixir
+hidden = Clingo.solve!("signal. #show.", models: :all)
+[%{shown: []}] = hidden.models
+:satisfiable = hidden.status
+impossible = Clingo.solve!("signal. :- signal.")
+[] = impossible.models
+:unsatisfiable = impossible.status
+%{hidden: hidden.status, impossible: impossible.status}
+```
+
+### Try it yourself
+
+Before running it, predict the effect of adding awake(elm). to the first program. Then make that one edit.
+
+<details>
+<summary>Hint and expected result</summary>
+
+Elm already has the other two properties. The shown model should now contain beacon(cedar) and beacon(elm).
+
+</details>
+
+## Classify creatures with rules
+
+Run top to bottom. Edit the ASP inside the string, then reevaluate the cell and any dependent cells. Solves close their controls automatically. [Wrapper guide](../elixir/01-getting-started.livemd#getting-started-with-clingo_elixir) · [Lesson contents](../README.md).
+
+We will classify imaginary creatures from three properties: being alive, having short arms, and roaring. The names are Riley, Morgan, Casey and Jordan. These are symbolic constants, not variables. A fact such as `alive(riley).` states one piece of information; its final period is required.
+
+Each code cell is a separate program. The first lists living creatures. The next lists attributes without carrying facts forward from the previous solve. The combined example supplies both kinds of information before applying a rule.
+
+```elixir
+~S"""
+alive(riley).
+alive(morgan).
+alive(casey).
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+### Add attributes
+
+The first solve contains `alive/1` facts. A predicate’s arity is its number of arguments. Now introduce `arm_length/2` and `roars/1`. Missing facts do not make a program invalid; they simply provide no support for the corresponding positive atom.
+
+```elixir
+~S"""
+arm_length(riley, "small").
+arm_length(morgan, "large").
+arm_length(jordan, "small").
+arm_length(casey, "small").
+roars(riley).
+roars(jordan).
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+### Combine conditions
+
+Read `resembles_dinosaur(Creature) :- alive(Creature), arm_length(Creature,"small"), roars(Creature).` as an implication. The body requires all three conditions for the same creature. Uppercase names denote variables; lowercase names denote symbolic constants. The next cell includes the complete input, so Riley satisfies the rule.
+
+```elixir
+~S"""
+alive(riley).
+alive(morgan).
+alive(casey).
+arm_length(riley, "small").
+arm_length(morgan, "large").
+arm_length(jordan, "small").
+arm_length(casey, "small").
+roars(riley).
+roars(jordan).
+resembles_dinosaur(Creature) :- alive(Creature), arm_length(Creature, "small"), roars(Creature).
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+### Choose what to display
+
+The full model includes facts as well as derived atoms. `#show resembles_dinosaur/1.` restricts the shown output without changing which models solve the program.
+
+```elixir
+~S"""
+alive(riley).
+alive(morgan).
+alive(casey).
+arm_length(riley, "small").
+arm_length(morgan, "large").
+arm_length(jordan, "small").
+arm_length(casey, "small").
+roars(riley).
+roars(jordan).
+resembles_dinosaur(Creature) :- alive(Creature), arm_length(Creature, "small"), roars(Creature).
+#show resembles_dinosaur/1.
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+The filtered result contains exactly `resembles_dinosaur(riley)`. Casey lacks a roar, Jordan lacks an `alive/1` fact, and Morgan has large arms.
+
+Try giving Jordan an `alive/1` fact, then rerun the complete program. Two creatures should now qualify. Removing all `alive/1` facts instead removes support for the classification; it does not necessarily cause a parsing error. Use the blank cell for further experiments.
+
+## Express alternatives without body disjunction
+
+Run top to bottom. Edit the ASP inside the string, then reevaluate the cell and any dependent cells. Solves close their controls automatically. [Wrapper guide](../elixir/01-getting-started.livemd#getting-started-with-clingo_elixir) · [Lesson contents](../README.md).
+
+A rule body joined by commas requires every condition. To derive `four_sided/1` from alternative shape names, use several rules sharing the same head. Putting a head-style `|` disjunction directly into the body is not valid syntax: the first cell deliberately demonstrates that parsing error.
+
+> **Note.** The body-OR example is deliberately invalid. Its native parsing diagnostic is displayed as an expected error so later examples can evaluate.
+
+```elixir
+Course.expect_error(fn ->
+  ~S"""
+  figure("circle").
+  figure("triangle").
+  figure("rectangle").
+  figure("rhombus").
+  figure("square").
+  figure("parallelogram").
+  figure("trapezium").
+  figure("kite").
+  four_sided(Name)
+        :- figure(Name),
+          Name == "rectangle" | Name == "square" | Name == "rhombus" | Name == "trapezium" | Name == "parallogram".
+  """
+  |> Clingo.solve!(models: :all)
+  |> Course.display()
+end)
+```
+
+### Establish one case
+
+The next program recognizes the rectangle alone. This is a working rule, but it does not yet cover every four-sided shape in the facts.
+
+```elixir
+~S"""
+figure("circle").
+figure("triangle").
+figure("rectangle").
+figure("rhombus").
+figure("square").
+figure("parallelogram").
+figure("trapezium").
+figure("kite").
+four_sided(Name)
+      :- figure(Name),
+        Name == "rectangle".
+#show four_sided/1.
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+### Cover each alternative
+
+Give each accepted shape its own rule. Any one of those rules can support the corresponding `four_sided/1` atom. The input also includes a circle and a triangle; neither belongs in this classification.
+
+```elixir
+~S"""
+figure("circle").
+figure("triangle").
+figure("rectangle").
+figure("rhombus").
+figure("square").
+figure("parallelogram").
+figure("trapezium").
+figure("kite").
+four_sided(Name)
+      :- figure(Name),
+        Name == "rectangle".
+four_sided(Name)
+      :- figure(Name),
+        Name == "square".
+four_sided(Name)
+      :- figure(Name),
+        Name == "rhombus".
+four_sided(Name)
+      :- figure(Name),
+        Name == "parallelogram".
+four_sided(Name)
+      :- figure(Name),
+        Name == "trapezium".
+four_sided(Name)
+      :- figure(Name),
+        Name == "kite".
+#show four_sided/1.
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+The final model shows six four-sided shapes: rectangle, square, rhombus, parallelogram, trapezium and kite. Circle and triangle are absent from the shown classification.
+
+As an exercise, represent the accepted names as data and use a single classification rule. Check that the set of six shown atoms stays the same.
+
+## Derive positive consequences
+
+Start from facts and repeatedly apply positive rules. For these positive normal programs, stable-model semantics selects the least supported consequence set; unsupported cycles do not create facts.
+
+The programs below are independent variations. Predict each answer set before running the cell. Edit one program in the list and compare its row again; answer-set order has no meaning.
+
+```elixir
+programs = [
+  ~S"""
+  a.
+  b.
+  """,
+  ~S"""
+  a.
+  b.
+  c.
+  """,
+  ~S"""
+  a.
+  b :- a.
+  """,
+  ~S"""
+  a.
+  b :- a.
+  c :- a.
+  """,
+  ~S"""
+  b :- a.
+  a.
+  """,
+  ~S"""
+  b :- a.
+  a.
+  c :- a.
+  """,
+  ~S"""
+  c :- a, b.
+  a.
+  b :- a.
+  """,
+  ~S"""
+  c :- a, b.
+  a.
+  b :- a.
+  d :- a, b, c.
+  """,
+  ~S"""
+  b :- a.
+  """,
+  ~S"""
+  b :- a.
+  c :- b.
+  """,
+  ~S"""
+  a.
+  c :- b.
+  """,
+  ~S"""
+  a.
+  c :- b.
+  e :- d.
+  """,
+  ~S"""
+  a.
+  c :- a, b.
+  """,
+  ~S"""
+  a.
+  c :- a, b.
+  e :- a, d.
+  """,
+  ~S"""
+  d :- a.
+  a.
+  c :- b.
+  """,
+  ~S"""
+  d :- a.
+  a.
+  c :- b.
+  e :- a, d.
+  """
+]
+
+programs
+|> Enum.with_index(1)
+|> Enum.map(fn {program, index} ->
+  result = Clingo.solve!(program, models: :all)
+
+  %{
+    example: index,
+    program: program,
+    shown_sets: inspect(Enum.sort(Enum.map(result.models, & &1.shown))),
+    status: result.status,
+    exhausted: result.exhausted
+  }
+end)
+|> Kino.DataTable.new()
+```

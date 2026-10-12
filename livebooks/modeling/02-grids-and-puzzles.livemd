@@ -1,0 +1,332 @@
+# Grids and spatial puzzles
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Start with Latin-square constraints, then build Sudoku, illumination and routing encodings. Each project states its input and output contract.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Make row and column constraints explicit](#make-row-and-column-constraints-explicit)
+- [Fill a Latin square](#fill-a-latin-square)
+- [Complete a Sudoku board](#complete-a-sudoku-board)
+- [Illuminate a grid](#illuminate-a-grid)
+- [Route through numbered hints](#route-through-numbered-hints)
+- [Move numbered pieces into regions](#move-numbered-pieces-into-regions)
+
+## Make row and column constraints explicit
+
+### What you will learn
+
+Build a complete small Latin square, then add a clue.
+
+### Fill a three-by-three Latin square
+
+Each cell chooses one value. Pairwise constraints prevent duplicate values in each row and column. Every value ranges over 1..3. There are twelve Latin squares of this size before clues are imposed.
+
+```elixir
+encoding = ~S"""
+index(1..3).
+1 { cell(Row,Col,Value) : index(Value) } 1 :- index(Row), index(Col).
+:- cell(Row,C1,Value), cell(Row,C2,Value), C1 < C2.
+:- cell(R1,Col,Value), cell(R2,Col,Value), R1 < R2.
+#show cell/3.
+"""
+
+result = Clingo.solve!(encoding, models: :all)
+true = result.exhausted
+12 = length(result.models)
+true = Enum.all?(result.models, &(length(&1.shown) == 9))
+Course.display(result)
+```
+
+### Constrain a clue rather than overwrite a cell
+
+A clue rejects assignments whose upper-left value is not 1. Four squares remain. Sudoku adds block constraints; other grid puzzles change the local constraints, not the need for explicit domains.
+
+```elixir
+clued = Clingo.solve!(encoding <> " :- not cell(1,1,1).", models: :all)
+4 = length(clued.models)
+true = Enum.all?(clued.models, &("cell(1,1,1)" in &1.shown))
+Course.display(clued)
+```
+
+### Try it yourself
+
+Add a second clue requiring cell(1,2,1). to the already clued Latin square. Predict the status.
+
+<details>
+<summary>Hint and expected result</summary>
+
+The first row would repeat value 1, so no model remains. An integrity constraint such as :- not cell(1,2,1). expresses the clue without introducing a new head.
+
+</details>
+
+## Fill a Latin square
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/modeling", __DIR__))
+```
+
+Fill an n-by-n board with values 1 through n. No value may repeat within a row or within a column. The input facts define the instance; the next editable cell is the encoding you must complete. Show solutions through `latin/3`.
+
+The starter is intentionally incomplete. A satisfiable run of that starter does not establish that it solves the exercise. The reference encoding later in the notebook provides a comparison once you have written your own rules.
+
+```elixir
+Course.write(workdir, "instances/instance-latin.lp", ~S"""
+size(3).
+""")
+```
+
+### Complete the rules
+
+Keep the input format and `latin/3` output contract. Start with a rule that generates candidates, then exclude candidates that break the conditions above.
+
+> **Note.** Terminate #show latin/3 with a period. The exercise encoding remains blank.
+
+```elixir
+~S"""
+#show latin/3.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance-latin.lp")], models: :all)
+|> Course.display()
+```
+
+The solve combines the instance file with your inline rules. `files:` supplies the instance; the string supplies the encoding.
+
+### Compare with the reference
+
+Alternative encoding: [latin.lp](../assets/modeling/solutions/latin.lp). [Test input](../assets/modeling/instances/instance-latin.lp).
+
+Compare your encoding with this readable reference. The collection files provide another formulation; compare projected model sets rather than enumeration order.
+
+```elixir
+~S"""
+index(1..N) :- size(N).
+1 { latin(R,C,V) : index(V) } 1 :- index(R), index(C).
+:- latin(R,C,V), latin(R,D,V), C < D.
+:- latin(R,C,V), latin(S,C,V), R < S.
+#show latin/3.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance-latin.lp")], models: :all)
+|> Course.display()
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Complete a Sudoku board
+
+Exercise files: [sudoku.lp](../assets/sudoku/sudoku.lp).
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/sudoku", __DIR__))
+```
+
+Fill the 9-by-9 board with digits 1 through 9. Preserve every given digit. Each row, column and 3-by-3 box must contain each digit exactly once.
+
+Complete the starter encoding, then verify the givens and every row, column, box or region constraint on the resulting models.
+
+### Keep the data contract
+
+The givens use `initial/3`. Keep the template’s solution predicate and show directive. Generate a value for each cell, then enforce uniqueness in the three kinds of unit.
+
+```elixir
+Course.write(workdir, "instances/ex00.lp", ~S"""
+initial(1,1,5). initial(1,2,3). initial(1,5,7).
+initial(2,1,6). initial(2,4,1). initial(2,5,9). initial(2,6,5).
+initial(3,2,9). initial(3,3,8). initial(3,8,6).
+initial(4,1,8). initial(4,5,6). initial(4,9,3).
+initial(5,1,4). initial(5,4,8). initial(5,6,3). initial(5,9,1).
+initial(6,1,7). initial(6,5,2). initial(6,9,6).
+initial(7,2,6). initial(7,7,2). initial(7,8,8).
+initial(8,4,4). initial(8,5,1). initial(8,6,9). initial(8,9,5).
+initial(9,5,8). initial(9,8,7). initial(9,9,9).
+""")
+```
+
+### Develop and check the encoding
+
+Edit the copied template and test it with the input above. Check each required constraint and download your edits before cleanup.
+
+```elixir
+Course.archive(workdir, "sudoku.zip")
+```
+
+```elixir
+~S"""
+subgrid_size(3).
+#show sudoku/3.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/ex00.lp")], models: :all)
+|> Course.display()
+```
+
+### Check boundary cases
+
+Test the smallest instance first, then check each derived relation. Compare projected model sets and, when optimizing, proven costs.
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Illuminate a grid
+
+Exercise files: [ex01.lp](../assets/light/instances/ex01.lp) · [light.lp](../assets/light/light.lp) · [ex01.json](../assets/light/solutions/ex01.json).
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/light", __DIR__))
+```
+
+Place lamps in ordinary cells. Every ordinary cell must be illuminated horizontally or vertically, and blocked cells stop light rays. Two lamps must not see each other. A numbered blocked cell requires exactly that many orthogonally adjacent lamps.
+
+Complete the starter encoding before comparing its projected models with the supplied solution data.
+
+### Keep the data contract
+
+The board uses `rows/1`, `cols/1`, `digit/3` and `empty/2`. Show lamp coordinates with `light/2`. Check the ray relation before adding the numbered-cell constraints.
+
+### Develop and check the encoding
+
+Complete the editable encoding below. Compare its shown atom sets with the JSON answers in `solutions`; `optimal_cost` records a proven optimum when present. Download your edits before cleanup.
+
+```elixir
+Course.archive(workdir, "light.zip")
+```
+
+```elixir
+~S"""
+#show light/2.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/ex01.lp")], models: :all)
+|> Course.display()
+```
+
+### Check boundary cases
+
+Test the smallest instance first, then check each derived relation. Compare projected model sets and, when optimizing, proven costs.
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Route through numbered hints
+
+Exercise files: [ex01.lp](../assets/seeknumbers/instances/ex01.lp) · [seeknumbers.lp](../assets/seeknumbers/seeknumbers.lp) · [ex01.json](../assets/seeknumbers/solutions/ex01.json).
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/seeknumbers", __DIR__))
+```
+
+Build a directed orthogonal path from the white marker to the black marker through every other cell exactly once. It must not intersect itself. Before the first numbered cell it is straight; after a numbered cell, count exactly that many bends before the next number or the finish.
+
+Complete the starter encoding before comparing its projected models with the supplied solution data.
+
+### Keep the data contract
+
+Read `cell/2`, `first/2`, `final/2` and `hint/3`. Show path edges through `path/4`. Local predecessor/successor constraints need a connectivity condition to exclude disconnected cycles.
+
+### Develop and check the encoding
+
+Complete the editable encoding below. Compare its shown atom sets with the JSON answers in `solutions`; `optimal_cost` records a proven optimum when present. Download your edits before cleanup.
+
+```elixir
+Course.archive(workdir, "seeknumbers.zip")
+```
+
+```elixir
+~S"""
+#show path/4.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/ex01.lp")], models: :all)
+|> Course.display()
+```
+
+### Check boundary cases
+
+Test the smallest instance first, then check each derived relation. Compare projected model sets and, when optimizing, proven costs.
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Move numbered pieces into regions
+
+Exercise files: [instance01.lp](../assets/yosenabe/instances/instance01.lp) · [yosenabe.lp](../assets/yosenabe/yosenabe.lp).
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/yosenabe", __DIR__))
+```
+
+Send each numbered piece along a straight grid route into a region. Routes must not touch or cross, every region needs a piece, and a region with a target requires exactly that sum of incoming values. A route may pass through another region; its destination is the first cell of the region where it stops.
+
+Complete the starter encoding, then verify the givens and every row, column, box or region constraint on the resulting models.
+
+### Keep the data contract
+
+Inputs are `cell/2`, `area/3`, `number/3` and optional `goal/2`. Show each source/destination pair through `target/4`. Distinguish the cells traversed by a route from the region that receives its value.
+
+### Complete the model
+
+Implement the conditions in the problem description without hard-coding an instance. Keep the required show signature so results can be compared with the reference data.
+
+### Develop and check the encoding
+
+Edit the copied template and test it with the input above. Check each required constraint and download your edits before cleanup.
+
+```elixir
+Course.archive(workdir, "yosenabe.zip")
+```
+
+```elixir
+~S"""
+dir(0,1). dir(0,-1). dir(1,0). dir(-1,0).
+#show target/4.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance01.lp")], models: :all)
+|> Course.display()
+```
+
+### Check boundary cases
+
+Test the smallest instance first, then check each derived relation. Compare projected model sets and, when optimizing, proven costs.
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```

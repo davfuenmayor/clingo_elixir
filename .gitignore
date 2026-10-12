@@ -1,0 +1,26 @@
+# Mix builds, dependencies and release archives
+/_build/
+/deps/
+/_release/
+/*.tar
+
+# Local upstream builds, including sanitizer variants
+/_native/
+/_native-*/
+/_source/
+/_upstream/
+/_upstream-*/
+
+# Compiled runtime assets
+/priv/*.so*
+/priv/clingo
+
+# Crash dumps and Python caches
+/core*
+/erl_crash.dump
+__pycache__/
+*.py[cod]
+
+# Local Elixir language-server state
+/.expert/
+/.elixir_ls/

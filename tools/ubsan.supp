@@ -1,0 +1,7 @@
+# clingo 5.8.2: ClingoLib's base constructor accesses clasp_ before construction.
+# Keep every other UBSan check enabled, including vptr checks elsewhere in upstream.
+vptr:clingocontrol.cc
+# C API opaque backend/configuration handles use casts to derived marker types.
+vptr:control.cc
+# Empty POD vectors call memcpy with a null destination and zero byte count.
+nonnull-attribute:pod_vector.h

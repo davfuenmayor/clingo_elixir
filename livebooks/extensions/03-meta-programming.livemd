@@ -1,0 +1,801 @@
+# Meta-programming and program transformations
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Interpret reified ground programs, compare model sets, construct diverse models and translate restricted fragments toward Boolean clauses.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Interpret grounded programs as data](#interpret-grounded-programs-as-data)
+- [Build translators and diverse-model interpreters](#build-translators-and-diverse-model-interpreters)
+
+## Interpret grounded programs as data
+
+Exercise files: [example.lp](../assets/meta-programming/example.lp).
+
+```elixir
+workdir =
+  Course.workspace(Path.expand("../assets/meta-programming", __DIR__))
+```
+
+Meta-programming separates a source program from an interpreter for its ground representation. ASPIF is a compact interchange format; reification turns that representation into ASP facts which another encoding can inspect.
+
+Use native Ground export to compare a small program’s ASPIF and reified facts. Numeric atom and tuple identifiers are local to an export; do not rely on their particular numbering. An output directive describes what to show, not a new rule deriving its displayed atom.
+
+```elixir
+Course.write(workdir, "example0.lp", ~S"""
+{a}.
+ b :- a.
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "example0.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "example0.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+Clingo.Ground.to_string!(files: [Path.join(workdir, "example0.lp")])
+|> IO.puts()
+```
+
+```elixir
+Course.read(workdir, "example.lp") |> IO.puts()
+```
+
+### Read ground rule forms
+
+A ground rule may use a normal literal body or a weighted body. Its head can be disjunctive, a choice, or empty. An empty disjunctive head is an integrity constraint. Use the reified rule, atom-tuple and literal-tuple facts together when reconstructing meaning.
+
+### Reify a minimal program
+
+Start with a single optional atom and inspect the tuple facts describing its choice head and empty body. Output filtering can hide every atom while leaving its models intact.
+
+```elixir
+Course.write(workdir, "example1.lp", ~S"""
+{a}.
+#show.
+""")
+```
+
+```elixir
+Clingo.Ground.to_string!(files: [Path.join(workdir, "example1.lp")])
+|> IO.puts()
+```
+
+```elixir
+Clingo.Ground.to_string!(files: [Path.join(workdir, "example1.lp")], format: :reify)
+|> IO.puts()
+```
+
+```elixir
+Course.write(workdir, "example2.lp", ~S"""
+{ a }.
+""")
+```
+
+```elixir
+Clingo.Ground.to_string!(files: [Path.join(workdir, "example2.lp")])
+|> IO.puts()
+```
+
+```elixir
+Clingo.Ground.to_string!(files: [Path.join(workdir, "example2.lp")], format: :reify)
+|> IO.puts()
+```
+
+### Build a small interpreter
+
+Compare the full meta encoding with the simplified version. The latter handles normal bodies and a restricted output representation. With the unmodified examples, it preserves the shown model sets of the source programs, including an empty shown set when `#show.` hides everything.
+
+```elixir
+Course.write(workdir, "meta.lp", ~S"""
+conjunction(B) :- literal_tuple(B),
+        hold(L) : literal_tuple(B, L), L > 0;
+    not hold(L) : literal_tuple(B,-L), L > 0.
+body(normal(B)) :- rule(_,normal(B)), conjunction(B).
+body(sum(B,G))  :- rule(_,sum(B,G)),
+    #sum { W,L :     hold(L), weighted_literal_tuple(B, L,W), L > 0 ;
+           W,L : not hold(L), weighted_literal_tuple(B,-L,W), L > 0 } >= G.
+  hold(A) : atom_tuple(H,A)   :- rule(disjunction(H),B), body(B).
+{ hold(A) : atom_tuple(H,A) } :- rule(     choice(H),B), body(B).
+#show.
+#show T : output(T,B), conjunction(B).
+""")
+```
+
+```elixir
+Course.write(workdir, "meta-simple.lp", ~S"""
+conjunction(B) :- literal_tuple(B),
+        hold(L) : literal_tuple(B, L), L > 0;
+    not hold(L) : literal_tuple(B,-L), L > 0.
+  hold(A) : atom_tuple(H,A)   :- rule(disjunction(H),normal(B)), conjunction(B).
+{ hold(A) : atom_tuple(H,A) } :- rule(     choice(H),normal(B)), conjunction(B).
+#show.
+#show T : output(T,B), not literal_tuple(B,_).
+#show T : output(T,B),     literal_tuple(B,L), hold(L).
+""")
+```
+
+```elixir
+Clingo.solve!(
+  Clingo.Ground.to_string!(files: [Path.join(workdir, "example1.lp")], format: :reify),
+  files: [Path.join(workdir, "meta-simple.lp")],
+  models: :all,
+  arguments: ["-Wnone"]
+)
+|> Course.display()
+```
+
+```elixir
+Clingo.solve!(
+  Clingo.Ground.to_string!(files: [Path.join(workdir, "example2.lp")], format: :reify),
+  files: [Path.join(workdir, "meta-simple.lp")],
+  models: :all,
+  arguments: ["-Wnone"]
+)
+|> Course.display()
+```
+
+### Exercise: change the interpretation
+
+Modify `meta-simple-ex1.lp` so that choice heads act as normal heads. For the one-atom example this should require the atom. Then change its output representation to show `true(a)` instead of `a`. These are goals for your completed encoding, not claims about the blank starter.
+
+```elixir
+Course.write(workdir, "meta-simple-ex1.lp", ~S"""
+conjunction(B) :- literal_tuple(B),
+        hold(L) : literal_tuple(B, L), L > 0;
+    not hold(L) : literal_tuple(B,-L), L > 0.
+  hold(A) : atom_tuple(H,A)   :- rule(disjunction(H),normal(B)), conjunction(B).
+{ hold(A) : atom_tuple(H,A) } :- rule(     choice(H),normal(B)), conjunction(B).
+#show.
+#show T : output(T,B), not literal_tuple(B,_).
+#show T : output(T,B),     literal_tuple(B,L), hold(L).
+""")
+```
+
+```elixir
+Clingo.solve!(
+  Clingo.Ground.to_string!(files: [Path.join(workdir, "example2.lp")], format: :reify),
+  files: [Path.join(workdir, "meta-simple-ex1.lp")],
+  models: :all,
+  arguments: ["-Wnone"]
+)
+|> Course.display()
+```
+
+### Add a dependent atom
+
+Now add a normal rule whose body depends on the optional atom. Reification records both the rule and the conditions used by the output directives. Follow those separate roles through the interpreter.
+
+```elixir
+Course.write(workdir, "example3.lp", ~S"""
+{a}.
+ b :- a.
+""")
+```
+
+```elixir
+Clingo.Ground.to_string!(files: [Path.join(workdir, "example3.lp")])
+|> IO.puts()
+```
+
+```elixir
+Clingo.Ground.to_string!(files: [Path.join(workdir, "example3.lp")], format: :reify)
+|> IO.puts()
+```
+
+```elixir
+Clingo.solve!(
+  Clingo.Ground.to_string!(files: [Path.join(workdir, "example3.lp")], format: :reify),
+  files: [Path.join(workdir, "meta-simple.lp")],
+  models: :all
+)
+|> Course.display()
+```
+
+### Exercise: exchange rule roles
+
+In `meta-simple-ex2.lp`, interpret choices as normal rules and normal rules as choices. Reverse each body literal’s sign. On the two-rule example, the intended transformed program has the unique shown set `{a}`.
+
+```elixir
+Course.write(workdir, "meta-simple-ex2.lp", ~S"""
+conjunction(B) :- literal_tuple(B),
+        hold(L) : literal_tuple(B, L), L > 0;
+    not hold(L) : literal_tuple(B,-L), L > 0.
+  hold(A) : atom_tuple(H,A)   :- rule(disjunction(H),normal(B)), conjunction(B).
+{ hold(A) : atom_tuple(H,A) } :- rule(     choice(H),normal(B)), conjunction(B).
+#show.
+#show T : output(T,B), not literal_tuple(B,_).
+#show T : output(T,B),     literal_tuple(B,L), hold(L).
+""")
+```
+
+```elixir
+Clingo.solve!(
+  Clingo.Ground.to_string!(files: [Path.join(workdir, "example3.lp")], format: :reify),
+  files: [Path.join(workdir, "meta-simple-ex2.lp")],
+  models: :all
+)
+|> Course.display()
+```
+
+### Exercise: change body conjunction
+
+Extend the simplified interpreter so a nonempty body acts as a disjunction of its literals. Specify separately what an empty body means, then test the change on the smallest example before larger inputs.
+
+```elixir
+Course.write(workdir, "example4.lp", ~S"""
+{a;b}.
+c :- a,b.
+""")
+```
+
+```elixir
+Course.write(workdir, "meta-simple-ex3.lp", ~S"""
+conjunction(B) :- literal_tuple(B),
+        hold(L) : literal_tuple(B, L), L > 0;
+    not hold(L) : literal_tuple(B,-L), L > 0.
+  hold(A) : atom_tuple(H,A)   :- rule(disjunction(H),normal(B)), conjunction(B).
+{ hold(A) : atom_tuple(H,A) } :- rule(     choice(H),normal(B)), conjunction(B).
+#show.
+#show T : output(T,B), not literal_tuple(B,_).
+#show T : output(T,B),     literal_tuple(B,L), hold(L).
+""")
+```
+
+```elixir
+Clingo.solve!(
+  Clingo.Ground.to_string!(files: [Path.join(workdir, "example4.lp")], format: :reify),
+  files: [Path.join(workdir, "meta-simple-ex3.lp")],
+  models: :all
+)
+|> Course.display()
+```
+
+### Remember grounding simplifications
+
+The next example revisits the exchanged-rule interpretation, but now a fact lets the grounder simplify other rules before reification.
+
+```elixir
+Course.write(workdir, "example5.lp", ~S"""
+a.
+b :- not a.
+""")
+```
+
+```elixir
+Clingo.solve!(
+  Clingo.Ground.to_string!(files: [Path.join(workdir, "example5.lp")], format: :reify),
+  files: [Path.join(workdir, "meta-simple-ex2.lp")],
+  models: :all
+)
+|> Course.display()
+```
+
+```elixir
+Clingo.Ground.to_string!(files: [Path.join(workdir, "example5.lp")])
+|> IO.puts()
+```
+
+```elixir
+Clingo.Ground.to_string!(files: [Path.join(workdir, "example5.lp")], format: :reify)
+|> IO.puts()
+```
+
+A rule removed during grounding is absent from the reified input. The meta encoding cannot reinterpret information that was already discarded. Its input is the simplified ground program, not the original variable-level source. Account for this boundary when designing transformations.
+
+```elixir
+Course.write(workdir, "example6.lp", ~S"""
+{a;b;c;d}.
+e :- a, 30 #sum{ 20:b; 30:c; 40:d }.
+:- not e.
+""")
+```
+
+```elixir
+Clingo.Ground.to_string!(files: [Path.join(workdir, "example6.lp")], format: :reify)
+|> IO.puts()
+```
+
+```elixir
+Course.write(workdir, "example6-reified.lp", ~S"""
+atom_tuple(0).
+atom_tuple(0,1).
+atom_tuple(0,2).
+atom_tuple(0,3).
+atom_tuple(0,4).
+literal_tuple(0).
+rule(choice(0),normal(0)).
+atom_tuple(1).
+atom_tuple(1,5).
+weighted_literal_tuple(0).
+weighted_literal_tuple(0,2,20).
+weighted_literal_tuple(0,3,30).
+weighted_literal_tuple(0,4,40).
+rule(disjunction(1),sum(0,30)).
+atom_tuple(2).
+atom_tuple(2,6).
+literal_tuple(1).
+literal_tuple(1,5).
+literal_tuple(1,1).
+rule(disjunction(2),normal(1)).
+atom_tuple(3).
+literal_tuple(2).
+literal_tuple(2,-6).
+rule(disjunction(3),normal(2)).
+literal_tuple(3).
+literal_tuple(3,1).
+output(a,3).
+literal_tuple(4).
+literal_tuple(4,2).
+output(b,4).
+literal_tuple(5).
+literal_tuple(5,3).
+output(c,5).
+literal_tuple(6).
+literal_tuple(6,4).
+output(d,6).
+literal_tuple(7).
+literal_tuple(7,6).
+output(e,7).
+""")
+```
+
+```elixir
+Course.write(workdir, "meta-ex4.lp", ~S"""
+conjunction(B) :- literal_tuple(B),
+        hold(L) : literal_tuple(B, L), L > 0;
+    not hold(L) : literal_tuple(B,-L), L > 0.
+body(normal(B)) :- rule(_,normal(B)), conjunction(B).
+body(sum(B,G))  :- rule(_,sum(B,G)),
+    #sum { W,L :     hold(L), weighted_literal_tuple(B, L,W), L > 0 ;
+           W,L : not hold(L), weighted_literal_tuple(B,-L,W), L > 0 } >= G.
+  hold(A) : atom_tuple(H,A)   :- rule(disjunction(H),B), body(B).
+{ hold(A) : atom_tuple(H,A) } :- rule(     choice(H),B), body(B).
+#show.
+#show T : output(T,B), conjunction(B).
+""")
+```
+
+```elixir
+Clingo.solve!(
+  Clingo.Ground.to_string!(files: [Path.join(workdir, "example6.lp")], format: :reify),
+  files: [Path.join(workdir, "meta-ex4.lp")],
+  models: :all
+)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "example7.lp", ~S"""
+{ a(1); a(2) }.
+:- 1 { a(Item) }.
+:-   { a(Item) } 1.
+#show a/1.
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "example7.lp")])
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "example7-relaxed.lp", ~S"""
+{ a(1); a(2) }.
+violated(ic1) :- 1 { a(Item) }.
+violated(ic2) :-   { a(Item) } 1.
+:~ violated(R). [1,R]
+#show a/1.
+#show violated/1.
+""")
+```
+
+```elixir
+Clingo.solve!(
+  files: [Path.join(workdir, "example7-relaxed.lp")],
+  models: :all,
+  arguments: ["--opt-mode=optN"]
+)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "meta-relaxed.lp", ~S"""
+conjunction(B) :- literal_tuple(B),
+        hold(L) : literal_tuple(B, L), L > 0;
+    not hold(L) : literal_tuple(B,-L), L > 0.
+body(normal(B)) :- rule(_,normal(B)), conjunction(B).
+body(sum(B,G))  :- rule(_,sum(B,G)),
+    #sum { W,L :     hold(L), weighted_literal_tuple(B, L,W), L > 0 ;
+           W,L : not hold(L), weighted_literal_tuple(B,-L,W), L > 0 } >= G.
+  hold(A) : atom_tuple(H,A)   :- rule(disjunction(H),B), body(B).
+{ hold(A) : atom_tuple(H,A) } :- rule(     choice(H),B), body(B).
+#show.
+#show T : output(T,B), conjunction(B).
+""")
+```
+
+```elixir
+Clingo.solve!(
+  Clingo.Ground.to_string!(files: [Path.join(workdir, "example7.lp")], format: :reify),
+  files: [Path.join(workdir, "meta-relaxed.lp")],
+  models: :all,
+  arguments: ["--opt-mode=optN"]
+)
+|> Course.display()
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Build translators and diverse-model interpreters
+
+```elixir
+workdir =
+  Course.workspace()
+
+exercise_runs = false
+```
+
+Start by comparing direct Latin-square solving with solving a reified program through a meta encoding. Compare sorted shown atom sets, not enumeration order or internal atom IDs. The helper `run` performs that comparison using the NIF.
+
+This project has two extensions: choose several weighted-diverse models, and translate general ground programs toward a restricted SAT-like representation. Learner-dependent runs remain gated by `exercise_runs`; enable them only after supplying the requested encodings.
+
+```elixir
+Course.write(workdir, "latin.lp", ~S"""
+#const s=4.
+number(1..s).
+1 { latin(Item,Other,N) : number(N) } 1 :- number(Item), number(Other).
+1 { latin(Item,Other,N) : number(Other) } 1 :- number(Item), number(N).
+1 { latin(Item,Other,N) : number(Item) } 1 :- number(Other), number(N).
+#show latin/3.
+""")
+```
+
+```elixir
+Course.write(workdir, "meta.lp", ~S"""
+conjunction(B) :- literal_tuple(B),
+        hold(L) : literal_tuple(B, L), L > 0;
+    not hold(L) : literal_tuple(B,-L), L > 0.
+body(normal(B)) :- rule(_,normal(B)), conjunction(B).
+body(sum(B,G))  :- rule(_,sum(B,G)),
+    #sum { W,L :     hold(L), weighted_literal_tuple(B, L,W), L > 0 ;
+           W,L : not hold(L), weighted_literal_tuple(B,-L,W), L > 0 } >= G.
+  hold(A) : atom_tuple(H,A)   :- rule(disjunction(H),B), body(B).
+{ hold(A) : atom_tuple(H,A) } :- rule(     choice(H),B), body(B).
+#show.
+#show T : output(T,B), conjunction(B).
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "latin.lp")], models: :all, arguments: ["-c", "s=4"])
+|> Course.display()
+```
+
+```elixir
+Course.write(
+  workdir,
+  "reify.lp",
+  Clingo.Ground.to_string!(
+    files: [Path.join(workdir, "latin.lp")],
+    arguments: ["-c", "s=4"],
+    format: :reify
+  )
+)
+
+Clingo.solve!(
+  files: [Path.join(workdir, "reify.lp"), Path.join(workdir, "meta.lp")],
+  models: :all
+)
+```
+
+```elixir
+run = fn program, files ->
+  Clingo.solve!(program, files: Enum.map(files, &Path.join(workdir, &1)), models: :all).models
+  |> Enum.map(& &1.shown)
+  |> Enum.sort()
+end
+```
+
+```elixir
+Course.write(
+  workdir,
+  "reify.lp",
+  Clingo.Ground.to_string!(
+    files: [Path.join(workdir, "latin.lp")],
+    arguments: ["-c", "s=4"],
+    format: :reify
+  )
+)
+
+true = run.("", ["reify.lp", "meta.lp"]) == run.("", ["latin.lp"])
+```
+
+### Weight model differences
+
+Create `weighted-many.lp` in the workspace by copying and extending the `many.lp` starter below. `weight/2` assigns a contribution to an atom; the distance between two models sums contributions for atoms on which they disagree. Check the requested number of models and their pairwise distances independently; the optimum must respect the selected optimization ordering.
+
+```elixir
+Course.write(workdir, "many.lp", ~S"""
+model(1..m).
+conjunction(B,M) :- model(M), literal_tuple(B),
+        hold(L,M) : literal_tuple(B, L), L > 0;
+    not hold(L,M) : literal_tuple(B,-L), L > 0.
+body(normal(B),M) :- rule(_,normal(B)), conjunction(B,M).
+body(sum(B,G),M)  :- model(M), rule(_,sum(B,G)),
+    #sum { W,L :     hold(L,M), weighted_literal_tuple(B, L,W), L > 0 ;
+           W,L : not hold(L,M), weighted_literal_tuple(B,-L,W), L > 0 } >= G.
+  hold(A,M) : atom_tuple(H,A)   :- rule(disjunction(H),B), body(B,M).
+{ hold(A,M) : atom_tuple(H,A) } :- rule(     choice(H),B), body(B,M).
+show(T,M) :- output(T,B), conjunction(B,M).
+#show.
+#show (T,M) : show(T,M).
+#const k=1.
+:- model(M), model(N), M<N, option = 1,
+    #sum{ 1,T: show(T,M), not show(T,N) ;
+          1,T: not show(T,M), show(T,N) } < k.
+#maximize{ 1,T,M,N: show(T,M), not show(T,N), model(N), option = 2 }.
+""")
+```
+
+> **Note.** Enable exercise_runs only after completing the required encoding. The default evaluation reports this as a pending exercise.
+
+```elixir
+if exercise_runs do
+  Course.write(
+    workdir,
+    "reify.lp",
+    Clingo.Ground.to_string!(files: [Path.join(workdir, "latin.lp")], format: :reify)
+  )
+
+  Clingo.solve!(
+    files: [Path.join(workdir, "reify.lp"), Path.join(workdir, "weighted-many.lp")],
+    models: :all,
+    arguments: ["-c", "m=3", "-c", "option=2", "--opt-mode=optN"]
+  )
+else
+  %{
+    exercise_pending: "Complete the requested encodings, then set exercise_runs = true."
+  }
+end
+```
+
+### Represent Boolean clauses
+
+A DIMACS header declares variable and clause counts. Each zero-terminated clause lists signed variable IDs. Generate Boolean choices in ASP and reject assignments that falsify a clause. The DIMACS example is executed by the native adapter, not by an external SAT process.
+
+```elixir
+Course.write(workdir, "example1.cnf", ~S"""
+c
+c some comments
+c
+p cnf 3 4
+1 -2 0
+2 -1 0
+3 -1 -2 0
+3  1  2 0
+""")
+```
+
+```elixir
+Clingo.Dimacs.solve!(Course.read(workdir, "example1.cnf"), models: :all)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "example1.cnf.lp", ~S"""
+{ hold(1..3) }.
+:- not hold(1),     hold(2).
+:- not hold(2),     hold(1).
+:- not hold(3),     hold(1),     hold(2).
+:- not hold(3), not hold(1), not hold(2).
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "example1.cnf.lp")], models: :all)
+|> Course.display()
+```
+
+### Translate in stages
+
+First replace choice and weight constructs with normal rules. For tight normal inputs, express completion as choices plus integrity constraints. Finally translate the supported restricted ASPIF fragment to DIMACS. Test preservation of projected model sets at each stage; general non-tight inputs are an optional extension, not an assumption of the starter.
+
+#### Remove choice and weight rules
+
+Complete `meta-normal.lp` so its ground output has neither construct while preserving the source program’s answer sets. The starter is incomplete: the model-set comparison below should be false until you add the missing translations. Inspect the reified ground output as well as running model-set comparisons. Empty filtered output is evidence about the inspected constructs, not proof of full semantic equivalence.
+
+```elixir
+Course.write(workdir, "meta-normal.lp", ~S"""
+conjunction(B) :- literal_tuple(B),
+        hold(L) : literal_tuple(B, L), L > 0;
+    not hold(L) : literal_tuple(B,-L), L > 0.
+body(normal(B)) :- rule(_,normal(B)), conjunction(B).
+  hold(A) : atom_tuple(H,A)   :- rule(disjunction(H),B), body(B).
+#show.
+#show T : output(T,B), conjunction(B).
+""")
+```
+
+```elixir
+Course.write(
+  workdir,
+  "reify.lp",
+  Clingo.Ground.to_string!(
+    files: [Path.join(workdir, "latin.lp")],
+    arguments: ["-c", "s=4"],
+    format: :reify
+  )
+)
+
+run.("", ["reify.lp", "meta-normal.lp"]) == run.("", ["latin.lp"])
+```
+
+```elixir
+Course.write(
+  workdir,
+  "reify.lp",
+  Clingo.Ground.to_string!(
+    files: [Path.join(workdir, "latin.lp")],
+    arguments: ["-c", "s=4"],
+    format: :reify
+  )
+)
+
+Clingo.Ground.to_string!(
+  files: [Path.join(workdir, "reify.lp"), Path.join(workdir, "meta-normal.lp")],
+  format: :reify
+)
+|> String.split("\n", trim: true)
+|> Enum.filter(&String.starts_with?(&1, ["weighted_literal_tuple", "rule(choice"]))
+|> Enum.join("\n")
+```
+
+> **Note.** Enable exercise_runs only after completing the required encoding. The default evaluation reports this as a pending exercise.
+
+```elixir
+if exercise_runs do
+  Course.write(
+    workdir,
+    "reify.lp",
+    Clingo.Ground.to_string!(files: [Path.join(workdir, "latin.lp")], format: :reify)
+  )
+
+  run.("", ["reify.lp", "meta-normal.lp"]) == run.("", ["latin.lp"])
+else
+  %{
+    exercise_pending: "Complete the requested encodings, then set exercise_runs = true."
+  }
+end
+```
+
+#### Replace a choice head
+
+Represent the optional truth of each head atom using normal rules and suitable complementary support. Check both truth choices before applying the construction to reified tuples.
+
+#### Replace a weighted body
+
+The weight threshold must be represented without leaving a ground weight rule. Accumulate weighted literal contributions through ordinary rules and compare the resulting threshold behavior with the original aggregate.
+
+### Express completion for tight programs
+
+Complete `meta-constraints.lp` for normal programs with integrity constraints and no positive dependency cycle. Its choices generate assignments; its integrity constraints enforce the completion nogoods. The tightness restriction is essential to the stated model correspondence.
+
+```elixir
+Course.write(
+  workdir,
+  "reify.lp",
+  Clingo.Ground.to_string!(
+    files: [Path.join(workdir, "latin.lp")],
+    arguments: ["-c", "s=4"],
+    format: :reify
+  )
+)
+
+Clingo.Ground.to_string!(
+  files: [Path.join(workdir, "reify.lp"), Path.join(workdir, "meta-normal.lp")],
+  format: :reify
+)
+```
+
+```elixir
+Course.write(workdir, "meta-constraints.lp", ~S"""
+{conjunction(B)} :- literal_tuple(B).
+{     hold(|L|)} :- literal_tuple(B,L).
+{     hold( A )} :- atom_tuple(H,A).
+#show.
+#show T : output(T,B), conjunction(B).
+""")
+```
+
+Add two atom-oriented and three body-oriented constraint forms to the supplied template. Check each direction of support, not only whether true bodies imply their heads.
+
+> **Note.** Enable exercise_runs only after completing the required encoding. The default evaluation reports this as a pending exercise.
+
+```elixir
+if exercise_runs do
+  Course.write(
+    workdir,
+    "reify1.lp",
+    Clingo.Ground.to_string!(files: [Path.join(workdir, "latin.lp")], format: :reify)
+  )
+
+  Course.write(
+    workdir,
+    "reify2.lp",
+    Clingo.Ground.to_string!(
+      files: [Path.join(workdir, "reify1.lp"), Path.join(workdir, "meta-normal.lp")],
+      format: :reify
+    )
+  )
+
+  run.("", ["reify2.lp", "meta-constraints.lp"]) == run.("", ["latin.lp"])
+else
+  %{
+    exercise_pending: "Complete the requested encodings, then set exercise_runs = true."
+  }
+end
+```
+
+### Emit Boolean clauses
+
+Implement the `asp2dimacs` exercise for facts, independent one-atom choices and integrity constraints. Preserve the models under the atom-ID mapping. Implement the translator in Elixir and check it with `Clingo.Dimacs.solve!/2`.
+
+#### Handle auxiliary definitions
+
+Grounding a conditional literal can introduce a normal rule defining an auxiliary atom followed by a constraint using it. The next example exposes that case; a translator restricted to explicit constraints must handle it deliberately.
+
+```elixir
+Course.write(workdir, "conditional.lp", ~S"""
+{ a(1..3) }.
+:- a(1), not a(Item) : Item=2..3.
+{ b(1..3) }.
+:- not b(1), b(Item) : Item=2..3.
+#show.
+""")
+```
+
+```elixir
+Clingo.Ground.to_string!(files: [Path.join(workdir, "conditional.lp")])
+|> IO.puts()
+```
+
+Combine the auxiliary definition with its following constraint when the atom has no other uses. Do not leave unused auxiliary variables free in DIMACS: that would multiply the model count. Compare solution counts on your smallest translation test cases, including the examples above.
+
+### Extend only after the restricted translation works
+
+Possible extensions include reconstructing symbolic models from SAT assignments, combining the meta encodings, improving weight-rule translation, and supporting non-tight programs with an appropriate additional construction.
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```

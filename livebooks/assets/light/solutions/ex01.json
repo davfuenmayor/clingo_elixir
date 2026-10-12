@@ -1,0 +1,12 @@
+{
+  "status": "satisfiable",
+  "exhausted": true,
+  "optimal_cost": null,
+  "models": [
+    [
+      "light(2,1)",
+      "light(3,4)",
+      "light(4,3)"
+    ]
+  ]
+}

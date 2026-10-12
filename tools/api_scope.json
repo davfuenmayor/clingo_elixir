@@ -1,0 +1,412 @@
+{
+  "capabilities": {
+    "signature": {
+      "operations": [
+        "clingo_signature_create",
+        "clingo_signature_name",
+        "clingo_signature_arity",
+        "clingo_signature_is_positive",
+        "clingo_signature_is_negative",
+        "clingo_signature_is_equal_to",
+        "clingo_signature_is_less_than",
+        "clingo_signature_hash"
+      ],
+      "purpose": "Internal atom-signature inspection and matching."
+    },
+    "symbol": {
+      "operations": [
+        "clingo_symbol_create_number",
+        "clingo_symbol_create_supremum",
+        "clingo_symbol_create_infimum",
+        "clingo_symbol_create_string",
+        "clingo_symbol_create_id",
+        "clingo_symbol_create_function",
+        "clingo_symbol_number",
+        "clingo_symbol_name",
+        "clingo_symbol_string",
+        "clingo_symbol_is_positive",
+        "clingo_symbol_is_negative",
+        "clingo_symbol_arguments",
+        "clingo_symbol_type",
+        "clingo_symbol_to_string_size",
+        "clingo_symbol_to_string",
+        "clingo_symbol_is_equal_to",
+        "clingo_symbol_is_less_than",
+        "clingo_symbol_hash"
+      ],
+      "purpose": "Support the symbol capability; buffer/count/lifetime calls stay internal."
+    },
+    "symbolic_atoms": {
+      "operations": [
+        "clingo_symbolic_atoms_size",
+        "clingo_symbolic_atoms_begin",
+        "clingo_symbolic_atoms_end",
+        "clingo_symbolic_atoms_find",
+        "clingo_symbolic_atoms_iterator_is_equal_to",
+        "clingo_symbolic_atoms_symbol",
+        "clingo_symbolic_atoms_is_fact",
+        "clingo_symbolic_atoms_is_external",
+        "clingo_symbolic_atoms_literal",
+        "clingo_symbolic_atoms_signatures_size",
+        "clingo_symbolic_atoms_signatures",
+        "clingo_symbolic_atoms_next",
+        "clingo_symbolic_atoms_is_valid"
+      ],
+      "purpose": "Support the symbolic atoms capability; buffer/count/lifetime calls stay internal."
+    },
+    "theory_atoms": {
+      "operations": [
+        "clingo_theory_atoms_term_type",
+        "clingo_theory_atoms_term_number",
+        "clingo_theory_atoms_term_name",
+        "clingo_theory_atoms_term_arguments",
+        "clingo_theory_atoms_term_to_string_size",
+        "clingo_theory_atoms_term_to_string",
+        "clingo_theory_atoms_element_tuple",
+        "clingo_theory_atoms_element_condition",
+        "clingo_theory_atoms_element_condition_id",
+        "clingo_theory_atoms_element_to_string_size",
+        "clingo_theory_atoms_element_to_string",
+        "clingo_theory_atoms_size",
+        "clingo_theory_atoms_atom_term",
+        "clingo_theory_atoms_atom_elements",
+        "clingo_theory_atoms_atom_has_guard",
+        "clingo_theory_atoms_atom_guard",
+        "clingo_theory_atoms_atom_literal",
+        "clingo_theory_atoms_atom_to_string_size",
+        "clingo_theory_atoms_atom_to_string"
+      ],
+      "purpose": "Support the theory atoms capability; buffer/count/lifetime calls stay internal."
+    },
+    "assignment": {
+      "operations": [
+        "clingo_assignment_decision_level",
+        "clingo_assignment_root_level",
+        "clingo_assignment_has_conflict",
+        "clingo_assignment_has_literal",
+        "clingo_assignment_level",
+        "clingo_assignment_decision",
+        "clingo_assignment_is_fixed",
+        "clingo_assignment_is_true",
+        "clingo_assignment_is_false",
+        "clingo_assignment_truth_value",
+        "clingo_assignment_size",
+        "clingo_assignment_at",
+        "clingo_assignment_is_total",
+        "clingo_assignment_trail_size",
+        "clingo_assignment_trail_begin",
+        "clingo_assignment_trail_end",
+        "clingo_assignment_trail_at"
+      ],
+      "purpose": "Support the assignment capability; buffer/count/lifetime calls stay internal."
+    },
+    "propagate_init": {
+      "operations": [
+        "clingo_propagate_init_solver_literal",
+        "clingo_propagate_init_add_watch",
+        "clingo_propagate_init_add_watch_to_thread",
+        "clingo_propagate_init_remove_watch",
+        "clingo_propagate_init_remove_watch_from_thread",
+        "clingo_propagate_init_freeze_literal",
+        "clingo_propagate_init_symbolic_atoms",
+        "clingo_propagate_init_theory_atoms",
+        "clingo_propagate_init_number_of_threads",
+        "clingo_propagate_init_set_check_mode",
+        "clingo_propagate_init_get_check_mode",
+        "clingo_propagate_init_set_undo_mode",
+        "clingo_propagate_init_get_undo_mode",
+        "clingo_propagate_init_assignment",
+        "clingo_propagate_init_add_literal",
+        "clingo_propagate_init_add_clause",
+        "clingo_propagate_init_add_weight_constraint",
+        "clingo_propagate_init_add_minimize",
+        "clingo_propagate_init_propagate"
+      ],
+      "purpose": "Support the propagate init capability; buffer/count/lifetime calls stay internal."
+    },
+    "propagate_control": {
+      "operations": [
+        "clingo_propagate_control_thread_id",
+        "clingo_propagate_control_assignment",
+        "clingo_propagate_control_add_literal",
+        "clingo_propagate_control_add_watch",
+        "clingo_propagate_control_has_watch",
+        "clingo_propagate_control_remove_watch",
+        "clingo_propagate_control_add_clause",
+        "clingo_propagate_control_propagate"
+      ],
+      "purpose": "Support the propagate control capability; buffer/count/lifetime calls stay internal."
+    },
+    "backend": {
+      "operations": [
+        "clingo_backend_begin",
+        "clingo_backend_end",
+        "clingo_backend_rule",
+        "clingo_backend_weight_rule",
+        "clingo_backend_minimize",
+        "clingo_backend_project",
+        "clingo_backend_external",
+        "clingo_backend_assume",
+        "clingo_backend_heuristic",
+        "clingo_backend_acyc_edge",
+        "clingo_backend_add_atom",
+        "clingo_backend_theory_term_number",
+        "clingo_backend_theory_term_string",
+        "clingo_backend_theory_term_sequence",
+        "clingo_backend_theory_term_function",
+        "clingo_backend_theory_term_symbol",
+        "clingo_backend_theory_element",
+        "clingo_backend_theory_atom",
+        "clingo_backend_theory_atom_with_guard"
+      ],
+      "purpose": "Support the backend capability; buffer/count/lifetime calls stay internal."
+    },
+    "configuration": {
+      "operations": [
+        "clingo_configuration_root",
+        "clingo_configuration_type",
+        "clingo_configuration_description",
+        "clingo_configuration_array_size",
+        "clingo_configuration_array_at",
+        "clingo_configuration_map_size",
+        "clingo_configuration_map_has_subkey",
+        "clingo_configuration_map_subkey_name",
+        "clingo_configuration_map_at",
+        "clingo_configuration_value_is_assigned",
+        "clingo_configuration_value_get_size",
+        "clingo_configuration_value_get",
+        "clingo_configuration_value_set"
+      ],
+      "purpose": "Support the configuration capability; buffer/count/lifetime calls stay internal."
+    },
+    "statistics": {
+      "operations": [
+        "clingo_statistics_root",
+        "clingo_statistics_type",
+        "clingo_statistics_array_size",
+        "clingo_statistics_array_at",
+        "clingo_statistics_array_push",
+        "clingo_statistics_map_size",
+        "clingo_statistics_map_has_subkey",
+        "clingo_statistics_map_subkey_name",
+        "clingo_statistics_map_at",
+        "clingo_statistics_map_add_subkey",
+        "clingo_statistics_value_get",
+        "clingo_statistics_value_set"
+      ],
+      "purpose": "Support the statistics capability; buffer/count/lifetime calls stay internal."
+    },
+    "model": {
+      "operations": [
+        "clingo_model_type",
+        "clingo_model_number",
+        "clingo_model_symbols_size",
+        "clingo_model_symbols",
+        "clingo_model_contains",
+        "clingo_model_is_true",
+        "clingo_model_is_consequence",
+        "clingo_model_cost_size",
+        "clingo_model_cost",
+        "clingo_model_priority",
+        "clingo_model_optimality_proven",
+        "clingo_model_thread_id",
+        "clingo_model_extend",
+        "clingo_model_context"
+      ],
+      "purpose": "Support the model capability; buffer/count/lifetime calls stay internal."
+    },
+    "solve_handle": {
+      "operations": [
+        "clingo_solve_handle_get",
+        "clingo_solve_handle_wait",
+        "clingo_solve_handle_model",
+        "clingo_solve_handle_core",
+        "clingo_solve_handle_last",
+        "clingo_solve_handle_resume",
+        "clingo_solve_handle_cancel",
+        "clingo_solve_handle_close"
+      ],
+      "purpose": "Support the solve handle capability; buffer/count/lifetime calls stay internal."
+    },
+    "control": {
+      "operations": [
+        "clingo_control_new",
+        "clingo_control_free",
+        "clingo_control_load",
+        "clingo_control_load_aspif",
+        "clingo_control_add",
+        "clingo_control_ground",
+        "clingo_control_solve",
+        "clingo_control_cleanup",
+        "clingo_control_assign_external",
+        "clingo_control_release_external",
+        "clingo_control_remove_minimize",
+        "clingo_control_update_project",
+        "clingo_control_register_propagator",
+        "clingo_control_is_conflicting",
+        "clingo_control_statistics",
+        "clingo_control_interrupt",
+        "clingo_control_configuration",
+        "clingo_control_set_enable_enumeration_assumption",
+        "clingo_control_get_enable_enumeration_assumption",
+        "clingo_control_set_enable_cleanup",
+        "clingo_control_get_enable_cleanup",
+        "clingo_control_get_const",
+        "clingo_control_has_const",
+        "clingo_control_symbolic_atoms",
+        "clingo_control_theory_atoms",
+        "clingo_control_register_observer",
+        "clingo_control_register_backend",
+        "clingo_control_backend"
+      ],
+      "purpose": "Support the control capability; buffer/count/lifetime calls stay internal."
+    },
+    "ast": {
+      "operations": [
+        "clingo_ast_build",
+        "clingo_ast_acquire",
+        "clingo_ast_release",
+        "clingo_ast_copy",
+        "clingo_ast_deep_copy",
+        "clingo_ast_less_than",
+        "clingo_ast_equal",
+        "clingo_ast_hash",
+        "clingo_ast_to_string_size",
+        "clingo_ast_to_string",
+        "clingo_ast_get_type",
+        "clingo_ast_has_attribute",
+        "clingo_ast_attribute_type",
+        "clingo_ast_attribute_get_number",
+        "clingo_ast_attribute_set_number",
+        "clingo_ast_attribute_get_symbol",
+        "clingo_ast_attribute_set_symbol",
+        "clingo_ast_attribute_get_location",
+        "clingo_ast_attribute_set_location",
+        "clingo_ast_attribute_get_string",
+        "clingo_ast_attribute_set_string",
+        "clingo_ast_attribute_get_ast",
+        "clingo_ast_attribute_set_ast",
+        "clingo_ast_attribute_get_optional_ast",
+        "clingo_ast_attribute_set_optional_ast",
+        "clingo_ast_attribute_get_string_at",
+        "clingo_ast_attribute_set_string_at",
+        "clingo_ast_attribute_delete_string_at",
+        "clingo_ast_attribute_size_string_array",
+        "clingo_ast_attribute_insert_string_at",
+        "clingo_ast_attribute_get_ast_at",
+        "clingo_ast_attribute_set_ast_at",
+        "clingo_ast_attribute_delete_ast_at",
+        "clingo_ast_attribute_size_ast_array",
+        "clingo_ast_attribute_insert_ast_at",
+        "clingo_ast_parse_string",
+        "clingo_ast_parse_files",
+        "clingo_ast_unpool"
+      ],
+      "purpose": "Support the ast capability; buffer/count/lifetime calls stay internal."
+    },
+    "program_builder": {
+      "operations": [
+        "clingo_program_builder_init",
+        "clingo_program_builder_begin",
+        "clingo_program_builder_end",
+        "clingo_program_builder_add"
+      ],
+      "purpose": "Support the program builder capability; buffer/count/lifetime calls stay internal."
+    },
+    "options": {
+      "operations": [
+        "clingo_options_add",
+        "clingo_options_add_flag"
+      ],
+      "purpose": "Support the options capability; buffer/count/lifetime calls stay internal."
+    },
+    "script": {
+      "operations": [
+        "clingo_script_version"
+      ],
+      "purpose": "Support the script capability; buffer/count/lifetime calls stay internal."
+    },
+    "diagnostic_names": {
+      "operations": [
+        "clingo_error_string",
+        "clingo_warning_string"
+      ],
+      "purpose": "Convert known diagnostic enums to upstream names for application logging."
+    },
+    "symbol_storage_and_parsing": {
+      "operations": [
+        "clingo_add_string",
+        "clingo_parse_term"
+      ],
+      "purpose": "Internal symbol interning/parsing; output pointers remain private."
+    },
+    "live_model_clauses": {
+      "operations": [
+        "clingo_solve_control_symbolic_atoms",
+        "clingo_solve_control_add_clause"
+      ],
+      "purpose": "Support scoped live model inspection and clause injection."
+    },
+    "specialized_embedding": {
+      "operations": [
+        "clingo_main",
+        "clingo_register_script"
+      ],
+      "purpose": "Native application and global language hooks outside notebook workflows."
+    }
+  },
+  "excluded": {
+    "clingo_error_code": "Thread-local diagnostic storage is converted directly to Clingo.Error; no public error polling.",
+    "clingo_error_message": "Errors are copied into exceptions at the failing native call.",
+    "clingo_set_error": "Elixir callbacks raise exceptions; users cannot mutate native thread-local diagnostics.",
+    "clingo_version": "Clingo.version/0 uses the pinned version validated by the native loader.",
+    "clingo_control_clasp_facade": "Experimental ClaspFacade C++ pointer; upstream explicitly excludes it from the stable API. No safe Elixir capability is provided by exporting this opaque implementation pointer."
+  },
+  "native_only": [
+    "clingo_add_string",
+    "clingo_ast_attribute_delete_ast_at",
+    "clingo_ast_attribute_delete_string_at",
+    "clingo_ast_attribute_insert_ast_at",
+    "clingo_ast_attribute_insert_string_at",
+    "clingo_ast_attribute_set_ast",
+    "clingo_ast_attribute_set_ast_at",
+    "clingo_ast_attribute_set_location",
+    "clingo_ast_attribute_set_number",
+    "clingo_ast_attribute_set_optional_ast",
+    "clingo_ast_attribute_set_string",
+    "clingo_ast_attribute_set_string_at",
+    "clingo_ast_attribute_set_symbol",
+    "clingo_ast_build",
+    "clingo_ast_copy",
+    "clingo_ast_to_string_size",
+    "clingo_configuration_value_get_size",
+    "clingo_error_string",
+    "clingo_model_cost",
+    "clingo_model_cost_size",
+    "clingo_model_number",
+    "clingo_model_optimality_proven",
+    "clingo_model_symbols_size",
+    "clingo_model_type",
+    "clingo_parse_term",
+    "clingo_solve_handle_cancel",
+    "clingo_solve_handle_core",
+    "clingo_solve_handle_get",
+    "clingo_solve_handle_last",
+    "clingo_solve_handle_wait",
+    "clingo_symbol_create_id",
+    "clingo_symbol_create_string",
+    "clingo_symbol_hash",
+    "clingo_symbol_is_negative",
+    "clingo_symbol_is_positive",
+    "clingo_symbol_name",
+    "clingo_symbol_number",
+    "clingo_symbol_string",
+    "clingo_symbol_to_string_size",
+    "clingo_symbol_type",
+    "clingo_symbolic_atoms_signatures_size",
+    "clingo_theory_atoms_atom_to_string_size",
+    "clingo_theory_atoms_element_to_string_size",
+    "clingo_theory_atoms_term_to_string_size",
+    "clingo_warning_string"
+  ]
+}

@@ -1,0 +1,233 @@
+# Observers, propagators and search agents
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Observe grounding, trace assignments and distinguish passive checks from an actual constraint propagator. Develop solver-side and Sudoku agents as exercises.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Observe grounding and search without changing answers](#observe-grounding-and-search-without-changing-answers)
+- [Observe search and add constraints on demand](#observe-search-and-add-constraints-on-demand)
+- [Start a solver-side agent](#start-a-solver-side-agent)
+- [Design a Sudoku search agent](#design-a-sudoku-search-agent)
+
+## Observe grounding and search without changing answers
+
+### What you will learn
+
+Use real callbacks, distinguish snapshots from views, and recognize unfinished extensions.
+
+### Observe a grounded choice rule
+
+The observer sees ground rules. Its callback sends copied integers and a Boolean to the notebook process; those values remain valid after callback return. This observer records information and does not replace the solver. Compare these events with the [native ASPIF export](../elixir/04-inspection-and-export.livemd).
+
+```elixir
+parent = self()
+tag = make_ref()
+
+result =
+  Clingo.with_control([models: :all], fn control ->
+    Clingo.Control.register_observer!(control, %{
+      rule: fn choice, head, body ->
+        send(parent, {tag, choice, head, body})
+        :ok
+      end
+    })
+
+    Clingo.Control.add!(control, "{notice}.")
+    Clingo.Control.ground!(control)
+    Clingo.Control.solve!(control)
+  end)
+
+2 = length(result.models)
+
+receive do
+  {^tag, true, [_], []} -> :ok
+after
+  5_000 -> raise "Expected the observed choice rule"
+end
+
+Course.display(result)
+```
+
+### Inspect complete assignments without claiming propagation
+
+The check callback runs on total assignments. It reads a decision level through a scoped view, checks the copied integer, and returns. This deliberately passive propagator leaves both choices available; a real constraint propagator must also detect conflicts or propagate consequences and handle undo. The control closes on exceptions too. Native views expire when the hook returns; retain only copied values, and never wait synchronously for an ordinary call on the same control from a hook.
+
+```elixir
+result =
+  Clingo.with_control([models: :all], fn control ->
+    Clingo.Control.register_propagator!(control, %{
+      init: fn init -> Clingo.View.check_mode!(init, :clingo_propagator_check_mode_total) end,
+      check: fn view ->
+        level = Clingo.View.decision_level(Clingo.View.assignment(view))
+        true = is_integer(level)
+        :ok
+      end
+    })
+
+    Clingo.Control.add!(control, "{notice}.")
+    Clingo.Control.ground!(control)
+    Clingo.Control.solve!(control)
+  end)
+
+2 = length(result.models)
+Course.display(result)
+```
+
+### Try it yourself
+
+Rename notice to event in both passive callback examples. Should observing or checking change the number of answers?
+
+<details>
+<summary>Hint and expected result</summary>
+
+Both still enumerate two models. These callbacks inspect and report; they do not add clauses or propagate consequences. Scope views must not escape the callback.
+
+</details>
+
+## Observe search and add constraints on demand
+
+Exercise files: [example.lp](../assets/propagators/example.lp) · [latin.lp](../assets/propagators/latin.lp) · [one.lp](../assets/propagators/one.lp) · [two.lp](../assets/propagators/two.lp).
+
+```elixir
+workdir =
+  Course.workspace(Path.expand("../assets/propagators", __DIR__))
+```
+
+Start with symbolic-atom inspection, then follow assignment changes through a propagator. A symbolic atom has a program literal; initialization can map that literal to a solver literal. Several program literals may share a solver literal, so preserve that distinction when displaying assignments.
+
+Extend the skeleton to trace propagation, undo and consistency checks, then experiment with a decision policy. The reference interactive tool is reference-only; the native wrapper supplies the corresponding extension points.
+
+```elixir
+Course.read(workdir, "example.lp") |> IO.puts()
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "example.lp")], models: :all)
+|> Course.display()
+```
+
+### Map the initial assignment
+
+Display each symbolic atom’s fact/external flags, its program literal and its mapped solver literal. Do not assume a one-to-one mapping at every boundary. Group atoms that share a solver literal when presenting the initial trail.
+
+### Trace search changes
+
+Report the decision level and newly assigned literals during propagation, record undo events when backtracking, and inspect candidates during checks. A conflict can return search to an earlier level immediately after a decision.
+
+### Experiment with decisions
+
+Choose an unassigned solver literal in the decision callback or return the supplied fallback. Implement any Livebook interaction without blocking a callback on another ordinary call in the same session.
+
+```elixir
+Course.read(workdir, "one.lp") |> IO.puts()
+```
+
+```elixir
+Course.read(workdir, "two.lp") |> IO.puts()
+```
+
+### Specialize the trace to Latin squares
+
+Render true `latin/3` atoms as a grid at each callback. A size-3 Latin square has 12 completions; fixing the top-left value to 1 leaves four. The supplied `latin.lp` includes that restriction. Build a trace from the live callbacks.
+
+```elixir
+Course.read(workdir, "latin.lp") |> IO.puts()
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "latin.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+items = ["latin(1,1,1)", "latin(2,2,2)", "latin(2,3,1)", "latin(3,2,1)", "latin(3,3,3)"]
+
+grid =
+  Map.new(items, fn item ->
+    [x, y, n] = Regex.run(~r/latin\((\d+),(\d+),(\d+)\)/, item, capture: :all_but_first)
+    {{String.to_integer(x), String.to_integer(y)}, n}
+  end)
+
+for x <- 1..3 do
+  Enum.map_join(1..3, " ", &Map.get(grid, {x, &1}, ".")) |> IO.puts()
+end
+```
+
+### Generate nogoods when needed
+
+Instead of grounding every column restriction, detect duplicate values in a column and add the nogood excluding that combination. Compare checking only complete candidates, detecting conflicts during propagation, and propagating a forced exclusion before a conflict occurs. Always handle undo correctly.
+
+### Compare three checking policies
+
+First add a column-duplicate nogood only when checking a candidate. Then detect the same conflict during propagation. Finally, when a value is already present in a column, add the nogood that can exclude an unassigned duplicate immediately. The policies should agree on complete solution sets.
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Start a solver-side agent
+
+Exercise files: [example.lp](../assets/search-agent/example.lp).
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/search-agent", __DIR__))
+```
+
+This exercise starts a custom search agent through propagator callbacks. The native Elixir skeleton registers initialization, decision and consistency hooks, then loads and solves the example program. It currently defers decisions to the solver and only reports a decision level.
+
+Add the required watches, deductions and decisions to implement an actual agent. Keep callback work bounded, respect callback-scoped views and use the wrapper’s propagator API. A completed solve of the skeleton is not evidence that the missing agent behavior exists.
+
+```elixir
+Course.read(workdir, "example.lp") |> IO.puts()
+```
+
+```elixir
+Clingo.with_control(fn control ->
+  # Original agent skeleton: fill in watches/decisions as the exercise asks.
+  propagator = %{
+    init: fn _init -> :ok end,
+    decide: fn _thread, _assignment, fallback -> fallback end,
+    check: fn propagation ->
+      assignment = Clingo.View.assignment(propagation)
+      IO.inspect(Clingo.View.decision_level(assignment), label: "decision level")
+      :ok
+    end
+  }
+
+  Control.register_propagator!(control, propagator)
+  Control.load!(control, Path.join(workdir, "example.lp"))
+  Control.ground!(control)
+  Control.solve!(control)
+end)
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Design a Sudoku search agent
+
+Specialize a search agent for Sudoku. Use the given board to choose watches and interpret assignment changes, then implement the deductions and decision policy required by your design. This page is a project brief rather than an executable solution; start from the neighbouring agent skeleton and the wrapper’s callback examples.

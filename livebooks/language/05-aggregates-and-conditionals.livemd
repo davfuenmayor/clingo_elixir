@@ -1,0 +1,808 @@
+# Aggregates and conditional literals
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Choose tuple identities deliberately, compare counts and weighted sums, and expand conditional literals over their domains.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Count tuples and express all conditions](#count-tuples-and-express-all-conditions)
+- [Count distinct tuples](#count-distinct-tuples)
+- [Sum weighted tuple sets](#sum-weighted-tuple-sets)
+- [Expand conditional literals](#expand-conditional-literals)
+- [Apply aggregates to course selection](#apply-aggregates-to-course-selection)
+
+## Count tuples and express all conditions
+
+### What you will learn
+
+Understand aggregate identity and conditional literal expansion.
+
+### Choose the aggregate tuple deliberately
+
+An aggregate is a set of tuples. Both parcels weigh two, but the one-field tuple contains only the value 2 once. Adding the parcel identifier keeps two distinct tuples, giving a total weight of four.
+
+```elixir
+result =
+  Clingo.solve!(
+    ~S"""
+    weight(letter,2). weight(packet,2).
+    distinct_weights(Sum) :- Sum = #sum { Weight : weight(Parcel,Weight) }.
+    shipment_weight(Sum) :- Sum = #sum { Weight,Parcel : weight(Parcel,Weight) }.
+    parcel_count(Count) :- Count = #count { Parcel : weight(Parcel,Weight) }.
+    #show distinct_weights/1. #show shipment_weight/1. #show parcel_count/1.
+    """,
+    models: :all
+  )
+
+[%{shown: ["distinct_weights(2)", "parcel_count(2)", "shipment_weight(4)"]}] = result.models
+Course.display(result)
+```
+
+### Require every member of a domain
+
+The conditional body expands ok(Item) for every required(Item). Only red is ok, so complete has no support while blue is required. Hiding the input facts leaves a satisfiable model with empty shown output.
+
+```elixir
+result =
+  Clingo.solve!(
+    ~S"""
+    required(red;blue). ok(red).
+    complete :- ok(Item) : required(Item).
+    #show complete/0.
+    """,
+    models: :all
+  )
+
+[%{shown: []}] = result.models
+:satisfiable = result.status
+Course.display(result)
+```
+
+### Try it yourself
+
+Add ok(blue). to the conditional example. Then remove both required facts and compare.
+
+<details>
+<summary>Hint and expected result</summary>
+
+In both cases complete is derived. With an empty required domain, the conditional body has no instances to falsify it; this is vacuous truth.
+
+</details>
+
+## Count distinct tuples
+
+Predict the tuple set of each `#count` aggregate before evaluating its comparison. Identical tuples count once even if several substitutions produce them. Tuple components and variable scope therefore matter.
+
+The programs below are independent variations. Predict each answer set before running the cell. Edit one program in the list and compare its row again; answer-set order has no meaning.
+
+```elixir
+programs = [
+  ~S"""
+  a(1,1). a(1,2). a(2,1). a(2,2). a(2,3).
+  b(1,1).                 b(2,2).         b(3,3).
+  c(S) :- S = #count{ Item,Other : a(Item,Other) }.
+  d(S) :- S = #count{   Item : a(Item,Other) }.
+  e(S) :- S = #count{   Other : a(Item,Other) }.
+  #show c/1. #show d/1. #show e/1.
+  """,
+  ~S"""
+  a(1,1). a(1,2).         a(2,2). a(2,3).
+  b(1,1).                                 b(3,3).
+  c(S) :- S = #count{ Item,Other : a(Item,Other) }.
+  d(S) :- S = #count{   Item : a(Item,Other) }.
+  e(S) :- S = #count{   Other : a(Item,Other) }.
+  #show c/1. #show d/1. #show e/1.
+  """,
+  ~S"""
+  a(1,1). a(1,2). a(2,1). a(2,2). a(2,3).
+  b(1,1).                 b(2,2).         b(3,3).
+  c(S) :- S = #count{   Item,Other : a(Item,Other);      Item,Other : b(Item,Other) }.
+  d(S) :- S = #count{   Item,Other : a(Item,Other);      Third,W : b(Third,W) }.
+  e(S) :- S = #count{ Item,Other,1 : a(Item,Other);    Item,Other,2 : b(Item,Other) }.
+  f(S) :- S = #count{   Item,Other : a(Item,Other);    Item,Other,2 : b(Item,Other) }.
+  #show c/1. #show d/1. #show e/1. #show f/1.
+  """,
+  ~S"""
+  a(1,1). a(1,2).         a(2,2). a(2,3).
+  b(1,1).                                 b(3,3).
+  c(S) :- S = #count{   Item,Other : a(Item,Other);      Item,Other : b(Item,Other) }.
+  d(S) :- S = #count{   Item,Other : a(Item,Other);      Third,W : b(Third,W) }.
+  e(S) :- S = #count{ Item,Other,1 : a(Item,Other);    Item,Other,2 : b(Item,Other) }.
+  f(S) :- S = #count{   Item,Other : a(Item,Other);    Item,Other,2 : b(Item,Other) }.
+  #show c/1. #show d/1. #show e/1. #show f/1.
+  """,
+  ~S"""
+  a(1,1). a(1,2). a(2,1). a(2,2). a(2,3).
+  b(1,1).                 b(2,2).         b(3,3).
+  c(1).           c(2).
+  d(Item,S) :- c(Item), S = #count{   Other : a(Item,Other);        Third : b(Item,Third) }.
+  e(Item,S) :- c(Item), S = #count{ Other,a : a(Item,Other);      Third,b : b(Item,Third) }.
+  #show d/2. #show e/2.
+  """,
+  ~S"""
+  a(1,1). a(1,2).         a(2,2). a(2,3).
+  b(1,1).                                 b(3,3).
+  c(1).             c(2).
+  d(Item,S) :- c(Item), S = #count{   Other : a(Item,Other);        Third : b(Item,Third) }.
+  e(Item,S) :- c(Item), S = #count{ Other,a : a(Item,Other);      Third,b : b(Item,Third) }.
+  #show d/2. #show e/2.
+  """,
+  ~S"""
+  n(1..2).
+  { a(Item) : n(Item) }.
+  :- 2 #count{ Item : a(Item) }.
+  #show a/1.
+  """,
+  ~S"""
+  n(1..3).
+  { a(Item) : n(Item) }.
+  :- 2 #count{ Item : a(Item) }.
+  #show a/1.
+  """,
+  ~S"""
+  n(1..2).
+  { a(Item,Other) : n(Item), n(Other) }.
+  :- 2 #count{ Item,Other : a(Item,Other) }.
+  #show a/2.
+  """,
+  ~S"""
+  n(1..2).
+  { a(Item,Other) : n(Item), n(Other) }.
+  :- 2 #count{ Item : a(Item,Other) }.
+  #show a/2.
+  """,
+  ~S"""
+  n(1..2).
+  { a(Item,Other) : n(Item), n(Other) }.
+  :- 2 #count{ Other : a(Item,Other) }.
+  #show a/2.
+  """,
+  ~S"""
+  n(1..2).
+  1 { a(Item,Other) : n(Item), n(Other) } 1.
+  1 { b(Item,Other) : n(Item), n(Other) } 1.
+  :- 2 #count{ Item,Other : a(Item,Other);   Third,W : b(Third,W) }.
+  #show a/2. #show b/2.
+  """,
+  ~S"""
+  n(1..2).
+  1 { a(Item,Other) : n(Item), n(Other) } 1.
+  1 { b(Item,Other) : n(Item), n(Other) } 1.
+  :- 2 #count{ Item,Other,a : a(Item,Other);   Third,W,b : b(Third,W) }.
+  #show a/2. #show b/2.
+  """,
+  ~S"""
+  n(1..2).
+  1 { a(Item,Other) : n(Item), n(Other) } 1.
+  1 { b(Item,Other) : n(Item), n(Other) } 1.
+  ok(Item) :- 2 #count{ Other : a(Item,Other);   Third : b(Item,Third) }, n(Item).
+  :- not ok(1), not ok(2).
+  #show a/2. #show b/2. #show ok/1.
+  """,
+  ~S"""
+  n(1..2).
+  1 { a(Item,Other) : n(Item), n(Other) } 1.
+  1 { b(Item,Other) : n(Item), n(Other) } 1.
+  ok(Item) :- 2 #count{ Other,first : a(Item,Other);   Third,second : b(Item,Third) }, n(Item).
+  :- not ok(1), not ok(2).
+  #show a/2. #show b/2. #show ok/1.
+  """
+]
+
+programs
+|> Enum.with_index(1)
+|> Enum.map(fn {program, index} ->
+  result = Clingo.solve!(program, models: :all)
+
+  %{
+    example: index,
+    program: program,
+    shown_sets: inspect(Enum.sort(Enum.map(result.models, & &1.shown))),
+    status: result.status,
+    exhausted: result.exhausted
+  }
+end)
+|> Kino.DataTable.new()
+```
+
+## Sum weighted tuple sets
+
+For `#sum`, the first tuple component is the contribution. Distinct aggregate tuples contribute separately, while identical tuples are merged. Check both the tuple set and the resulting total.
+
+The programs below are independent variations. Predict each answer set before running the cell. Edit one program in the list and compare its row again; answer-set order has no meaning.
+
+```elixir
+programs = [
+  ~S"""
+  a(1,1). a(1,2). a(2,1). a(2,2). a(2,3).
+  b(1,1).                 b(2,2).         b(3,3).
+  c(S) :- S = #sum{ 1,Item,Other : a(Item,Other) }.
+  d(S) :- S = #sum{   2,Item : a(Item,Other) }.
+  e(S) :- S = #sum{  -1,Other : a(Item,Other) }.
+  f(S) :- S = #sum{   Item,Other : a(Item,Other) }.
+  #show c/1. #show d/1. #show e/1. #show f/1.
+  """,
+  ~S"""
+  a(1,1). a(1,2).         a(2,2). a(2,3).
+  b(1,1).                                 b(3,3).
+  c(S) :- S = #sum{ 1,Item,Other : a(Item,Other) }.
+  d(S) :- S = #sum{   2,Item : a(Item,Other) }.
+  e(S) :- S = #sum{  -1,Other : a(Item,Other) }.
+  f(S) :- S = #sum{   Item,Other : a(Item,Other) }.
+  #show c/1. #show d/1. #show e/1. #show f/1.
+  """,
+  ~S"""
+  a(1,1). a(1,2). a(2,1). a(2,2). a(2,3).
+  b(1,1).                 b(2,2).         b(3,3).
+  c(S) :- S = #sum{ 1,Item,Other : a(Item,Other);   1,Third,W : b(Third,W) }.
+  d(S) :- S = #sum{ 1,Item,Other : a(Item,Other);   2,Item,Other : b(Item,Other) }.
+  #show c/1. #show d/1.
+  """,
+  ~S"""
+  a(1,1). a(1,2).         a(2,2). a(2,3).
+  b(1,1).                                 b(3,3).
+  c(S) :- S = #sum{ 1,Item,Other : a(Item,Other);   1,Third,W : b(Third,W) }.
+  d(S) :- S = #sum{ 1,Item,Other : a(Item,Other);   2,Item,Other : b(Item,Other) }.
+  #show c/1. #show d/1.
+  """,
+  ~S"""
+  a(1,1). a(1,2). a(2,1). a(2,2). a(2,3).
+  b(1,1).                 b(2,2).         b(3,3).
+  c(1).           c(2).
+  d(Item,S) :- c(Item), S = #sum{ 1,Other : a(Item,Other);     1,Third : b(Item,Third) }.
+  e(Item,S) :- c(Item), S = #sum{ 1,Other : a(Item,Other);     5,Other : b(Item,Other) }.
+  #show d/2. #show e/2.
+  """,
+  ~S"""
+  a(1,1). a(1,2).         a(2,2). a(2,3).
+  b(1,1).                                 b(3,3).
+  c(1).           c(2).
+  d(Item,S) :- c(Item), S = #sum{ 1,Other : a(Item,Other);     1,Third : b(Item,Third) }.
+  e(Item,S) :- c(Item), S = #sum{ 1,Other : a(Item,Other);     5,Other : b(Item,Other) }.
+  #show d/2. #show e/2.
+  """,
+  ~S"""
+  n(1..2).
+  { a(Item) : n(Item) }.
+  :- 2 #sum{ Item : a(Item) }.
+  #show a/1.
+  """,
+  ~S"""
+  n(1..2). n(0).
+  { a(Item) : n(Item) }.
+  :- 2 #sum{ Item : a(Item) }.
+  #show a/1.
+  """,
+  ~S"""
+  n(1..2).
+  { a(Item,Other) : n(Item), n(Other) }.
+  :- 2 #sum{ 1,Item,Other : a(Item,Other) }.
+  #show a/2.
+  """,
+  ~S"""
+  n(1..2).
+  { a(Item,Other) : n(Item), n(Other) }.
+  :- 2 #sum{ 1,Item : a(Item,Other) }.
+  #show a/2.
+  """,
+  ~S"""
+  n(1..2).
+  { a(Item,Other) : n(Item), n(Other) }.
+  :- 2 #sum{ 1,Other : a(Item,Other) }.
+  #show a/2.
+  """,
+  ~S"""
+  n(1..2).
+  1 { a(Item,Other) : n(Item), n(Other) } 1.
+  1 { b(Item,Other) : n(Item), n(Other) } 1.
+  :- 4 #sum{ 2,Item,Other : a(Item,Other);   2,Third,W : b(Third,W) }.
+  #show a/2. #show b/2.
+  """,
+  ~S"""
+  n(1..2).
+  1 { a(Item,Other) : n(Item), n(Other) } 1.
+  1 { b(Item,Other) : n(Item), n(Other) } 1.
+  :- 3 #sum{ 1,Item,Other : a(Item,Other);   2,Third,W : b(Third,W) }.
+  #show a/2. #show b/2.
+  """,
+  ~S"""
+  n(1..2).
+  1 { a(Item,Other) : n(Item), n(Other) } 1.
+  1 { b(Item,Other) : n(Item), n(Other) } 1.
+  ok(Item) :- 2 #sum{ 1,Other : a(Item,Other);   1,Third : b(Item,Third) }, n(Item).
+  :- not ok(1), not ok(2).
+  #show a/2. #show b/2. #show ok/1.
+  """,
+  ~S"""
+  n(1..2).
+  1 { a(Item,Other) : n(Item), n(Other) } 1.
+  1 { b(Item,Other) : n(Item), n(Other) } 1.
+  ok(Item) :- 2 #count{ 1,Other : a(Item,Other);   2,Third : b(Item,Third) }, n(Item).
+  :- not ok(1), not ok(2).
+  #show a/2. #show b/2. #show ok/1.
+  """
+]
+
+programs
+|> Enum.with_index(1)
+|> Enum.map(fn {program, index} ->
+  result = Clingo.solve!(program, models: :all)
+
+  %{
+    example: index,
+    program: program,
+    shown_sets: inspect(Enum.sort(Enum.map(result.models, & &1.shown))),
+    status: result.status,
+    exhausted: result.exhausted
+  }
+end)
+|> Kino.DataTable.new()
+```
+
+## Expand conditional literals
+
+The conditions after a colon determine which literal instances participate. Track local bindings separately from variables shared with the outer rule. Compare the expanded instances with the computed model.
+
+The programs below are independent variations. Predict each answer set before running the cell. Edit one program in the list and compare its row again; answer-set order has no meaning.
+
+```elixir
+programs = [
+  ~S"""
+  a(1..2).
+  b(1..2).
+  c :- a(Item) : b(Item).
+  #show c/0.
+  """,
+  ~S"""
+  a(1..3).
+  b(1..3).
+  c :- a(Item) : b(Item).
+  #show c/0.
+  """,
+  ~S"""
+  a(1).
+  b(1..2).
+  c :- a(Item) : b(Item).
+  #show c/0.
+  """,
+  ~S"""
+  a(1..2).
+  b(1..3).
+  c :- a(Item) : b(Item).
+  #show c/0.
+  """,
+  ~S"""
+  b(1).
+  c :- a(Item) : b(Item).
+  #show c/0.
+  """,
+  ~S"""
+  b(1..2).
+  c :- a(Item) : b(Item).
+  #show c/0.
+  """,
+  ~S"""
+  a(1..2).
+  b(1..2).
+  c(1..2).
+  d :- a(Item) : b(Item), c(Item).
+  #show d/0.
+  """,
+  ~S"""
+  a(1..2).
+  b(1..2).
+  c(1..3).
+  d :- a(Item) : b(Item), c(Item).
+  #show d/0.
+  """,
+  ~S"""
+  a(1..2).
+  b(1..3).
+  c(1..3).
+  d :- a(Item) : b(Item), c(Item).
+  #show d/0.
+  """,
+  ~S"""
+  a(1..2).
+  b(1..2).
+  c(1..2).
+  d(Item) :- a(Item) : b(Item);   c(Item).
+  #show d/1.
+  """,
+  ~S"""
+  a(1..2).
+  b(1..2).
+  c(1..3).
+  d(Item) :- a(Item) : b(Item);   c(Item).
+  #show d/1.
+  """,
+  ~S"""
+  a(1..2).
+  b(1..3).
+  c(1..3).
+  d(Item) :- a(Item) : b(Item);   c(Item).
+  #show d/1.
+  """,
+  ~S"""
+  a(1..2).
+  b(1..2,1..2).
+  c(1..2).
+  d(Item) :- a(Other) : b(Item,Other);   c(Item).
+  #show d/1.
+  """,
+  ~S"""
+  a(1..2).
+  b(1..2,1..2). b(2,3).
+  c(1..2).
+  d(Item) :- a(Other) : b(Item,Other);   c(Item).
+  #show d/1.
+  """,
+  ~S"""
+  a(1..2).
+  b(1..2,1..2). b(2,3).
+  c(1..2). c(3).
+  d(Item) :- a(Other) : b(Item,Other);  c(Item).
+  #show d/1.
+  """
+]
+
+programs
+|> Enum.with_index(1)
+|> Enum.map(fn {program, index} ->
+  result = Clingo.solve!(program, models: :all)
+
+  %{
+    example: index,
+    program: program,
+    shown_sets: inspect(Enum.sort(Enum.map(result.models, & &1.shown))),
+    status: result.status,
+    exhausted: result.exhausted
+  }
+end)
+|> Kino.DataTable.new()
+```
+
+## Apply aggregates to course selection
+
+Extend the timetable example from [domains and grounding](04-domains-and-grounding.livemd#develop-a-course-selection-model). This section creates its own input files so you can run it independently. Contrast counts of courses, lecture tuples and conflicting pairs; then deliberately test aggregate safety.
+
+```elixir
+workdir = Course.workspace()
+```
+
+```elixir
+Course.write(workdir, "facts.lp", ~S"""
+credits( asp,9).
+credits(  ml,9).
+credits(ling,6).
+credits(phil,9).
+lecture(asp,thu,3). lecture(asp,fri,3).
+lecture(ml,wed,2). lecture(ml,thu,3). lecture(ml,fri,4).
+lecture(ling,tue,1). lecture(ling,thu,2).
+lecture(phil,tue,3). lecture(phil,wed,4).
+""")
+```
+
+```elixir
+Course.write(workdir, "enroll.lp", ~S"""
+enroll(asp). enroll(ml). enroll(ling).
+""")
+```
+
+```elixir
+Course.write(workdir, "basic_1.lp", ~S"""
+course(C) :- lecture(C,D,P).
+   day(D) :- lecture(C,D,P).
+period(P) :- lecture(C,D,P).
+slot(D,P) :- lecture(C,D,P).
+""")
+```
+
+### Count selected atoms
+
+Cardinality expressions constrain how many conditional literals hold. The threshold can come from a constant or an input fact. Counting enrolled courses differs from counting individual lecture slots: repeated lectures must not accidentally multiply a course count.
+
+```elixir
+~S"""
+many_courses :- enroll(C1), enroll(C2), C1 != C2.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "enroll.lp")])
+|> Course.display()
+```
+
+```elixir
+~S"""
+many_courses :- enroll(C1), enroll(C2), C1 != C2,
+                enroll(C3), C1 != C3, C2 != C3.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "enroll.lp")])
+|> Course.display()
+```
+
+> **Note.** This example deliberately contains unsafe variables or an unfinished ellipsis. The cell displays the expected native diagnostic instead of stopping notebook evaluation.
+
+```elixir
+Course.expect_error(fn ->
+  Clingo.solve!(
+    ~S"""
+    many_courses :- enroll(C1), enroll(C2), C1 != C2, ...
+    """,
+    files: [Path.join(workdir, "enroll.lp")],
+    arguments: ["-c", "m=2"]
+  )
+end)
+```
+
+```elixir
+~S"""
+many_courses :- m { enroll(C) }.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "enroll.lp")], arguments: ["-c", "m=2"])
+|> Course.display()
+```
+
+```elixir
+~S"""
+many(m).
+many_courses :- many(M), M { enroll(C) }.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "enroll.lp")], arguments: ["-c", "m=2"])
+|> Course.display()
+```
+
+> **Note.** Use basic_1.lp, the domain file created earlier in this lesson.
+
+```elixir
+~S"""
+many(m).
+enroll(C,D) :- enroll(C), lecture(C,D,P).
+many_courses(D) :- day(D), many(M), M { enroll(C,D) }.
+#show many_courses/1.
+"""
+|> Clingo.solve!(
+  files: [
+    Path.join(workdir, "facts.lp"),
+    Path.join(workdir, "enroll.lp"),
+    Path.join(workdir, "basic_1.lp")
+  ],
+  arguments: ["-c", "m=2"]
+)
+|> Course.display()
+```
+
+> **Note.** Use basic_1.lp, the domain file created earlier in this lesson.
+
+```elixir
+~S"""
+many(m).
+many_courses(D) :- day(D), many(M), M { enroll(C) : lecture(C,D,P) }.
+#show many_courses/1.
+"""
+|> Clingo.solve!(
+  files: [
+    Path.join(workdir, "facts.lp"),
+    Path.join(workdir, "enroll.lp"),
+    Path.join(workdir, "basic_1.lp")
+  ],
+  arguments: ["-c", "m=2"]
+)
+|> Course.display()
+```
+
+```elixir
+~S"""
+#show enroll/1.
+#show lecture/3.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "facts.lp"), Path.join(workdir, "enroll.lp")])
+|> Course.display()
+```
+
+#### Choose the counted object
+
+The literal before a colon determines what is counted; the condition determines which instances participate. Local variables range inside the aggregate element. Global variables connect the aggregate to the rest of its rule.
+
+#### Compare cardinalities
+
+Lower and upper bounds can also be written with comparison operators. Identify the same counted set in each spelling before deciding whether the conditions are equivalent.
+
+> **Note.** Use basic_1.lp, the domain file created earlier in this lesson.
+
+```elixir
+~S"""
+many(m).
+many_courses(D) :- day(D), many(M), M { enroll(C) : lecture(C,D,P) }.
+some_courses(D) :- day(D), 1 { enroll(C) : lecture(C,D,P) } 2.
+#show many_courses/1.
+#show some_courses/1.
+"""
+|> Clingo.solve!(
+  files: [
+    Path.join(workdir, "facts.lp"),
+    Path.join(workdir, "enroll.lp"),
+    Path.join(workdir, "basic_1.lp")
+  ],
+  arguments: ["-c", "m=2"]
+)
+|> Course.display()
+```
+
+#### Count lectures instead of courses
+
+Put the lecture literal, including its slot, before the colon when separate lectures must contribute separately. Counting only the enrolled course would merge its repeated appearances.
+
+> **Note.** Use basic_1.lp, the domain file created earlier in this lesson.
+
+```elixir
+~S"""
+many(m).
+many_lectures(D) :- day(D), many(M), M { lecture(C,D,P) : enroll(C) }.
+lecture(ml,wed,1).
+#show many_lectures/1.
+"""
+|> Clingo.solve!(
+  files: [
+    Path.join(workdir, "facts.lp"),
+    Path.join(workdir, "enroll.lp"),
+    Path.join(workdir, "basic_1.lp")
+  ],
+  arguments: ["-c", "m=2"]
+)
+|> Course.display()
+```
+
+#### Keep variable scopes distinct
+
+Renaming a variable local to an aggregate element is harmless when done consistently in that element. Renaming a shared outer variable only inside the aggregate changes the condition. Compare all three rules rather than assuming they agree.
+
+```elixir
+~S"""
+day(mon;tue;wed;thu;fri).
+many(m).
+enroll(asp). lecture(asp,mon,1).
+enroll(ml).  lecture(ml,mon,1). lecture(ml,mon,4).
+extreme(D) :- day(D), many(M), M { enroll(C) : lecture(C,D,P), P <= 1 ;
+                                   enroll(C) : lecture(C,D,P), P >= 4 }.
+#show extreme/1.
+"""
+|> Clingo.solve!(arguments: ["-c", "m=2"])
+|> Course.display()
+```
+
+#### Check aggregate safety
+
+Global variables need suitable outer bindings; variables local to an aggregate element need suitable bindings inside that element. The next program deliberately violates these requirements.
+
+> **Note.** This example deliberately contains unsafe variables or an unfinished ellipsis. The cell displays the expected native diagnostic instead of stopping notebook evaluation.
+
+```elixir
+Course.expect_error(fn ->
+  Clingo.solve!(~S"""
+  extreme(D) :- day(D), many(M), M { enroll(C) : lecture(C,D,P), P <= 1 ;
+                                     enroll(C) : lecture(C,D,P), P >= 4 }.
+  extreme(D) :- day(D), many(M), M { enroll(C) : lecture(C,D,P), P <= 1 ;
+                                     not enroll(C) : lecture(C,D,P), P >= 4 }.
+  extreme(D) :- not day(D), many(M), M { enroll(C) : lecture(C,D,P), P <= 1 ;
+                                         enroll(C) : lecture(C,D,P), P >= 4 }.
+  extreme(D) :- day(D), many(M), M { enroll(C) : lecture(C,D,P), P <= 1 ;
+                                     enroll(C) : not lecture(C,D,P), P >= 4 }.
+  """)
+end)
+```
+
+### Count tuples
+
+`#count` counts distinct tuples satisfying its conditions. Include enough tuple components to distinguish the objects you intend to count. Omitting a component can merge two contributions; including a fixed global value does not distinguish additional tuples.
+
+> **Note.** Use basic_1.lp, the domain file created earlier in this lesson.
+
+```elixir
+~S"""
+many(m).
+many_courses(D) :- day(D), many(M), M { enroll(C) : lecture(C,D,P) }.
+#show many_courses/1.
+"""
+|> Clingo.solve!(
+  files: [
+    Path.join(workdir, "facts.lp"),
+    Path.join(workdir, "enroll.lp"),
+    Path.join(workdir, "basic_1.lp")
+  ],
+  arguments: ["-c", "m=2"]
+)
+|> Course.display()
+```
+
+#### Distinguish lecture tuples
+
+The following aggregates count different tuple representations. A day bound outside the aggregate is fixed for that instance; a lecture’s course and period distinguish the contributions.
+
+> **Note.** Use basic_1.lp, the domain file created earlier in this lesson.
+
+```elixir
+~S"""
+many(m).
+many_lectures(D) :- day(D), many(M), M { lecture(C,D,P) : enroll(C) }.
+lecture(ml,wed,1).
+#show many_lectures/1.
+"""
+|> Clingo.solve!(
+  files: [
+    Path.join(workdir, "facts.lp"),
+    Path.join(workdir, "enroll.lp"),
+    Path.join(workdir, "basic_1.lp")
+  ],
+  arguments: ["-c", "m=2"]
+)
+|> Course.display()
+```
+
+#### Aggregate overlapping lectures
+
+The next example counts lecture combinations at a slot. Inspect which tuple components identify a distinct conflict, and avoid counting one symmetric pair twice.
+
+> **Note.** Use basic_1.lp, the domain file created earlier in this lesson.
+
+```elixir
+~S"""
+many(m).
+conflict(D,P) :- enroll(C1), lecture(C1,D,P),
+                 enroll(C2), lecture(C2,D,P), C1 < C2.
+many_conflicts( courses) :- many(M), M #count {     C : conflict(D,P), lecture(C,D,P) }.
+many_conflicts(    days) :- many(M), M #count {     D : conflict(D,P), lecture(C,D,P) }.
+many_conflicts(   slots) :- many(M), M #count {   D,P : conflict(D,P), lecture(C,D,P) }.
+many_conflicts(lectures) :- many(M), M #count { C,D,P : conflict(D,P), lecture(C,D,P) }.
+#show many_conflicts/1.
+"""
+|> Clingo.solve!(
+  files: [
+    Path.join(workdir, "facts.lp"),
+    Path.join(workdir, "enroll.lp"),
+    Path.join(workdir, "basic_1.lp")
+  ],
+  arguments: ["-c", "m=2"]
+)
+|> Course.display()
+```
+
+#### Apply the same scope rules
+
+The safety example now uses count aggregates. Its error is expected. Compare these scope rules with the sum and conditional examples above; [optimization and projection](06-optimization-and-projection.livemd) uses the resulting distinctions when ranking answers.
+
+> **Note.** This example deliberately contains unsafe variables or an unfinished ellipsis. The cell displays the expected native diagnostic instead of stopping notebook evaluation.
+
+```elixir
+Course.expect_error(fn ->
+  Clingo.solve!(~S"""
+  extreme(D) :- day(D), many(M), M #count { C : enroll(C), lecture(C,D,P), P <= 1 ;
+                                            C : enroll(C), lecture(C,D,P), P >= 4 }.
+  extreme(D) :- day(D), many(M), M #count { C : enroll(C), lecture(C,D,P), P <= 1 ;
+                                            C : not enroll(C), lecture(C,D,P), P >= 4 }.
+  extreme(D) :- not day(D), many(M), M #count { C : enroll(C), lecture(C,D,P), P <= 1 ;
+                                                C : enroll(C), lecture(C,D,P), P >= 4 }.
+  extreme(D) :- day(D), many(M), M #count { C : enroll(C), lecture(C,D,P), P <= 1 ;
+                                            C : enroll(C), not lecture(C,D,P), P >= 4 }.
+  """)
+end)
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```

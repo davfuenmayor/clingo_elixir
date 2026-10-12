@@ -1,0 +1,144 @@
+# Theory constraints and solver evaluation
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Separate theory syntax from semantics, design difference-logic and integer propagators, and compare equivalent scheduling formulations.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Inspect theory syntax and choose the next extension](#inspect-theory-syntax-and-choose-the-next-extension)
+- [Extend solving with theory constraints](#extend-solving-with-theory-constraints)
+- [Build a restricted integer propagator](#build-a-restricted-integer-propagator)
+- [Evaluate theory-based scheduling](#evaluate-theory-based-scheduling)
+
+## Inspect theory syntax and choose the next extension
+
+### What you will learn
+
+Separate native theory syntax from an installed theory-solving implementation.
+
+### Parsing a theory atom does not enforce arithmetic
+
+The declaration lets clingo parse this theory atom. Inspection copies its term and elements, but this notebook does not install an arithmetic propagator. Therefore the shown model demonstrates parsing and grounding only; it is not evidence that a difference-logic constraint has been checked.
+
+```elixir
+atoms =
+  Clingo.with_control(fn control ->
+    Clingo.Control.add!(control, ~S"""
+    #theory example {
+      term { + : 1, binary, left };
+      &sample/0 : term, any
+    }.
+    &sample { 2+3 }.
+    """)
+
+    Clingo.Control.ground!(control)
+    atoms = Clingo.Inspection.theory_atoms!(control)
+    1 = length(atoms)
+    atoms
+  end)
+
+[%{term: "sample", elements: [_]}] = atoms
+atoms
+```
+
+### Make the next project explicit
+
+The theory projects below describe checking constraints on complete candidates, reporting conflicts, then propagating earlier. The Sudoku agent has the same incremental-checking challenge. Those projects remain exercises. Start with the passive callback in the [observer notebook](01-observers-and-propagators.livemd), specify the semantic invariant, then test a tiny instance before adding solver-state mutation. Do not call an external CLI from a notebook.
+
+```elixir
+%{
+  next_steps: [
+    "Specify which complete assignments violate the constraint",
+    "Implement conflict reporting with callback-scoped views",
+    "Handle undo and verify agreement with an ordinary ASP encoding"
+  ],
+  status: :exercise
+}
+```
+
+### Try it yourself
+
+Write down a tiny arithmetic invariant that the declared sample theory does not check. Which extra component would enforce it?
+
+<details>
+<summary>Hint and expected result</summary>
+
+Parsing 2+3 does not install addition semantics or a constraint checker. A theory-aware propagator or an ordinary ASP encoding must define and enforce the intended invariant. Do not describe inspection as arithmetic solving.
+
+</details>
+
+## Extend solving with theory constraints
+
+Theory atoms supply syntax; a propagator must enforce their semantics. For difference logic, map each active constraint to an edge in a weighted graph. Use Bellman–Ford to detect a negative cycle and add a nogood excluding the responsible combination of solver literals.
+
+Begin with `check` on complete candidates, then compare it with checking partial assignments in `propagate`. Preserve the same complete solution sets, handle undo, and keep callback-scoped views inside callbacks. The [observer and propagator notebook](01-observers-and-propagators.livemd) supplies the native starting point.
+
+## Build a restricted integer propagator
+
+Exercise inputs: [fs.lp](../assets/integer-constraints/fs.lp) · [money.lp](../assets/integer-constraints/money.lp) · [move.lp](../assets/integer-constraints/move.lp).
+
+Implement only the integer-sum theory fragment used by the supplied examples. Use the difference-logic callback design above to connect theory atoms and solver literals to your consistency checker, then extend it to integer linear relations. Do not silently treat a continuous solution as an integer one.
+
+The project excludes unrelated theory constructs and theory atoms in bodies. Preserve each example’s projection convention: multiple satisfying integer assignments must not accidentally multiply the intended shown Boolean models. Implement this as a native propagator and compare its projected models with an ordinary ASP formulation.
+
+## Evaluate theory-based scheduling
+
+Exercise files: [instance.lp](../assets/scheduling/instance.lp).
+
+```elixir
+workdir =
+  Course.workspace(Path.expand("../assets/scheduling", __DIR__))
+```
+
+Implement the same job-shop problem in ordinary ASP, difference logic and integer constraints. Check operation order, machine exclusivity and the objective before comparing running times.
+
+Measure first feasible solutions separately from proven optima. Begin with the retained small instance and vary its durations or resource limits before scaling up. The ordinary clingo encoding runs through the NIF. Difference-logic and integer semantics remain implementation exercises. Do not compare an unfinished template’s timing with that of a complete encoding.
+
+### Run the ordinary ASP formulation
+
+The inline starter keeps `#show perm/3.`; implement its missing rules before measuring. Complete its constraints before interpreting the displayed permutations as valid schedules. `arguments: ["--opt-mode=ignore"]` can be used for a feasibility-only comparison.
+
+```elixir
+~S"""
+#show perm/3.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instance.lp")])
+|> Course.display()
+```
+
+### Compare difference logic
+
+The reference difference-logic formulation uses a start variable for each job/machine operation and a `bound` variable for makespan minimization. Implement its consistency checks with native propagator callbacks.
+
+### Compare integer constraints
+
+The reference integer-constraint formulation uses the same operation-start meaning and completion objective. Its semantics require an integer-aware propagator. A comparison must use equivalent feasibility and optimization settings.
+
+### Keep your work
+
+The following download snapshots the current chapter workspace. Save it before cleanup if you have edited an encoding or instance.
+
+```elixir
+Course.archive(workdir, "theory-solving-evaluation.zip")
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```

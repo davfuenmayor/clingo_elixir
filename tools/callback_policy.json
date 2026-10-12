@@ -1,0 +1,134 @@
+{
+  "struct clingo_propagator": {
+    "init": {
+      "arrays": [],
+      "userdata": 1
+    },
+    "propagate": {
+      "arrays": [
+        1
+      ],
+      "userdata": 3
+    },
+    "undo": {
+      "arrays": [
+        1
+      ],
+      "userdata": 3
+    },
+    "check": {
+      "arrays": [],
+      "userdata": 1
+    },
+    "decide": {
+      "arrays": [],
+      "userdata": 3,
+      "decision": 4
+    }
+  },
+  "struct clingo_ground_program_observer": {
+    "init_program": {
+      "arrays": [],
+      "userdata": 1
+    },
+    "begin_step": {
+      "arrays": [],
+      "userdata": 0
+    },
+    "end_step": {
+      "arrays": [],
+      "userdata": 0
+    },
+    "rule": {
+      "arrays": [
+        1,
+        3
+      ],
+      "userdata": 5
+    },
+    "weight_rule": {
+      "arrays": [
+        1,
+        4
+      ],
+      "userdata": 6
+    },
+    "minimize": {
+      "arrays": [
+        1
+      ],
+      "userdata": 3
+    },
+    "project": {
+      "arrays": [
+        0
+      ],
+      "userdata": 2
+    },
+    "output_atom": {
+      "arrays": [],
+      "userdata": 2
+    },
+    "output_term": {
+      "arrays": [
+        1
+      ],
+      "userdata": 3
+    },
+    "external": {
+      "arrays": [],
+      "userdata": 2
+    },
+    "assume": {
+      "arrays": [
+        0
+      ],
+      "userdata": 2
+    },
+    "heuristic": {
+      "arrays": [
+        4
+      ],
+      "userdata": 6
+    },
+    "acyc_edge": {
+      "arrays": [
+        2
+      ],
+      "userdata": 4
+    },
+    "theory_term_number": {
+      "arrays": [],
+      "userdata": 2
+    },
+    "theory_term_string": {
+      "arrays": [],
+      "userdata": 2
+    },
+    "theory_term_compound": {
+      "arrays": [
+        2
+      ],
+      "userdata": 4
+    },
+    "theory_element": {
+      "arrays": [
+        1,
+        3
+      ],
+      "userdata": 5
+    },
+    "theory_atom": {
+      "arrays": [
+        2
+      ],
+      "userdata": 4
+    },
+    "theory_atom_with_guard": {
+      "arrays": [
+        2
+      ],
+      "userdata": 6
+    }
+  }
+}

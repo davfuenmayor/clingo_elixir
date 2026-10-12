@@ -1,0 +1,131 @@
+# Inputs, symbols, results and streams
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Supply source text, files and grounding functions; choose complete results or lazy samples; use assumptions for one search.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Supply text, files and grounding functions](#supply-text-files-and-grounding-functions)
+- [Choose between complete results and lazy samples](#choose-between-complete-results-and-lazy-samples)
+
+## Supply text, files and grounding functions
+
+### What you will learn
+
+Keep ASP as the modeling language while Elixir supplies data.
+
+### Use copied symbols at the boundary
+
+A grounding function receives decoded symbols and returns symbols. Here Elixir doubles the numeric argument. It is called while grounding, not once per candidate model during search.
+
+```elixir
+result =
+  Clingo.solve!("value(@twice(6)). #show value/1.",
+    context: %{"twice" => fn [number] -> Clingo.Symbol.number(number.value * 2) end},
+    symbols: true
+  )
+
+[%{shown: ["value(12)"]}] = result.models
+symbol = Clingo.Symbol.parse!("value(12)")
+"value(12)" = Clingo.Symbol.format!(symbol)
+Course.display(result)
+```
+
+### Load a file without an empty program string
+
+The file example uses a temporary directory and cleans it up even if solving fails. Includes resolve relative to the input file. The first solve uses only files; the second adds a constraint as inline ASP.
+
+```elixir
+directory = Path.join(System.tmp_dir!(), "learning-input-#{System.unique_integer([:positive])}")
+File.mkdir_p!(directory)
+
+try do
+  File.write!(Path.join(directory, "items.lp"), "item(oak;pine).")
+  path = Path.join(directory, "select.lp")
+  File.write!(path, ~S|#include "items.lp". 1 { chosen(Item) : item(Item) } 1. #show chosen/1.|)
+  all = Clingo.solve!(files: [path], models: :all)
+  restricted = Clingo.solve!(":- chosen(oak).", files: [path], models: :all)
+  2 = length(all.models)
+  [%{shown: ["chosen(pine)"]}] = restricted.models
+  Course.display(restricted)
+after
+  File.rm_rf!(directory)
+end
+```
+
+### Try it yourself
+
+Change @twice(6) to @twice(9). Explain when the function runs and predict the shown atom.
+
+<details>
+<summary>Hint and expected result</summary>
+
+The copied numeric symbol has value 9; the function returns number(18), so the shown result is value(18). It runs during grounding, not during each model callback.
+
+</details>
+
+## Choose between complete results and lazy samples
+
+### What you will learn
+
+Read search status, stream model snapshots and apply temporary assumptions.
+
+### Distinguish a limit from exhausted search
+
+A one-model limit finds an answer but leaves alternatives unexplored. Complete enumeration returns eight models for three independent choices. A lazy stream can stop after two without keeping the other snapshots.
+
+```elixir
+program = "{flag(1..3)}."
+limited = Clingo.solve!(program, models: 1)
+:satisfiable = limited.status
+false = limited.exhausted
+complete = Clingo.solve!(program, models: :all)
+true = complete.exhausted
+8 = length(complete.models)
+sample = Clingo.models(program, models: :all) |> Enum.take(2)
+2 = length(sample)
+%{complete: length(complete.models), sample: Enum.map(sample, & &1.shown)}
+```
+
+### Constrain one solve with an assumption
+
+An assumption requires a symbolic atom to be true or false for that solve. It does not add a persistent rule. Both snapshots remain ordinary Elixir data after the scoped control closes.
+
+```elixir
+answers =
+  Clingo.with_control([models: :all], fn control ->
+    Clingo.Control.add!(control, "{enabled}. #show enabled/0.")
+    Clingo.Control.ground!(control)
+    constrained = Clingo.Control.solve!(control, assumptions: [{"enabled", true}])
+    unconstrained = Clingo.Control.solve!(control)
+    {constrained, unconstrained}
+  end)
+
+{constrained, unconstrained} = answers
+[%{shown: ["enabled"]}] = constrained.models
+2 = length(unconstrained.models)
+Course.display(unconstrained)
+```
+
+### Try it yourself
+
+Change the true assumption to false and compare the following unconstrained solve.
+
+<details>
+<summary>Hint and expected result</summary>
+
+The constrained model has an empty shown set. The later solve still has two models because assumptions are temporary.
+
+</details>

@@ -1,0 +1,1 @@
+:- a(Item), b(Item).

@@ -1,0 +1,1 @@
+#show light/2.

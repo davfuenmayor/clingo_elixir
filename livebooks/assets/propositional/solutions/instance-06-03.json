@@ -1,0 +1,64 @@
+{
+  "status": "satisfiable",
+  "exhausted": true,
+  "optimal_cost": [
+    0
+  ],
+  "models": [
+    [
+      "for(1,or,2)",
+      "for(2,atom,a)",
+      "for(3,atom,v)"
+    ],
+    [
+      "for(1,or,2)",
+      "for(2,atom,c)",
+      "for(3,atom,k)"
+    ],
+    [
+      "for(1,or,2)",
+      "for(2,atom,c)",
+      "for(3,atom,t)"
+    ],
+    [
+      "for(1,or,2)",
+      "for(2,atom,c)",
+      "for(3,atom,u)"
+    ],
+    [
+      "for(1,or,2)",
+      "for(2,atom,c)",
+      "for(3,atom,v)"
+    ],
+    [
+      "for(1,or,2)",
+      "for(2,atom,e)",
+      "for(3,atom,v)"
+    ],
+    [
+      "for(1,or,2)",
+      "for(2,atom,h)",
+      "for(3,atom,k)"
+    ],
+    [
+      "for(1,or,2)",
+      "for(2,atom,h)",
+      "for(3,atom,t)"
+    ],
+    [
+      "for(1,or,2)",
+      "for(2,atom,h)",
+      "for(3,atom,u)"
+    ],
+    [
+      "for(1,or,2)",
+      "for(2,atom,h)",
+      "for(3,atom,v)"
+    ],
+    [
+      "for(1,or,2)",
+      "for(2,atom,j)",
+      "for(3,atom,v)"
+    ]
+  ]
+}

@@ -1,0 +1,191 @@
+# Getting started with clingo_elixir
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Choose an entry point, read copied results, sample lazy models and manage native state deliberately.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Getting Started with clingo_elixir](#getting-started-with-clingo_elixir)
+
+## Getting Started with clingo_elixir
+
+### Introduction
+
+This notebook introduces **the Elixir wrapper**: choosing an API, reading results,
+and managing native state. To learn answer set programming itself, open the
+[course contents](../README.md). Run this guide top to bottom in a local Livebook
+runtime with Elixir 1.20 / OTP 29 and the build dependencies in the
+[project README](../../README.md). Setup installs this checkout and Kino 0.19.0;
+the first installation needs network access. These examples use local ASP text.
+
+Clingo parses, grounds, and solves ASP. Elixir orchestrates that work and receives
+copied values. There is no separate Elixir modeling language to learn.
+
+### Solve an independent problem
+
+Choose exactly one person to take a shift. Alice is unavailable.
+
+```elixir
+program = """
+person(alice; bob; carol).
+1 { assigned(P) : person(P) } 1.
+:- assigned(alice).
+#show assigned/1.
+"""
+
+result = Clingo.solve!(program, models: :all)
+result
+```
+
+`Clingo.solve!/2` creates a control, adds the program, grounds it, solves it,
+and closes the control. Use it for independent jobs. `models: :all` requests
+all models; the default returns at most one. For files alone, use
+`Clingo.solve!(files: [path], models: :all)`; no empty program string is needed.
+You can also combine text and files with `Clingo.solve!(program, files: [path])`.
+The [introductory lesson](../language/03-choices-and-constraints.livemd#choices-consequences-and-constraints)
+shows both forms using a file created in the notebook.
+`Clingo.models(files: [path], models: :all)` streams file-based results, and
+`Clingo.Ground.to_string!(files: [path])` exports without searching.
+Native solver settings can be passed
+as `arguments: ["--seed=7"]`.
+
+### Read results before presenting them
+
+The result is a `%Clingo.Result{}`. Each `%Clingo.Model{}` contains copied shown
+atom strings, optimization costs, and its own `optimality_proven` flag. Those
+values remain usable after the control closes.
+
+```elixir
+:satisfiable = result.status
+true = result.exhausted
+[["assigned(bob)"], ["assigned(carol)"]] = Enum.sort(Enum.map(result.models, & &1.shown))
+Course.display(result)
+```
+
+`Course.display/1` is a notebook presentation helper: it builds a Kino status
+summary and model table. It does not solve again or change `result`.
+`Course.table_data/1` provides ordinary row maps for your own table rendering.
+Use the public `Clingo` API in application code; the course helper lives only
+under `livebooks/support`.
+
+| Field | Meaning |
+| --- | --- |
+| `status` | `:satisfiable`, `:unsatisfiable`, or `:unknown` |
+| `exhausted` | Search finished, rather than stopping at a limit |
+| `interrupted` | Search was interrupted |
+| `model.cost` | Native optimization costs, in priority order |
+| `model.optimality_proven` | Whether optimality was established for this model |
+
+Finding a model does not establish optimality. An empty shown set is also a
+valid model: it differs from finding no models.
+
+```elixir
+empty = Clingo.solve!("#show.", models: :all)
+[%{shown: []}] = empty.models
+
+unsat = Clingo.solve!("a. :- a.")
+:unsatisfiable = unsat.status
+[] = unsat.models
+Kino.Layout.grid([Course.display(empty), Course.display(unsat)], columns: 1)
+```
+
+UNSAT is a successful solve outcome. Invalid ASP raises a `Clingo.Error` instead.
+
+### Enumerate only what you need
+
+```elixir
+sample = Clingo.models("{a; b; c}.", models: :all) |> Enum.take(2)
+2 = length(sample)
+Enum.map(sample, & &1.shown)
+```
+
+`Clingo.models/2` is lazy. Each enumeration creates its own control and closes
+it on completion, early halt, or an exception. `Enum.take/2` avoids collecting
+all models. A list of sampled models does not include a final solve status;
+use `solve!/2` when you need that result.
+
+### Reuse a control within one workflow
+
+An external atom lets an application change an input between solves without
+rebuilding the grounded program.
+
+```elixir
+snapshots =
+  Clingo.with_control(fn control ->
+    :ok =
+      Control.add!(control, "#external available. assigned(bob) :- available. #show assigned/1.")
+
+    :ok = Control.ground!(control)
+    before = Control.solve!(control)
+    :ok = Control.assign_external!(control, "available", true)
+    after_change = Control.solve!(control)
+    %{before: before, after_change: after_change}
+  end)
+
+[%{shown: []}] = snapshots.before.models
+[%{shown: ["assigned(bob)"]}] = snapshots.after_change.models
+Course.display(snapshots.after_change)
+```
+
+`with_control` returns the callback's value directly and closes native state
+when the callback finishes, including on exceptions. Mutating operations return
+`:ok`; solves return copied results. `add!` supplies ASP source; `ground!`
+instantiates rules before solving. Copied snapshots describe their original
+solve and do not change when native state changes.
+
+### Keep state across notebook cells deliberately
+
+For exploration you can hold a control across cells. Here the next cell changes
+an external input rather than adding the same program again.
+
+```elixir
+control = Control.new!()
+:ok = Control.add!(control, "#external enabled. a :- enabled.")
+:ok = Control.ground!(control)
+Control.solve!(control) |> Course.display()
+```
+
+```elixir
+:ok = Control.assign_external!(control, "enabled", true)
+Control.solve!(control) |> Course.display()
+```
+
+Close the control before replacing it or finishing your notebook. Re-evaluating
+a creation cell creates another control; it does not reset the previous one.
+After closing, rerun from the creation cell to start a new workflow.
+
+```elixir
+:ok = Control.close(control)
+:ok = Control.close(control)
+```
+
+Closing twice is harmless. Handles share mutable native state and become invalid
+after close. Prefer `with_control` for complete jobs. Temporary grounding, solve
+hook and copied-inspection storage is reclaimed after native completion. Escaped
+views remain expired, and intentionally retained views keep their identities alive. See the [ownership and API guide](../../docs/ELIXIR_API.md).
+
+### Handle a parsing failure
+
+```elixir
+try do
+  Clingo.solve!("a(")
+rescue
+  error in Clingo.Error -> %{message: error.message, code: error.code}
+end
+```
+
+Bang functions raise on failure. Catch errors when your application can act on
+them; otherwise let the notebook stop at the failing cell. An ordinary UNSAT
+result should be handled through `result.status`.

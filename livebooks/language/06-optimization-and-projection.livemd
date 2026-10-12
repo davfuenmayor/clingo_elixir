@@ -1,0 +1,75 @@
+# Optimization and projection
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Distinguish improving candidates from proven optima, and display filtering from model equivalence.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Optimize costs without mistaking search progress for proof](#optimize-costs-without-mistaking-search-progress-for-proof)
+
+## Optimize costs without mistaking search progress for proof
+
+### What you will learn
+
+Read optimization results and distinguish display filtering from projection.
+
+### Choose the cheapest candidate
+
+The objective sums the selected fare. Search may report improving models before proving a minimum. optN asks for optimal-model enumeration; select snapshots whose proof flag is true rather than assuming the first model is optimal.
+
+```elixir
+result =
+  Clingo.solve!(
+    ~S"""
+    fare(bus,3). fare(tram,1). fare(taxi,7).
+    1 { take(Mode) : fare(Mode,Cost) } 1.
+    #minimize { Cost,Mode : take(Mode), fare(Mode,Cost) }.
+    #show take/1.
+    """,
+    models: :all,
+    arguments: ["--opt-mode=optN"]
+  )
+
+true = result.exhausted
+proven = Enum.filter(result.models, & &1.optimality_proven)
+true = proven != []
+true = Enum.all?(proven, &(&1.shown == ["take(tram)"] and &1.cost == [1]))
+Course.display(result)
+```
+
+### Showing less does not merge models
+
+Two hidden choices produce four models even when every shown set is empty. Projection onto the shown atoms identifies them as one projected answer. Use projection when your application defines equivalence through a visible signature.
+
+```elixir
+source = "{hidden(1..2)}. #show."
+plain = Clingo.solve!(source, models: :all)
+projected = Clingo.solve!(source, models: :all, arguments: ["--project=show"])
+4 = length(plain.models)
+1 = length(projected.models)
+true = Enum.all?(plain.models, &(&1.shown == []))
+%{ordinary_models: length(plain.models), projected_models: length(projected.models)}
+```
+
+### Try it yourself
+
+Give bus the same fare as tram. Which proven optimal shown answers should remain?
+
+<details>
+<summary>Hint and expected result</summary>
+
+Set fare(bus,1). The optimal cost is [1]; proven snapshots include take(bus) and take(tram). Compare sets and proof flags rather than the order of search snapshots.
+
+</details>

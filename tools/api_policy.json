@@ -1,0 +1,6307 @@
+{
+  "clingo_error_string": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "code",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_error_code": {
+    "flags": [
+      "error_code",
+      "error_api"
+    ],
+    "arguments": []
+  },
+  "clingo_error_message": {
+    "flags": [
+      "error_message",
+      "error_api"
+    ],
+    "arguments": []
+  },
+  "clingo_set_error": {
+    "flags": [
+      "error_api",
+      "set_error"
+    ],
+    "arguments": [
+      {
+        "name": "code",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "message",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_warning_string": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "code",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_version": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "major",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "minor",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "revision",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_signature_create": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "arity",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "positive",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "signature",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_signature_name": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "signature",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_signature_arity": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "signature",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_signature_is_positive": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "signature",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_signature_is_negative": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "signature",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_signature_is_equal_to": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "a",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "b",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_signature_is_less_than": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "a",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "b",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_signature_hash": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "signature",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_create_number": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "number",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_create_supremum": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_create_infimum": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_create_string": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "string",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_create_id": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "positive",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_create_function": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "arguments",
+        "nullable": false,
+        "size": "arguments_size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "arguments_size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "positive",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_number": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "number",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_name": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_string": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "string",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_is_positive": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "positive",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_is_negative": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "negative",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_arguments": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "arguments",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "arguments_size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_type": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_to_string_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_to_string": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "string",
+        "nullable": false,
+        "size": "size",
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_is_equal_to": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "a",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "b",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_is_less_than": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "a",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "b",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbol_hash": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_add_string": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "string",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "result",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_parse_term": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "string",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "logger",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "logger_data",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "message_limit",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbolic_atoms_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbolic_atoms_begin": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "signature",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "iterator",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbolic_atoms_end": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "iterator",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbolic_atoms_find": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "iterator",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbolic_atoms_iterator_is_equal_to": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "a",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "b",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "equal",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbolic_atoms_symbol": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "iterator",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbolic_atoms_is_fact": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "iterator",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "fact",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbolic_atoms_is_external": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "iterator",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "external",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbolic_atoms_literal": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "iterator",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbolic_atoms_signatures_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbolic_atoms_signatures": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "signatures",
+        "nullable": false,
+        "size": "size",
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbolic_atoms_next": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "iterator",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "next",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_symbolic_atoms_is_valid": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "iterator",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "valid",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_term_type": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "term",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "type",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_term_number": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "term",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "number",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_term_name": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "term",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_term_arguments": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "term",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "arguments",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_term_to_string_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "term",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_term_to_string": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "term",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "string",
+        "nullable": false,
+        "size": "size",
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_element_tuple": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "element",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "tuple",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_element_condition": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "element",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "condition",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_element_condition_id": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "element",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "condition",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_element_to_string_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "element",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_element_to_string": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "element",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "string",
+        "nullable": false,
+        "size": "size",
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_atom_term": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atom",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "term",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_atom_elements": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atom",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "elements",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_atom_has_guard": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atom",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "has_guard",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_atom_guard": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atom",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "connective",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "term",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_atom_literal": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atom",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_atom_to_string_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atom",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_theory_atoms_atom_to_string": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atom",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "string",
+        "nullable": false,
+        "size": "size",
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_decision_level": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_root_level": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_has_conflict": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_has_literal": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_level": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "level",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_decision": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "level",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_is_fixed": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "is_fixed",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_is_true": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "is_true",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_is_false": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "is_false",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_truth_value": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_at": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "offset",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_is_total": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_trail_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_trail_begin": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "level",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "offset",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_trail_end": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "level",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "offset",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_assignment_trail_at": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "assignment",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "offset",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_solver_literal": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "aspif_literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "solver_literal",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_add_watch": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "solver_literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_add_watch_to_thread": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "solver_literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "thread_id",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_remove_watch": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "solver_literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_remove_watch_from_thread": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "solver_literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "thread_id",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_freeze_literal": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "solver_literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_symbolic_atoms": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_theory_atoms": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_number_of_threads": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_set_check_mode": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "mode",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_get_check_mode": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_set_undo_mode": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "mode",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_get_undo_mode": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_assignment": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_add_literal": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "freeze",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "result",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_add_clause": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "clause",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "result",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_add_weight_constraint": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literals",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "bound",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "type",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "compare_equal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "result",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_add_minimize": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "weight",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "priority",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_init_propagate": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "init",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "result",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_control_thread_id": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_control_assignment": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_control_add_literal": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "result",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_control_add_watch": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_control_has_watch": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_control_remove_watch": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_control_add_clause": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "clause",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "type",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "result",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_propagate_control_propagate": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "result",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_begin": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_end": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_rule": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "choice",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "head",
+        "nullable": false,
+        "size": "head_size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "head_size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "body",
+        "nullable": false,
+        "size": "body_size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "body_size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_weight_rule": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "choice",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "head",
+        "nullable": false,
+        "size": "head_size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "head_size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "lower_bound",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "body",
+        "nullable": false,
+        "size": "body_size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "body_size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_minimize": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "priority",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literals",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_project": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_external": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atom",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "type",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_assume": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literals",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_heuristic": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atom",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "type",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "bias",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "priority",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "condition",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_acyc_edge": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "node_u",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "node_v",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "condition",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_add_atom": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "symbol",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atom",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_theory_term_number": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "number",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "term_id",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_theory_term_string": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "string",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "term_id",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_theory_term_sequence": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "type",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "arguments",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "term_id",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_theory_term_function": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "arguments",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "term_id",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_theory_term_symbol": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "term_id",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_theory_element": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "tuple",
+        "nullable": false,
+        "size": "tuple_size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "tuple_size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "condition",
+        "nullable": false,
+        "size": "condition_size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "condition_size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "element_id",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_theory_atom": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atom",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "term_id",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "elements",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atom_id",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_backend_theory_atom_with_guard": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atom",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "term_id",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "elements",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "operator_name",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "right_hand_side_id",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atom_id",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_configuration_root": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "configuration",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_configuration_type": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "configuration",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "type",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_configuration_description": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "configuration",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "description",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_configuration_array_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "configuration",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_configuration_array_at": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "configuration",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "offset",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "subkey",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_configuration_map_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "configuration",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_configuration_map_has_subkey": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "configuration",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "result",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_configuration_map_subkey_name": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "configuration",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "offset",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_configuration_map_at": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "configuration",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "subkey",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_configuration_value_is_assigned": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "configuration",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "assigned",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_configuration_value_get_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "configuration",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_configuration_value_get": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "configuration",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": "size",
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_configuration_value_set": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "configuration",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_statistics_root": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "statistics",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_statistics_type": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "statistics",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "type",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_statistics_array_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "statistics",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_statistics_array_at": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "statistics",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "offset",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "subkey",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_statistics_array_push": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "statistics",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "type",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "subkey",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_statistics_map_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "statistics",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_statistics_map_has_subkey": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "statistics",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "result",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_statistics_map_subkey_name": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "statistics",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "offset",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_statistics_map_at": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "statistics",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "subkey",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_statistics_map_add_subkey": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "statistics",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "type",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "subkey",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_statistics_value_get": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "statistics",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_statistics_value_set": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "statistics",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "key",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_model_type": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "type",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_model_number": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "number",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_model_symbols_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "show",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_model_symbols": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "show",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "symbols",
+        "nullable": false,
+        "size": "size",
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_model_contains": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atom",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "contained",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_model_is_true": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "result",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_model_is_consequence": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "result",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_model_cost_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_model_cost": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "costs",
+        "nullable": false,
+        "size": "size",
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_model_priority": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "priorities",
+        "nullable": false,
+        "size": "size",
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_model_optimality_proven": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "proven",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_model_thread_id": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "id",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_model_extend": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "symbols",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_model_context": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_solve_control_symbolic_atoms": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_solve_control_add_clause": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "clause",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_solve_handle_get": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "handle",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "result",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_solve_handle_wait": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "handle",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "timeout",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "result",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_solve_handle_model": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "handle",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_solve_handle_core": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "handle",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "core",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_solve_handle_last": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "handle",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "model",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_solve_handle_resume": {
+    "flags": [
+      "resume"
+    ],
+    "arguments": [
+      {
+        "name": "handle",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_solve_handle_cancel": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "handle",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_solve_handle_close": {
+    "flags": [
+      "close_handle"
+    ],
+    "arguments": [
+      {
+        "name": "handle",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_new": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "arguments",
+        "nullable": false,
+        "size": "arguments_size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "arguments_size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "logger",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "logger_data",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "message_limit",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": true
+      }
+    ]
+  },
+  "clingo_control_free": {
+    "flags": [
+      "free_control"
+    ],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_load": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "file",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_load_aspif": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "files",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_add": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "parameters",
+        "nullable": false,
+        "size": "parameters_size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "parameters_size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "program",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_ground": {
+    "flags": [
+      "atoms_epoch"
+    ],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "parts",
+        "nullable": false,
+        "size": "parts_size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "parts_size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "ground_callback",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "ground_callback_data",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_solve": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "mode",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "assumptions",
+        "nullable": false,
+        "size": "assumptions_size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "assumptions_size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "notify",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "data",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "handle",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": true
+      }
+    ]
+  },
+  "clingo_control_cleanup": {
+    "flags": [
+      "atoms_epoch"
+    ],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_assign_external": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_release_external": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "literal",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_remove_minimize": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_update_project": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "append",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_register_propagator": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "propagator",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "data",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "sequential",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_is_conflicting": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_statistics": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "statistics",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_interrupt": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_clasp_facade": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "clasp",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_configuration": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "configuration",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_set_enable_enumeration_assumption": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "enable",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_get_enable_enumeration_assumption": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_set_enable_cleanup": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "enable",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_get_enable_cleanup": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_get_const": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "symbol",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_has_const": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "exists",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_symbolic_atoms": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_theory_atoms": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "atoms",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_register_observer": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "observer",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "replace",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "data",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_register_backend": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "type",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "file",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "replace",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_control_backend": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "backend",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_build": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "type",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": true
+      }
+    ]
+  },
+  "clingo_ast_acquire": {
+    "flags": [
+      "acquire_ast"
+    ],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_release": {
+    "flags": [
+      "release_ast"
+    ],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_copy": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "copy",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": true
+      }
+    ]
+  },
+  "clingo_ast_deep_copy": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "copy",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": true
+      }
+    ]
+  },
+  "clingo_ast_less_than": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "a",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "b",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_equal": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "a",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "b",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_hash": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_to_string_size": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_to_string": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "string",
+        "nullable": false,
+        "size": "size",
+        "direction": "out",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_get_type": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "type",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_has_attribute": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "has_attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_type": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "type",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_get_number": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_set_number": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_get_symbol": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_set_symbol": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_get_location": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_set_location": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_get_string": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_set_string": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_get_ast": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": true
+      }
+    ]
+  },
+  "clingo_ast_attribute_set_ast": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_get_optional_ast": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": true
+      }
+    ]
+  },
+  "clingo_ast_attribute_set_optional_ast": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_get_string_at": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "index",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_set_string_at": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "index",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_delete_string_at": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "index",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_size_string_array": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_insert_string_at": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "index",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_get_ast_at": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "index",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": true
+      }
+    ]
+  },
+  "clingo_ast_attribute_set_ast_at": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "index",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_delete_ast_at": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "index",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_size_ast_array": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_attribute_insert_ast_at": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "attribute",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "index",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "value",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_parse_string": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "program",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "callback",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "callback_data",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "control",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "logger",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "logger_data",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "message_limit",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_parse_files": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "files",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "callback",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "callback_data",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "control",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "logger",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "logger_data",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "message_limit",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_program_builder_init": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "control",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "builder",
+        "nullable": false,
+        "size": null,
+        "direction": "out",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_program_builder_begin": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "builder",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_program_builder_end": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "builder",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_program_builder_add": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "builder",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_ast_unpool": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "ast",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "unpool_type",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "callback",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "callback_data",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_options_add": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "options",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "group",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "option",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "description",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "parse",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "data",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "multi",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "argument",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_options_add_flag": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "options",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "group",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "option",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "description",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "target",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_main": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "application",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "arguments",
+        "nullable": false,
+        "size": "size",
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "size",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "data",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_register_script": {
+    "flags": [
+      "register_script"
+    ],
+    "arguments": [
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "script",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      },
+      {
+        "name": "data",
+        "nullable": true,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  },
+  "clingo_script_version": {
+    "flags": [],
+    "arguments": [
+      {
+        "name": "name",
+        "nullable": false,
+        "size": null,
+        "direction": "in",
+        "owned": false
+      }
+    ]
+  }
+}

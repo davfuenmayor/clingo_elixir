@@ -1,0 +1,642 @@
+# Negation, recursion and support
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Compare default and explicit negation, then explain why positive and negative cycles behave differently.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Absence, explicit negation and recursion](#absence-explicit-negation-and-recursion)
+- [Reason with missing evidence](#reason-with-missing-evidence)
+- [Distinguish explicit and default negation](#distinguish-explicit-and-default-negation)
+- [Follow positive cycles](#follow-positive-cycles)
+- [Test default negation](#test-default-negation)
+- [Study mutual absence tests](#study-mutual-absence-tests)
+- [Vary a negative cycle](#vary-a-negative-cycle)
+
+## Absence, explicit negation and recursion
+
+### What you will learn
+
+Distinguish unsupported atoms, default negation and explicit negative atoms.
+
+### Use absence as a condition
+
+The screening rule checks whether evidence is absent from a candidate model. Uma has evidence and Vic does not, so only Vic passes. This use of not does not construct an explicit negative evidence atom.
+
+```elixir
+result =
+  Clingo.solve!(
+    ~S"""
+    person(uma;vic).
+    evidence(uma).
+    passes(Person) :- person(Person), not evidence(Person).
+    #show passes/1.
+    """,
+    models: :all
+  )
+
+[%{shown: ["passes(vic)"]}] = result.models
+Course.display(result)
+```
+
+### Compare explicit alternatives
+
+The two default-negated rules support two alternative models. Replacing a predicate with its explicit negative form changes the vocabulary: -ready is an atom, while not ready tests absence. The same stable-model choice appears in both examples.
+
+```elixir
+alternatives = Clingo.solve!("tea :- not cocoa. cocoa :- not tea.", models: :all)
+[["cocoa"], ["tea"]] = Enum.sort(Enum.map(alternatives.models, & &1.shown))
+explicit = Clingo.solve!("ready :- not -ready. -ready :- not ready.", models: :all)
+[["-ready"], ["ready"]] = Enum.sort(Enum.map(explicit.models, & &1.shown))
+Course.display(explicit)
+```
+
+### Give positive recursion a starting point
+
+Positive recursion extends existing support. The two edges form a cycle, but reachability begins at the explicit seed. Removing that seed removes all reachable atoms, even though the edges remain.
+
+```elixir
+result =
+  Clingo.solve!(
+    ~S"""
+    edge(dock,park). edge(park,dock).
+    reached(dock).
+    reached(To) :- reached(From), edge(From,To).
+    #show reached/1.
+    """,
+    models: :all
+  )
+
+[%{shown: ["reached(dock)", "reached(park)"]}] = result.models
+Course.display(result)
+```
+
+### Try it yourself
+
+Remove reached(dock). from the recursive example. Predict whether the cycle can justify itself.
+
+<details>
+<summary>Hint and expected result</summary>
+
+Keep both edge facts. The solve remains satisfiable, but the only shown set is empty: positive recursion needs external support.
+
+</details>
+
+## Reason with missing evidence
+
+Run top to bottom. Edit the ASP inside the string, then reevaluate the cell and any dependent cells. Solves close their controls automatically. [Wrapper guide](../elixir/01-getting-started.livemd#getting-started-with-clingo_elixir) · [Lesson contents](../README.md).
+
+This example reasons about evidence. Alex and Blair each have a reason to act; only Alex has a trace linking them to the event. `implicated(Person)` requires both a reason and a trace. `cleared(Person)` requires a reason and the absence of a trace in the answer set.
+
+The first cell shows only implicated people. Its one shown atom is `implicated(alex)`. These predicates describe the rules of our toy model, not a claim about how real evidence establishes guilt.
+
+```elixir
+~S"""
+reason(alex).
+reason(blair).
+trace(alex).
+cleared(Person) :- reason(Person), not trace(Person).
+implicated(Person) :- reason(Person), trace(Person).
+#show implicated/1.
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+### Inspect the complete model
+
+`not trace(Person)` is default negation: the condition holds when that trace atom is absent from the candidate answer set. It is different from an explicitly negated atom such as `-trace(Person)`.
+
+The next program omits the output filter. Expect the two reason facts, `trace(alex)`, `implicated(alex)` and `cleared(blair)` in its only model. Facts are rules with empty bodies; the other rules add consequences of those facts.
+
+```elixir
+~S"""
+reason(alex).
+reason(blair).
+trace(alex).
+cleared(Person) :- reason(Person), not trace(Person).
+implicated(Person) :- reason(Person), trace(Person).
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+`#show implicated/1.` can restore the narrower display. In application code, keep the `%Clingo.Result{}` returned by `Clingo.solve!` when you need to examine shown atoms or search status. A display filter changes presentation, not the underlying logic.
+
+## Distinguish explicit and default negation
+
+Run top to bottom. Edit the ASP inside the string, then reevaluate the cell and any dependent cells. Solves close their controls automatically. [Wrapper guide](../elixir/01-getting-started.livemd#getting-started-with-clingo_elixir) · [Lesson contents](../README.md).
+
+Explicit negation writes the opposite of an atom as `-airborne(...)`. Default negation writes an absence test as `not airborne(...)`. They play different roles: a consistent answer set cannot contain both an atom and its explicit opposite.
+
+The program describes Puck and Pip. Puck’s penguin rule supports an explicit negative conclusion. Pip’s alternative conclusions lead to two models; the display filter exposes only positive `airborne/1` atoms.
+
+```elixir
+~S"""
+avian(puck).
+penguin(puck).
+avian(pip).
+canary(pip).
+airborne(Item) :- avian(Item), not -airborne(Item).
+-airborne(Item) :- avian(Item), not airborne(Item).
+-airborne(Item) :- penguin(Item).
+#show airborne/1.
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+One model shows `airborne(pip)` and the other has an empty shown set. The empty row is still a valid model: hidden facts and negative conclusions can exist even when the filter shows nothing. There is no model containing both positive and explicitly negative airborne atoms for the same bird.
+
+Try removing the show directive to inspect the distinction directly.
+
+## Follow positive cycles
+
+Trace dependencies around each positive cycle. A cycle with no supporting fact cannot justify its own atoms. Compare that case with a cycle reached from an actual fact.
+
+The programs below are independent variations. Predict each answer set before running the cell. Edit one program in the list and compare its row again; answer-set order has no meaning.
+
+```elixir
+programs = [
+  ~S"""
+  a :- a.
+  """,
+  ~S"""
+  a:- a, b.
+  b.
+  """,
+  ~S"""
+  a :- b.
+  b :- a.
+  """,
+  ~S"""
+  a :- b, c.
+  b :- a, c.
+  c.
+  """,
+  ~S"""
+  a :- b.
+  b :- a.
+  b.
+  """,
+  ~S"""
+  a :- b.
+  b :- a.
+  b :- c.
+  c.
+  """,
+  ~S"""
+  a :- b.
+  b :- a.
+  b.
+  c :- a.
+  """,
+  ~S"""
+  a :- b.
+  b :- a.
+  b.
+  c :- a, b.
+  d :- a, b, c.
+  """,
+  ~S"""
+  a :- b.
+  b :- c.
+  c :- a.
+  """,
+  ~S"""
+  a :- b, d.
+  b :- c, e.
+  c :- a, e.
+  d.
+  e :- d.
+  """,
+  ~S"""
+  a :- b.
+  b :- c.
+  c :- a.
+  d.
+  c :- d.
+  """,
+  ~S"""
+  a :- b, d.
+  b :- c, d.
+  c :- a, d.
+  d.
+  c :- d.
+  """,
+  ~S"""
+  a :- b.
+  b :- a.
+  c :- d.
+  d :- c.
+  """,
+  ~S"""
+  a :- b, c.
+  b :- a, d.
+  c :- d.
+  d :- c.
+  d.
+  """,
+  ~S"""
+  a :- b.
+  b :- a.
+  c :- d.
+  d :- c.
+  c.
+  b :- d.
+  """,
+  ~S"""
+  a :- b, c, d.
+  b :- a, c, d.
+  c :- d.
+  d :- c.
+  c.
+  b :- d.
+  """
+]
+
+programs
+|> Enum.with_index(1)
+|> Enum.map(fn {program, index} ->
+  result = Clingo.solve!(program, models: :all)
+
+  %{
+    example: index,
+    program: program,
+    shown_sets: inspect(Enum.sort(Enum.map(result.models, & &1.shown))),
+    status: result.status,
+    exhausted: result.exhausted
+  }
+end)
+|> Kino.DataTable.new()
+```
+
+## Test default negation
+
+For each candidate answer set, interpret `not atom` as the absence of that atom. A successful candidate must also be justified by the resulting rules; absence tests alone do not supply positive support.
+
+The programs below are independent variations. Predict each answer set before running the cell. Edit one program in the list and compare its row again; answer-set order has no meaning.
+
+```elixir
+programs = [
+  ~S"""
+  a :- not b.
+  """,
+  ~S"""
+  a :- not b, c.
+  c.
+  """,
+  ~S"""
+  a :- not b.
+  b.
+  """,
+  ~S"""
+  a :- not b.
+  b :- c.
+  c.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not c.
+  """,
+  ~S"""
+  a :- not b, d.
+  b :- not c, d.
+  d.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not c.
+  c :- d.
+  d.
+  """,
+  ~S"""
+  a :- not b, d.
+  b :- not c, d.
+  c :- d.
+  d :- not e.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not c.
+  c :- d.
+  d :- c.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not c.
+  c :- d.
+  d :- c.
+  d.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not c.
+  d :- b.
+  b :- d.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not c.
+  d :- b.
+  b :- d.
+  c.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not c.
+  a :- d.
+  d.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not c.
+  a :- d.
+  d.
+  b :- d.
+  """,
+  ~S"""
+  a :- not b.
+  b :- c, d.
+  c :- b.
+  d.
+  """,
+  ~S"""
+  a :- not b.
+  b :- c, d.
+  c :- b.
+  d.
+  c :- d.
+  """
+]
+
+programs
+|> Enum.with_index(1)
+|> Enum.map(fn {program, index} ->
+  result = Clingo.solve!(program, models: :all)
+
+  %{
+    example: index,
+    program: program,
+    shown_sets: inspect(Enum.sort(Enum.map(result.models, & &1.shown))),
+    status: result.status,
+    exhausted: result.exhausted
+  }
+end)
+|> Kino.DataTable.new()
+```
+
+## Study mutual absence tests
+
+Run the programs with cyclic default negation. Check the actual model sets instead of applying ordinary implication intuition. Depending on the rules, there may be alternatives or no stable model.
+
+The programs below are independent variations. Predict each answer set before running the cell. Edit one program in the list and compare its row again; answer-set order has no meaning.
+
+```elixir
+programs = [
+  ~S"""
+  a :- not b.
+  b :- not a.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a, c.
+  c.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- a.
+  d :- b.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- a, not b.
+  c :- b, not a.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  b :- not c.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  b :- c.
+  c.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  b :- not c.
+  c.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a, c.
+  b :- not c.
+  c :- not d.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- not d.
+  d :- not c.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a, e.
+  c :- not d.
+  d :- not c, f.
+  e.
+  f :- e.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- not d.
+  d :- not c.
+  e :- a, c.
+  f :- a, d.
+  g :- b, c.
+  h :- b, d.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not c.
+  c :- not d.
+  d :- not c.
+  e :- a, c.
+  e :- a, d.
+  f :- not a, c.
+  f :- b, not c.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- a.
+  d :- c.
+  c :- d.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- a.
+  d :- c.
+  c :- d.
+  d :- b.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- d.
+  d :- c.
+  a :- c, d.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- d.
+  d :- c.
+  a :- c, d.
+  c.
+  """
+]
+
+programs
+|> Enum.with_index(1)
+|> Enum.map(fn {program, index} ->
+  result = Clingo.solve!(program, models: :all)
+
+  %{
+    example: index,
+    program: program,
+    shown_sets: inspect(Enum.sort(Enum.map(result.models, & &1.shown))),
+    status: result.status,
+    exhausted: result.exhausted
+  }
+end)
+|> Kino.DataTable.new()
+```
+
+## Vary a negative cycle
+
+Change the support or constraints around the negative cycle and observe the effect on stable models. An unsatisfiable result is a normal outcome; it is different from a parser error.
+
+The programs below are independent variations. Predict each answer set before running the cell. Edit one program in the list and compare its row again; answer-set order has no meaning.
+
+```elixir
+programs = [
+  ~S"""
+  a :- not a.
+  """,
+  ~S"""
+  a :- not a, b.
+  b.
+  """,
+  ~S"""
+  a :- not a, b.
+  """,
+  ~S"""
+  a :- not a, b.
+  b :- c.
+  """,
+  ~S"""
+  a :- not a, b.
+  b :- not c.
+  """,
+  ~S"""
+  a :- not a, b.
+  b :- not c.
+  c.
+  """,
+  ~S"""
+  a :- not a, b.
+  a :- not a, c.
+  """,
+  ~S"""
+  a :- not a, b.
+  a :- not a, c.
+  c.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- not c, b.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- not c, a.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- not c, a.
+  c :- not c, b.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- not c, a.
+  d :- not d, b.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- a.
+  d :- not d, c.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- a.
+  d :- not d, c.
+  c :- b.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- not d.
+  d :- not c.
+  e :- not e, a, c.
+  f :- not f, b, d.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not a.
+  c :- not d.
+  d :- not c.
+  e :- not e, a, d.
+  f :- not f, b, c.
+  """
+]
+
+programs
+|> Enum.with_index(1)
+|> Enum.map(fn {program, index} ->
+  result = Clingo.solve!(program, models: :all)
+
+  %{
+    example: index,
+    program: program,
+    shown_sets: inspect(Enum.sort(Enum.map(result.models, & &1.shown))),
+    status: result.status,
+    exhausted: result.exhausted
+  }
+end)
+|> Kino.DataTable.new()
+```

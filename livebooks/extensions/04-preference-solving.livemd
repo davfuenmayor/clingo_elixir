@@ -1,0 +1,169 @@
+# Preference solving with repeated search
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Separate feasible and preferred candidates, combine comparison criteria, and develop a small incremental preference engine.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Implement a small preference engine](#implement-a-small-preference-engine)
+
+## Implement a small preference engine
+
+Exercise files: [subset.lp](../assets/preferences/subset.lp).
+
+```elixir
+workdir =
+  Course.workspace(Path.expand("../assets/preferences", __DIR__))
+```
+
+Preference reasoning compares candidate answer sets according to a declared ordering. This project builds a restricted asprin-like application: ground the object program, interpret its preference specification and repeatedly search for improvements. A found model is only a candidate until the search establishes that no preferred competitor exists.
+
+The native examples demonstrate feasibility and numeric minimization. The restricted engine remains a learner implementation; its input contract is the reified minimize data consumed by `subset.lp`. Compare both accepted models and proof of optimality when extending your Elixir engine.
+
+### Separate feasible and preferred models
+
+The first examples solve an ordinary program, then add minimize statements. Inspect candidate costs and the final search result; the first candidate is not necessarily optimal.
+
+```elixir
+Course.write(workdir, "example1.lp", ~S"""
+dom(1..2).
+1 { a(Item) : dom(Item) }.
+#show a/1.
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "example1.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "minimize.lp", ~S"""
+#minimize{ 1,Item : a(Item) }.
+""")
+```
+
+```elixir
+Clingo.solve!(
+  files: [Path.join(workdir, "example1.lp"), Path.join(workdir, "minimize.lp")],
+  models: :all,
+  arguments: ["--opt-mode=optN"]
+)
+|> Course.display()
+```
+
+A preference compares answer sets using a strict partial order. A model is optimal when there is no strictly better model. Distinct incomparable models can both be optimal.
+
+### Use a richer comparison
+
+Asprin generalizes numeric minimization with preference specifications such as subset comparison. Its preference programs define what “better” means, rather than changing the object program’s feasible answer sets. The following two specifications illustrate asprin notation: `#preference` and `#optimize` are not clingo syntax and cannot be passed to this wrapper. They are not inputs to the restricted engine built below.
+
+```asp
+#preference(p1,less(weight)) { 1,Item :: a(Item) : dom(Item) }.
+#optimize(p1).
+```
+
+### Combine preference criteria
+
+Compare weighted and subset interpretations on the same candidate models. Define what makes one candidate better before implementing the repeated searches.
+
+```asp
+#preference(p1,less(weight)) { 1,Item :: a(Item) : dom(Item) }.
+#preference(p2,      subset) {        a(Item) : dom(Item) }.
+#const s=p2.
+#optimize(s).
+```
+
+```elixir
+Course.write(workdir, "example2.lp", ~S"""
+dom(3).
+a(3) :- a(2).
+a(2) :- a(3).
+""")
+```
+
+```elixir
+Clingo.solve!(
+  files: [Path.join(workdir, "example1.lp"), Path.join(workdir, "example2.lp")],
+  models: :all
+)
+|> Course.display()
+```
+
+```elixir
+Clingo.solve!(
+  files: [
+    Path.join(workdir, "example1.lp"),
+    Path.join(workdir, "example2.lp"),
+    Path.join(workdir, "minimize.lp")
+  ],
+  models: :all,
+  arguments: ["--opt-mode=optN"]
+)
+|> Course.display()
+```
+
+### Inspect a preference implementation
+
+This schematic comparison uses the richer preference vocabulary above. Contrast its `holds/1` and `holds'/1` candidates with the numbered `hold/2` candidates in the executable `subset.lp` encoding below. The restricted engine uses only the latter contract; it does not translate general asprin syntax.
+
+```asp
+#program preference(subset).
+better(P) :- preference(P,subset);
+             not holds(Item), holds'(Item), preference(P,_,_,for(Item),_);
+             not holds(Item) : preference(P,_,_,for(Item),_), not holds'(Item).
+:- optimize(P), not better(P).
+```
+
+### Implement the restricted engine
+
+Mini-asprin takes an ordinary program with minimize statements plus a preference program that reinterprets those statements. It avoids general asprin syntax translation. Return all object-program models that are optimal under the supplied comparison.
+
+### Record candidates by number
+
+Implement the engine with `Clingo.with_control/2`: ground the candidate program, copy each model, record its selected atoms under a candidate number, then ground a comparison part. Exclude the previous candidate before searching again. Keep the control in one scoped workflow and return copied results.
+
+Use a meta encoding to represent the current candidate with `hold(Atom,0)`. Save completed candidates under positive IDs. Add parameterized parts to record a candidate, compare it against the current one, and exclude it from later searches. Begin by enumerating feasible models, then add preference checks.
+
+```elixir
+Course.read(workdir, "subset.lp") |> IO.puts()
+```
+
+### Improve one candidate
+
+Repeatedly search for a strictly better model. If none exists, the last candidate is optimal. If a better candidate exists, save it and continue. Keep this proof step separate from simply finding a feasible answer.
+
+### Enumerate all optimal candidates
+
+After proving a candidate optimal, exclude it and models strictly worse than it. Remove temporary requirements to beat earlier candidates, then search again. This retains distinct incomparable optima while avoiding duplicates.
+
+```elixir
+Course.write(workdir, "test.lp", ~S"""
+#const n=1.
+v(Item) :- Item = 1..3*n, Item \ 3 = 1.
+1 { a(Item); a(Item+1); a(Item+2) } :- v(Item).
+            a(Item+1) :- a(Item+2), v(Item).
+            a(Item+2) :- a(Item+1), v(Item).
+""")
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```

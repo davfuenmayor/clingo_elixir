@@ -1,0 +1,279 @@
+# Actions, state transitions and robots
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Model change over a finite horizon, validate complete Hanoi plans, and extend the approach to pursuit and coordinated robots.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Represent change and resource limits](#represent-change-and-resource-limits)
+- [Plan legal disc transfers](#plan-legal-disc-transfers)
+- [Escape a deterministic pursuer](#escape-a-deterministic-pursuer)
+- [Coordinate robots and ordered jobs](#coordinate-robots-and-ordered-jobs)
+
+## Represent change and resource limits
+
+### What you will learn
+
+Use time-indexed states for planning, then prohibit scheduling overlap.
+
+### Plan transitions between states
+
+The robot begins at the depot and must be at the lab at time 2. Its next location follows an edge from the previous location. Both depot→hall→lab and depot→yard→lab satisfy the goal. This is a complete small planning model; the robot project offers a larger exercise.
+
+```elixir
+result =
+  Clingo.solve!(
+    ~S"""
+    place(depot;hall;yard;lab). time(0..2).
+    edge(depot,hall). edge(hall,lab). edge(depot,yard). edge(yard,lab).
+    at(depot,0).
+    1 { at(To,Step+1) : edge(From,To) } 1 :- at(From,Step), time(Step), Step < 2.
+    :- not at(lab,2).
+    #show at/2.
+    """,
+    models: :all
+  )
+
+[["at(depot,0)", "at(hall,1)", "at(lab,2)"], ["at(depot,0)", "at(lab,2)", "at(yard,1)"]] =
+  Enum.sort(Enum.map(result.models, & &1.shown))
+
+Course.display(result)
+```
+
+### Forbid overlap on a shared machine
+
+Two jobs each take one slot on the same machine. Exactly one slot is chosen per job; the constraint prevents simultaneous starts. There are two assignments. Longer durations require an overlap test on intervals, not just equal start times.
+
+```elixir
+result =
+  Clingo.solve!(
+    ~S"""
+    job(polish;pack). slot(1..2).
+    1 { starts(Job,Slot) : slot(Slot) } 1 :- job(Job).
+    :- starts(First,Slot), starts(Second,Slot), First < Second.
+    #show starts/2.
+    """,
+    models: :all
+  )
+
+[["starts(pack,1)", "starts(polish,2)"], ["starts(pack,2)", "starts(polish,1)"]] =
+  Enum.sort(Enum.map(result.models, & &1.shown))
+
+Course.display(result)
+```
+
+### Try it yourself
+
+Remove edge(depot,yard). from the planning example. Then give the scheduling example three slots. Predict both model counts.
+
+<details>
+<summary>Hint and expected result</summary>
+
+The plan count drops from two to one. Scheduling has six assignments: three choices for the first job, then two remaining slots for the other.
+
+</details>
+
+## Plan legal disc transfers
+
+Run top to bottom. Edit the ASP inside the string, then reevaluate the cell and any dependent cells. Solves close their controls automatically. [Wrapper guide](../elixir/01-getting-started.livemd#getting-started-with-clingo_elixir) · [Lesson contents](../README.md).
+
+We will build a bounded planning model for four discs and three posts: `left`, `middle` and `right`. The start places every disc on the left, and the goal places every disc on the right. A transfer must move an accessible disc and must not put a larger physical disc above a smaller one.
+
+This encoding numbers discs in reverse size order: disc 4 is physically smallest and disc 1 is largest. Keep that convention when reading `covered/3` and the final plan.
+
+```elixir
+~S"""
+post(left;middle;right).
+disc(1..4).
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+### Describe the endpoints
+
+Pooling creates the three posts, and the interval creates disc IDs 1 through 4. Next, `start_on/2` and `goal_on/2` describe the two configurations. At this stage they are data, not a verified plan.
+
+```elixir
+~S"""
+start_on(1..4,left).
+goal_on(1..4,right).
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+### Hide intermediate facts
+
+`#show.` leaves the shown set empty. The facts still participate in solving, and the resulting empty shown row is satisfiable. Output filtering does not remove the facts.
+
+```elixir
+~S"""
+start_on(1..4,left).
+goal_on(1..4,right).
+#show.
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+### Generate candidate actions
+
+For every step from 1 through the horizon, the cardinality rule selects exactly one disc/post pair. Four discs times three posts gives 12 choices per step, hence `12^15` candidate assignments before legality constraints.
+
+This demonstration collects one model and stops. Its search is incomplete, and its actions are not yet guaranteed to be a legal Hanoi solution. A bound on plan length is different from a bound on how many models are collected.
+
+> **Note.** This unconstrained generator has 12^15 models. The demonstration requests one model so Run all finishes. Its exhausted flag is false; it does not enumerate the full search space.
+
+```elixir
+~S"""
+post(left;middle;right).
+disc(1..4).
+horizon(15).
+1 { transfer(Disc,Post,Step) : disc(Disc), post(Post) } 1 :- horizon(Horizon), Step = 1..Horizon.
+"""
+|> Clingo.solve!(models: 1)
+|> Course.display()
+```
+
+### Reject illegal plans
+
+`located/3` records positions over time. A transfer changes a disc’s position; otherwise its previous position persists. The two-argument `transfer/2` predicate forgets the destination and records only which disc moved at a step.
+
+`covered/3` propagates obstruction down the stack under the reverse size numbering. Integrity constraints rule out inaccessible source discs, unsuitable destinations and a missing final goal. A further constraint requires each disc to have exactly one location at each step. The final `#show transfer/3.` exposes the action sequence.
+
+> **Note.** Larger disc IDs mean smaller physical discs: disc 4 is the smallest. The covered/3 rules enforce this ordering.
+
+```elixir
+~S"""
+post(left;middle;right).
+disc(1..4).
+start_on(1..4,left).
+goal_on(1..4,right).
+horizon(15).
+1 { transfer(Disc,Post,Step) : disc(Disc), post(Post) } 1 :- horizon(Horizon), Step = 1..Horizon.
+located(Disc, Post, 0) :- start_on(Disc,Post).
+located(Disc, Post, Step) :- transfer(Disc, Post, Step).
+transfer(Disc,Step)   :- transfer(Disc,_,Step).
+located(Disc,Post,Step+1) :- located(Disc,Post,Step), not transfer(Disc,Step+1), not horizon(Step).
+covered(Disc-1,Post,Step+1) :- located(Disc,Post,Step), disc(Disc), not horizon(Step).
+covered(Disc-1,Post,Step)   :- covered(Disc,Post,Step), disc(Disc).
+:- transfer(Disc,Post,Step), covered(Disc-1,Post,Step).
+:- transfer(Disc,Step), located(Disc,Post,Step-1), covered(Disc,Post,Step).
+:- goal_on(Disc,Post), not located(Disc,Post,Horizon), horizon(Horizon).
+:- not 1 { located(Disc,Post,Step) : post(Post) } 1, disc(Disc), horizon(Horizon), Step = 1..Horizon.
+#show transfer/3.
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+The final program enumerates legal 15-step plans for transferring all four discs to the right post. Sort each model’s transfers by their third argument to read its chronology. Verify accessibility before each move and the goal after step 15. Model enumeration order is not part of the lesson’s contract.
+
+## Escape a deterministic pursuer
+
+Exercise files: [level01.lp](../assets/minotaur/instances/level01.lp) · [minotaur.lp](../assets/minotaur/minotaur.lp) · [level01.json](../assets/minotaur/solutions/level01.json).
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/minotaur", __DIR__))
+```
+
+Choose a route to the goal without meeting the Minotaur. You may wait or move one orthogonal cell per turn. The pursuer then takes up to two moves, preferring a horizontal step that reduces distance, otherwise a vertical one, otherwise staying put. Walls block both actors. Minimize the escape length.
+
+Complete the starter encoding before comparing its projected models with the supplied solution data.
+
+### Keep the data contract
+
+Read `field/2`, `start/2`, `goal/2`, `mino/2`, `wall/4` and `maxsteps/1`. Show `at/3`. Treat each wall as blocking passage in both directions, and simulate both pursuer substeps when checking safety.
+
+### Complete the model
+
+Implement the conditions in the problem description without hard-coding an instance. Keep the required show signature so results can be compared with the reference data.
+
+### Develop and check the encoding
+
+Complete the editable encoding below. Compare its shown atom sets with the JSON answers in `solutions`; `optimal_cost` records a proven optimum when present. Download your edits before cleanup.
+
+```elixir
+Course.archive(workdir, "minotaur.zip")
+```
+
+```elixir
+~S"""
+#show at/3.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/level01.lp")], models: :all)
+|> Course.display()
+```
+
+### Check boundary cases
+
+Test the smallest instance first, then check each derived relation. Compare projected model sets and, when optimizing, proven costs.
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Coordinate robots and ordered jobs
+
+Exercise files: [corridor-01.lp](../assets/robots/instances/corridor-01.lp) · [robots.lp](../assets/robots/robots.lp) · [corridor-01.json](../assets/robots/solutions/corridor-01.json).
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/robots", __DIR__))
+```
+
+Plan robot positions from time 0 to the supplied horizon. Robots may wait or follow graph edges, but cannot share a node or swap across an edge in one step. Assign each job to a robot of its class. Complete its ordered operations before the deadline, without interleaving that robot’s separate jobs.
+
+Complete the starter encoding before comparing its projected models with the supplied solution data.
+
+### Keep the data contract
+
+Inputs include `edge/2`, `robot/3`, `job/3` and `operation/3`. Preserve `at/3` and `assign/3` output signatures. A visit made while completing another job does not automatically complete an operation of this job. Each operation consumes its own time step, even when consecutive operations use the same node. Minimize actual graph moves; waiting has zero cost.
+
+### Develop and check the encoding
+
+Complete the editable encoding below. Compare its shown atom sets with the JSON answers in `solutions`; `optimal_cost` records a proven optimum when present. Download your edits before cleanup.
+
+```elixir
+Course.archive(workdir, "robots.zip")
+```
+
+```elixir
+~S"""
+time(0..n).
+#show at/3.
+#show assign/3.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/corridor-01.lp")], models: :all)
+|> Course.display()
+```
+
+### Check boundary cases
+
+Test the smallest instance first, then check each derived relation. Compare projected model sets and, when optimizing, proven costs.
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```

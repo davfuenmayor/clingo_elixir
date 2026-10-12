@@ -1,0 +1,320 @@
+# Learning and product configuration
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Search over classifiers and compatible products. The small worked models establish the pattern; the projects extend it to formulas, trees, acyclic programs and component hierarchies.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Search over explanations and compatible products](#search-over-explanations-and-compatible-products)
+- [Learn a propositional classifier](#learn-a-propositional-classifier)
+- [Learn a binary decision tree](#learn-a-binary-decision-tree)
+- [Learn an acyclic rule system](#learn-an-acyclic-rule-system)
+- [Read a COOM product description](#read-a-coom-product-description)
+- [Understand configuration facts](#understand-configuration-facts)
+- [Configure a product from compatible parts](#configure-a-product-from-compatible-parts)
+
+## Search over explanations and compatible products
+
+### What you will learn
+
+Treat a hypothesis or a product configuration as the chosen object.
+
+### Choose a feature that explains the labels
+
+This toy learner chooses one feature. Every positive example must have it and every negative example must lack it. Only stripes separates the two examples. Larger decision trees and rule-learning projects search a richer hypothesis space.
+
+```elixir
+result =
+  Clingo.solve!(
+    ~S"""
+    feature(stripes;round).
+    positive(sample1). negative(sample2).
+    has(sample1,stripes). has(sample1,round). has(sample2,round).
+    1 { hypothesis(Feature) : feature(Feature) } 1.
+    :- hypothesis(Feature), positive(Example), not has(Example,Feature).
+    :- hypothesis(Feature), negative(Example), has(Example,Feature).
+    #show hypothesis/1.
+    """,
+    models: :all
+  )
+
+[%{shown: ["hypothesis(stripes)"]}] = result.models
+Course.display(result)
+```
+
+### Generate a product and enforce compatibility
+
+Choose one frame and one motor. The compact frame cannot use the heavy motor, so three products remain. Unlike the hypothesis example, this model checks compatibility of chosen components rather than agreement with training labels.
+
+```elixir
+result =
+  Clingo.solve!(
+    ~S"""
+    frame(compact;cargo). motor(light;heavy).
+    1 { fitted_frame(Frame) : frame(Frame) } 1.
+    1 { fitted_motor(Motor) : motor(Motor) } 1.
+    :- fitted_frame(compact), fitted_motor(heavy).
+    #show fitted_frame/1. #show fitted_motor/1.
+    """,
+    models: :all
+  )
+
+3 = length(result.models)
+true = Enum.all?(result.models, &(length(&1.shown) == 2))
+Course.display(result)
+```
+
+### Try it yourself
+
+Add has(sample2,stripes). to the learner. Separately remove the incompatibility constraint from configuration.
+
+<details>
+<summary>Hint and expected result</summary>
+
+No one-feature classifier now separates the examples. With no component incompatibility, the product model has four configurations.
+
+</details>
+
+## Learn a propositional classifier
+
+Exercise files: [instance-06-03.lp](../assets/propositional/instances/instance-06-03.lp) · [propositional.lp](../assets/propositional/propositional.lp) · [instance-06-03.json](../assets/propositional/solutions/instance-06-03.json).
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/propositional", __DIR__))
+```
+
+Construct propositional formulas over the supplied Boolean attributes and evaluate them on every labelled example. Use exactly the requested formula size, counting attributes and connectives as nodes. Maximize correctly classified examples, and preserve the supplied connective-order symmetry restrictions.
+
+Complete the starter encoding before comparing its projected models with the supplied solution data.
+
+### Keep the data contract
+
+The instance supplies `attribute/1`, `example/2`, `has/2` and `size`. Read the template for the formula-node representation and preserve its show signature. Start by evaluating one hand-written formula before searching over formulas.
+
+### Develop and check the encoding
+
+Complete the editable encoding below. Compare its shown atom sets with the JSON answers in `solutions`; `optimal_cost` records a proven optimum when present. Download your edits before cleanup.
+
+```elixir
+~S"""
+#show for/3.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance-06-03.lp")])
+|> Course.display()
+```
+
+### Check boundary cases
+
+Test the smallest instance first, then check each derived relation. Compare projected model sets and, when optimizing, proven costs.
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Learn a binary decision tree
+
+Exercise files: [decision-trees.lp](../assets/decision-trees/decision-trees.lp) · [instance-06-05.lp](../assets/decision-trees/instances/instance-06-05.lp) · [instance-06-05.json](../assets/decision-trees/solutions/instance-06-05.json).
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/decision-trees", __DIR__))
+```
+
+Construct a tree with the requested odd number of nodes that classifies every training example. Internal nodes test attributes and leaves carry class labels. Do not repeat an attribute along a root-to-leaf path or give two sibling leaves the same class.
+
+Complete the starter encoding before comparing its projected models with the supplied solution data.
+
+### Keep the data contract
+
+Read `example/2`, `holds/2` and `n`. Show `edge/2`, `decision/2` and `positive/1`. Node 1 is the root; children form consecutive, increasing ID pairs. The lower child is the false branch, and earlier parents receive earlier child pairs.
+
+### Develop and check the encoding
+
+Complete the editable encoding below. Compare its shown atom sets with the JSON answers in `solutions`; `optimal_cost` records a proven optimum when present. Download your edits before cleanup.
+
+```elixir
+Course.archive(workdir, "decision-trees.zip")
+```
+
+```elixir
+~S"""
+node(1..n).
+#show edge/2.
+#show decision/2.
+#show positive/1.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance-06-05.lp")], models: :all)
+|> Course.display()
+```
+
+### Check boundary cases
+
+Test the smallest instance first, then check each derived relation. Compare projected model sets and, when optimizing, proven costs.
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Learn an acyclic rule system
+
+Exercise files: [acyclic-programs.lp](../assets/acyclic-programs/acyclic-programs.lp) · [instance-006-4-2-0.lp](../assets/acyclic-programs/instances/instance-006-4-2-0.lp) · [instance-006-4-2-0.json](../assets/acyclic-programs/solutions/instance-006-4-2-0.json).
+
+```elixir
+workdir =
+  Course.workspace(Path.expand("../assets/acyclic-programs", __DIR__))
+```
+
+Learn a bounded normal program that separates positive and negative training examples. Its atom-dependency graph must have no cycle, including dependencies through negated body atoms. Auxiliary atom 1 is the positive-class output. Classify every training example correctly. Among correct encodings, minimize the number of rules first and then the total number of body literals.
+
+Complete the starter encoding before comparing its projected models with the supplied solution data.
+
+### Keep the data contract
+
+Inputs are `attribute/1`, `example/2`, `has/2` and the program/body size bounds. Outputs use `head/2` and `body/3`, with signs 1 and -1. Rule IDs and auxiliary IDs must be contiguous; preserve the supplied symmetry convention.
+
+### Develop and check the encoding
+
+Complete the editable encoding below. Compare its shown atom sets with the JSON answers in `solutions`; `optimal_cost` records a proven optimum when present. Download your edits before cleanup.
+
+```elixir
+~S"""
+#show head/2.
+#show body/3.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/instance-006-4-2-0.lp")])
+|> Course.display()
+```
+
+### Check boundary cases
+
+Test the smallest instance first, then check each derived relation. Compare projected model sets and, when optimizing, proven costs.
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```
+
+## Read a COOM product description
+
+COOM describes a product domain before translation into ASP. Read a description in three layers: its component hierarchy, each component’s feature domains, and the restrictions relating feature values.
+
+### Components and features
+
+A product names the root of the hierarchy. Structures describe reusable kinds of component. Fields attach child components with lower and upper cardinalities; enumerations give finite alternatives for feature values. Attributes belong to a particular component context, so the same feature name on two component types need not refer to the same value.
+
+### Restrictions and derived values
+
+Combination tables specify allowed or forbidden tuples. A requirement rules out assignments that fail a relation. Conditions make a restriction applicable only in its stated context. Defaults supply proposed values; distinguish these from mandatory requirements. Calculations derive numerical values from other features. Parent/context references allow a component to refer to related components without treating their attributes as global names.
+
+### Inspect before translating
+
+Read the example files in [the COOM instances](../assets/configuration/instances), then compare [their generated ASP facts](../assets/configuration/instances). The [fact vocabulary](03-learning-and-configuration.livemd#understand-configuration-facts) explains the encoding boundary. The Livebooks solve those facts with native clingo, but do not execute the COOM parser. Preserve its actual input syntax when extending a product description; this summary does not define a replacement DSL.
+
+## Understand configuration facts
+
+The parser output describes a configuration problem as data rather than solving it. `structure/1` declares component kinds; the included generated bike facts use `"ROOT"` as their root context. `feature/5` records a feature’s context, name, type and minimum/maximum cardinality. Enumeration and attribute facts specify legal values and their component context.
+
+A constraint’s representation records both its operands and the relation between them. Keep operand paths relative to their specified context; a feature name alone can be ambiguous. Bounds belong to the declaration they accompany and must not be treated as a global count.
+
+Use [the generated ASP instances](../assets/configuration/instances) as concrete input-format references. In the basic bike instance each wheel occurs exactly once, both draw from the same finite type domain, and the equality requirement forces their values to agree. The solver’s `value/2` atoms represent a completed assignment; the declaration facts themselves are not a solution.
+
+When extending the encoding, first support the constructs used by the smallest instance, then add each extra construct exercised by the larger examples. Check both missing-value and incompatible-value cases. This lesson uses the supplied generated facts and does not implement a COOM parser.
+
+## Configure a product from compatible parts
+
+Exercise files: [configuration.lp](../assets/configuration/configuration.lp) · [bike-1-basic.lp](../assets/configuration/instances/bike-1-basic.lp) · [bike-2-extended.lp](../assets/configuration/instances/bike-2-extended.lp) · [bike-1-basic.json](../assets/configuration/solutions/bike-1-basic.json) · [bike-2-extended.json](../assets/configuration/solutions/bike-2-extended.json) · [bike-1-basic.coom](../assets/configuration/instances/bike-1-basic.coom).
+
+```elixir
+workdir = Course.workspace(Path.expand("../assets/configuration", __DIR__))
+```
+
+A product configuration selects components and feature values while satisfying compatibility constraints. A partially specified configuration should be extendable to a complete one, or produce an explanation of the conflict. The small bike instance has two wheels whose types must agree; its four permitted wheel types give four complete configurations.
+
+The cells inspect the COOM description, generated ASP facts and basic configuration rules. Native clingo solves the ASP. The generated ASP facts are the solver input; this lesson does not implement a COOM parser or a product UI.
+
+```elixir
+Course.read(workdir, "instances/bike-1-basic.coom") |> IO.puts()
+```
+
+### Extend the configuration encoding
+
+Use the instances in `instances` to extend `configuration.lp`. The output contract is `value/2`. Make the rules reusable across products, rather than hard-coding the bike example.
+
+```elixir
+Course.read(workdir, "configuration.lp") |> IO.puts()
+```
+
+```elixir
+result =
+  Clingo.solve!(
+    files: [
+      Path.join(workdir, "configuration.lp"),
+      Path.join(workdir, "instances/bike-1-basic.lp")
+    ],
+    models: :all
+  )
+
+expected = Course.read(workdir, "solutions/bike-1-basic.json") |> JSON.decode!()
+true = result.exhausted
+true = Enum.sort(Enum.map(result.models, &Enum.sort(&1.shown))) == expected["models"]
+Course.display(result)
+```
+
+### Design the interaction
+
+Extend the domain encoding for a product of your choice. Use assumptions or external inputs for selections, reject incompatible combinations, and define how to explain a conflict. Keep UI design outside the solver encoding.
+
+### Test complete configurations
+
+The basic instance above checks its complete projected model set against the JSON answers. Use the same comparison for the extended instance after completing the encoding. Preserve the chosen cardinality convention. A blank or partial template may be satisfiable without representing a valid configuration.
+
+```elixir
+Course.archive(workdir, "configuration.zip")
+```
+
+Download edited files before workspace cleanup. The extended starter below returns eight configurations because it ignores the `combinations/3` and `allow/3` compatibility table. Implement that table: support must be `True` for W14 or W16 and `False` for W18 or W20. The expected answers contain the four valid configurations.
+
+```elixir
+~S"""
+{ value(F,V) : option(T,V) } = 1 :- feature(_,F,T,_,_).
+:- behavior((S,C)), require((S,C),B), not holds_binary(B).
+holds_binary(B) :- binary(_,B,Left,"=",Right), value(Left,LV), value(Right,RV), LV = RV.
+#show value/2.
+"""
+|> Clingo.solve!(files: [Path.join(workdir, "instances/bike-2-extended.lp")], models: :all)
+|> Course.display()
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```

@@ -1,0 +1,147 @@
+[
+  {
+    "function": "clingo_parse_term",
+    "argument": "logger",
+    "data": "logger_data",
+    "callback_data_indices": {
+      "logger": 2
+    }
+  },
+  {
+    "function": "clingo_control_new",
+    "argument": "logger",
+    "data": "logger_data",
+    "callback_data_indices": {
+      "logger": 2
+    }
+  },
+  {
+    "function": "clingo_control_ground",
+    "argument": "ground_callback",
+    "data": "ground_callback_data",
+    "callback_data_indices": {
+      "ground_callback": 4
+    }
+  },
+  {
+    "function": "clingo_control_solve",
+    "argument": "notify",
+    "data": "data",
+    "callback_data_indices": {
+      "notify": 2
+    }
+  },
+  {
+    "function": "clingo_control_register_propagator",
+    "argument": "propagator",
+    "data": "data",
+    "callback_data_indices": {
+      "init": 1,
+      "propagate": 3,
+      "undo": 3,
+      "check": 1,
+      "decide": 3
+    }
+  },
+  {
+    "function": "clingo_control_register_observer",
+    "argument": "observer",
+    "data": "data",
+    "callback_data_indices": {
+      "init_program": 1,
+      "begin_step": 0,
+      "end_step": 0,
+      "rule": 5,
+      "weight_rule": 6,
+      "minimize": 3,
+      "project": 2,
+      "output_atom": 2,
+      "output_term": 3,
+      "external": 2,
+      "assume": 2,
+      "heuristic": 6,
+      "acyc_edge": 4,
+      "theory_term_number": 2,
+      "theory_term_string": 2,
+      "theory_term_compound": 4,
+      "theory_element": 5,
+      "theory_atom": 4,
+      "theory_atom_with_guard": 6
+    }
+  },
+  {
+    "function": "clingo_ast_parse_string",
+    "argument": "callback",
+    "data": "callback_data",
+    "callback_data_indices": {
+      "callback": 1
+    }
+  },
+  {
+    "function": "clingo_ast_parse_string",
+    "argument": "logger",
+    "data": "logger_data",
+    "callback_data_indices": {
+      "logger": 2
+    }
+  },
+  {
+    "function": "clingo_ast_parse_files",
+    "argument": "callback",
+    "data": "callback_data",
+    "callback_data_indices": {
+      "callback": 1
+    }
+  },
+  {
+    "function": "clingo_ast_parse_files",
+    "argument": "logger",
+    "data": "logger_data",
+    "callback_data_indices": {
+      "logger": 2
+    }
+  },
+  {
+    "function": "clingo_ast_unpool",
+    "argument": "callback",
+    "data": "callback_data",
+    "callback_data_indices": {
+      "callback": 1
+    }
+  },
+  {
+    "function": "clingo_options_add",
+    "argument": "parse",
+    "data": "data",
+    "callback_data_indices": {
+      "parse": 1
+    }
+  },
+  {
+    "function": "clingo_main",
+    "argument": "application",
+    "data": "data",
+    "callback_data_indices": {
+      "program_name": 0,
+      "version": 0,
+      "message_limit": 0,
+      "main": 3,
+      "logger": 2,
+      "printer": 3,
+      "register_options": 1,
+      "validate_options": 0
+    }
+  },
+  {
+    "function": "clingo_register_script",
+    "argument": "script",
+    "data": "data",
+    "callback_data_indices": {
+      "execute": 2,
+      "call": 6,
+      "callable": 2,
+      "main": 1,
+      "free": 0
+    }
+  }
+]

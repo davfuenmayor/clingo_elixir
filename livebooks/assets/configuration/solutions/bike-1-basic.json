@@ -1,0 +1,23 @@
+{
+  "status": "satisfiable",
+  "exhausted": true,
+  "optimal_cost": null,
+  "models": [
+    [
+      "value(\"frontWheel\",\"W14\")",
+      "value(\"rearWheel\",\"W14\")"
+    ],
+    [
+      "value(\"frontWheel\",\"W16\")",
+      "value(\"rearWheel\",\"W16\")"
+    ],
+    [
+      "value(\"frontWheel\",\"W18\")",
+      "value(\"rearWheel\",\"W18\")"
+    ],
+    [
+      "value(\"frontWheel\",\"W20\")",
+      "value(\"rearWheel\",\"W20\")"
+    ]
+  ]
+}

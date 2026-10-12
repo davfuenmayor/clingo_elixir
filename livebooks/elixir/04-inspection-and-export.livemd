@@ -1,0 +1,139 @@
+# Inspection, ASPIF and native export
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Copy symbolic atom information, inspect incremental ASPIF, export grounded programs and solve DIMACS input through the wrapper.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Inspect atoms and exchange grounded programs](#inspect-atoms-and-exchange-grounded-programs)
+- [Inspect ASPIF across incremental steps](#inspect-aspif-across-incremental-steps)
+
+## Inspect atoms and exchange grounded programs
+
+### What you will learn
+
+Distinguish copied inspection, ASPIF export, reification and DIMACS input.
+
+### Copy atom information before closing
+
+Inspection exposes grounded symbolic atoms with solver literals and fact/external flags. The returned data remain readable after closure. Literal numbers identify this grounding and must not be treated as persistent IDs across controls.
+
+```elixir
+atoms =
+  Clingo.with_control(fn control ->
+    Clingo.Control.add!(control, "fixed. {optional}. #external input.")
+    Clingo.Control.ground!(control)
+    Clingo.Inspection.symbolic_atoms!(control)
+  end)
+
+by_name = Map.new(atoms, &{Clingo.Symbol.format!(&1.symbol), &1})
+true = by_name["fixed"].fact
+true = by_name["input"].external
+true = is_integer(by_name["optional"].literal)
+Enum.sort(Map.keys(by_name))
+```
+
+### Export a program without searching it
+
+ASPIF is a grounded program format. Reified output describes that program as ordinary facts for a meta-interpreter. Solving reified facts alone does not reconstruct the original answers. This example checks an ASPIF round trip; it only inspects the reification.
+
+```elixir
+program = "{permit}. admitted :- permit. #show admitted/0."
+aspif = Clingo.Ground.to_string!(program)
+reified = Clingo.Ground.to_string!(program, format: :reify)
+true = String.starts_with?(aspif, "asp 1 0 0")
+true = String.contains?(reified, "rule(")
+original = Clingo.solve!(program, models: :all)
+round_trip = Clingo.solve!(aspif, models: :all)
+
+true =
+  Enum.sort(Enum.map(original.models, & &1.shown)) ==
+    Enum.sort(Enum.map(round_trip.models, & &1.shown))
+
+IO.puts(reified)
+```
+
+### Read a tiny CNF instance natively
+
+The DIMACS clauses require variable 1 and allow either truth value for variable 2. The adapter presents true variables as v(N), giving two models. No command-line solver is involved.
+
+```elixir
+result =
+  Clingo.Dimacs.solve!("p cnf 2 2
+1 0
+1 2 0
+",
+    models: :all
+  )
+
+[["v(1)"], ["v(1)", "v(2)"]] = Enum.sort(Enum.map(result.models, & &1.shown))
+Course.display(result)
+```
+
+### Try it yourself
+
+Change the first DIMACS clause to -1 0. Work out the second clause before running.
+
+<details>
+<summary>Hint and expected result</summary>
+
+The first clause forces variable 1 false. The clause 1 2 then forces variable 2 true, so the only shown answer is v(2).
+
+</details>
+
+## Inspect ASPIF across incremental steps
+
+```elixir
+workdir =
+  Course.workspace()
+```
+
+Ground export exposes the program passed to the solver. In an incremental workflow, each added part contributes a new step rather than requiring a fresh process. Inspect the available ASPIF examples and distinguish atom definitions, output directives and step boundaries.
+
+Native `Clingo.Ground.to_string!` handles ordinary exports; use scoped controls for solving related program parts. Numeric identifiers are implementation details and should not become expected answer labels.
+
+```elixir
+Course.write(workdir, "example.lp", ~S"""
+dom(1..2).
+a(Item) :- dom(Item).
+b(Item) :- not a(Item), dom(Item).
+{ c(Item) } :- dom(Item).
+d(Item) :- not c(Item), dom(Item).
+e(Item); f(Item); g(Item) :- c(Item), d(Item), dom(Item).
+{ e(Item); f(Item); g(Item) } :- c(Item), d(Item), dom(Item).
+h :- 1 { e(Item); f(Item) }.
+i :- 1 { e(Item); f(Item) } 1.
+:- h, i.
+#show (e(Item),f(Item),g(Item)) : e(Item), f(Item), g(Item).
+#minimize{ 1@3,Item : e(Item); 2@3,Item : f(Item); 3,Item : g(Item)}.
+#external j. [true]
+#heuristic e(Item) : c(Item). [1,level]
+#project e/1.
+""")
+```
+
+```elixir
+Clingo.Ground.to_string!(files: [Path.join(workdir, "example.lp")])
+|> IO.puts()
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```

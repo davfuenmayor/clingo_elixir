@@ -1,0 +1,998 @@
+# Choices, cardinalities and constraints
+
+```elixir
+Mix.install([
+  {:clingo_elixir, path: Path.expand("../..", __DIR__)},
+  {:kino, "== 0.19.0"}
+])
+
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+```
+
+Generate candidates, filter them, and compare bounded choices with recursive support. Finish with file-based experiments.
+
+Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+
+[Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
+
+- [Generate candidates, reject violations](#generate-candidates-reject-violations)
+- [Make atoms optional](#make-atoms-optional)
+- [Combine choices with positive recursion](#combine-choices-with-positive-recursion)
+- [Filter candidate models](#filter-candidate-models)
+- [Bound a choice](#bound-a-choice)
+- [Combine bounds and conditions](#combine-bounds-and-conditions)
+- [Generate and filter structured choices](#generate-and-filter-structured-choices)
+- [Choices, consequences and constraints](#choices-consequences-and-constraints)
+
+## Generate candidates, reject violations
+
+### What you will learn
+
+Separate choice rules from integrity constraints.
+
+### Choose exactly one option
+
+A choice rule creates alternatives; the lower and upper bound both equal one. The integrity constraint rejects the unavailable person. Two complete assignments remain.
+
+```elixir
+result =
+  Clingo.solve!(
+    ~S"""
+    person(ada;ben;cy).
+    1 { assigned(Person) : person(Person) } 1.
+    :- assigned(ada).
+    #show assigned/1.
+    """,
+    models: :all
+  )
+
+true = result.exhausted
+[["assigned(ben)"], ["assigned(cy)"]] = Enum.sort(Enum.map(result.models, & &1.shown))
+Course.display(result)
+```
+
+### Disjoin heads, not body conditions
+
+In a rule body, commas mean that all conditions must hold. A semicolon in a disjunctive head permits alternatives. With no other support, the following positive disjunction has two minimal stable models. Use separate rules when either of two bodies should derive the same head.
+
+```elixir
+result =
+  Clingo.solve!(
+    ~S"""
+    lamp; lantern.
+    light :- lamp.
+    light :- lantern.
+    #show lamp/0.
+    #show lantern/0.
+    """,
+    models: :all
+  )
+
+[["lamp"], ["lantern"]] = Enum.sort(Enum.map(result.models, & &1.shown))
+Course.display(result)
+```
+
+### Try it yourself
+
+Allow at most one assigned person by changing the lower bound from 1 to 0. How many assignments survive the constraint?
+
+<details>
+<summary>Hint and expected result</summary>
+
+There are three: assign Ben, assign Cy, or assign nobody. The upper bound still prevents selecting both.
+
+</details>
+
+## Make atoms optional
+
+A choice head permits its atoms to be selected. Other rules can still require consequences or eliminate choices. Enumerate all models to see the allowed combinations.
+
+The programs below are independent variations. Predict each answer set before running the cell. Edit one program in the list and compare its row again; answer-set order has no meaning.
+
+```elixir
+programs = [
+  ~S"""
+  { a }.
+  """,
+  ~S"""
+  {a} :- b.
+  b.
+  """,
+  ~S"""
+  { a }.
+  b :- a.
+  c :- not a.
+  """,
+  ~S"""
+  { a }.
+  b :- a.
+  b :- not a.
+  """,
+  ~S"""
+  { a }.
+  { b }.
+  """,
+  ~S"""
+  { a } :- c.
+  { b } :- d.
+  c.
+  d :- c.
+  """,
+  ~S"""
+  { a }.
+  { b } :- a.
+  """,
+  ~S"""
+  { a }.
+  { b } :- c.
+  c :- a.
+  """,
+  ~S"""
+  { a }.
+  { b } :- a.
+  { c } :- not a.
+  """,
+  ~S"""
+  { a }.
+  { b } :- d.
+  { c } :- not d.
+  d :- a.
+  """,
+  ~S"""
+  { a; b }.
+  c :- not a, not b.
+  d :- a, b.
+  """,
+  ~S"""
+  { a; b }.
+  c :- not a, b.
+  d :- a, not b.
+  """,
+  ~S"""
+  { a; b }.
+  b :- a.
+  a :- b.
+  """,
+  ~S"""
+  { a; b; c }.
+  b :- a.
+  a :- c.
+  c :- b.
+  """,
+  ~S"""
+  { a; b }.
+  b :- a.
+  a :- b.
+  { c } :- not a, not b.
+  """,
+  ~S"""
+  { a; b }.
+  b :- a.
+  a :- b.
+  { c } :- a, b.
+  """
+]
+
+programs
+|> Enum.with_index(1)
+|> Enum.map(fn {program, index} ->
+  result = Clingo.solve!(program, models: :all)
+
+  %{
+    example: index,
+    program: program,
+    shown_sets: inspect(Enum.sort(Enum.map(result.models, & &1.shown))),
+    status: result.status,
+    exhausted: result.exhausted
+  }
+end)
+|> Kino.DataTable.new()
+```
+
+## Combine choices with positive recursion
+
+Separate the optional choice from the consequences it supports. Positive recursion propagates support but does not independently justify unsupported atoms.
+
+The programs below are independent variations. Predict each answer set before running the cell. Edit one program in the list and compare its row again; answer-set order has no meaning.
+
+```elixir
+programs = [
+  ~S"""
+  { a } :- a.
+  """,
+  ~S"""
+  { a } :- a, b.
+  b.
+  """,
+  ~S"""
+  { a } :- b.
+  { b } :- a.
+  """,
+  ~S"""
+  { a } :- b, c.
+  { b } :- a, c.
+  c :- d.
+  """,
+  ~S"""
+  { a } :- b.
+  { b } :- a.
+  b.
+  """,
+  ~S"""
+  { a } :- b.
+  { b } :- a.
+  b :- c.
+  c :- not d.
+  """,
+  ~S"""
+  { a } :- b.
+  { b } :- a.
+  b.
+  c :- a.
+  """,
+  ~S"""
+  { a } :- b, d.
+  { b } :- a.
+  b :- d.
+  c :- b, not a.
+  d.
+  """,
+  ~S"""
+  { a } :- b.
+  { b } :- a.
+  { b }.
+  { c } :- a.
+  """,
+  ~S"""
+  { a } :- b.
+  { b } :- a.
+  { a }.
+  { c } :- not b.
+  """,
+  ~S"""
+  { a } :- b.
+  { b } :- c.
+  { c } :- a.
+  { a }.
+  """,
+  ~S"""
+  { a } :- b, c.
+  { b } :- c.
+  { c } :- a.
+  { c }.
+  """,
+  ~S"""
+  { a } :- b.
+  { b } :- a.
+  { c } :- d.
+  { d } :- c.
+  { c }.
+  b :- d.
+  """,
+  ~S"""
+  { a } :- b.
+  { b } :- a.
+  { c } :- d.
+  { d } :- c.
+  c.
+  { b } :- d.
+  """,
+  ~S"""
+  a :- b.
+  b :- a.
+  { c } :- d.
+  { d } :- c.
+  { c }.
+  b :- d.
+  """,
+  ~S"""
+  a :- b.
+  b :- a.
+  { c } :- d.
+  { d } :- c.
+  c.
+  { b } :- d.
+  """
+]
+
+programs
+|> Enum.with_index(1)
+|> Enum.map(fn {program, index} ->
+  result = Clingo.solve!(program, models: :all)
+
+  %{
+    example: index,
+    program: program,
+    shown_sets: inspect(Enum.sort(Enum.map(result.models, & &1.shown))),
+    status: result.status,
+    exhausted: result.exhausted
+  }
+end)
+|> Kino.DataTable.new()
+```
+
+## Filter candidate models
+
+A headless rule rejects a candidate whenever all its body conditions hold. Compare the same program before and after each constraint, and identify the eliminated candidates.
+
+The programs below are independent variations. Predict each answer set before running the cell. Edit one program in the list and compare its row again; answer-set order has no meaning.
+
+```elixir
+programs = [
+  ~S"""
+  { a }.
+  :- a.
+  """,
+  ~S"""
+  { a }.
+  :- not a.
+  """,
+  ~S"""
+  { a }.
+  b :- a.
+  :- not b.
+  """,
+  ~S"""
+  { a }.
+  b :- not a.
+  :- b.
+  """,
+  ~S"""
+  { a }.
+  b :- a.
+  c :- not a.
+  :- a, b.
+  :- not a, c.
+  """,
+  ~S"""
+  { a }.
+  b :- not a.
+  c :- a.
+  :- not a, not b.
+  :- a, c.
+  """,
+  ~S"""
+  { a; b }.
+  c :- a, not b.
+  d :- not a, b.
+  :- c.
+  :- d.
+  """,
+  ~S"""
+  { a; b }.
+  :- a, not b.
+  :- not a, b.
+  """,
+  ~S"""
+  { a } :- b.
+  { b } :- c.
+  { c } :- a.
+  { a }.
+  :- a, c.
+  """,
+  ~S"""
+  { a } :- b, c.
+  { b } :- c.
+  { c } :- a.
+  { c }.
+  :- not a.
+  """,
+  ~S"""
+  { a; b; c }.
+  :- a, not b.
+  :- not a, c.
+  :- b, not c.
+  """,
+  ~S"""
+  { a; b; c }.
+  :- not a, b.
+  :- a, not c.
+  :- not b, c.
+  """,
+  ~S"""
+  { a; b }.
+  a :- b.
+  b :- a.
+  :- a, b.
+  """,
+  ~S"""
+  { a; b }.
+  :- not a, b.
+  :- not b, a.
+  :- a, b.
+  """,
+  ~S"""
+  a :- not b.
+  b :- not c.
+  """,
+  ~S"""
+  { a } :- not b.
+  :- not a, not b.
+  { b } :- not c.
+  :- not b, not c.
+  """,
+  ~S"""
+  :- not a.
+  """,
+  ~S"""
+  :- not a.
+  a.
+  """,
+  ~S"""
+  :-.
+  """,
+  ~S"""
+  :-.
+  a.
+  """
+]
+
+programs
+|> Enum.with_index(1)
+|> Enum.map(fn {program, index} ->
+  result = Clingo.solve!(program, models: :all)
+
+  %{
+    example: index,
+    program: program,
+    shown_sets: inspect(Enum.sort(Enum.map(result.models, & &1.shown))),
+    status: result.status,
+    exhausted: result.exhausted
+  }
+end)
+|> Kino.DataTable.new()
+```
+
+## Bound a choice
+
+The bounds around a choice restrict the number of selected literals. Enumerate the models and check those counts directly, including the lower and upper boundaries.
+
+The programs below are independent variations. Predict each answer set before running the cell. Edit one program in the list and compare its row again; answer-set order has no meaning.
+
+```elixir
+programs = [
+  ~S"""
+  { a; b }.
+  c :-   { a; b } 0.
+  d :- 1 { a; b }.
+  e :- 1 { a; b } 1.
+  f :- 2 { a; b }.
+  """,
+  ~S"""
+  { a; b }.
+    :-   { a; b } 0.
+  d :- 1 { a; b }.
+  e :- 1 { a; b } 1.
+    :- 2 { a; b }.
+  """,
+  ~S"""
+  { a; b }.
+  c :-   { not a; not b } 0.
+  d :- 1 { not a; not b }.
+  e :- 1 { not a; not b } 1.
+  f :- 2 { not a; not b }.
+  """,
+  ~S"""
+  { a; b }.
+  c :-   { a; not b } 0.
+  d :- 1 { a; not b }.
+  e :- 1 { a; not b } 1.
+  f :- 2 { a; not b }.
+  """,
+  ~S"""
+  { a; b; c }.
+  :-   { a; b; c } 0.
+  :- 2 { a; b; c } 2.
+  """,
+  ~S"""
+  { a; b; c }.
+  :- 3 { a; b; c }.
+  :- 1 { a; b; c } 1.
+  """,
+  ~S"""
+  { a; b; c }.
+  :- not 1 { a; b; c } 2.
+  """,
+  ~S"""
+  { a; b; c }.
+  :- not { a; b; c } 1.
+  """,
+  ~S"""
+  { a; b }.
+  c :- 1 { a; b } 1.
+  :- not c.
+  """,
+  ~S"""
+  { a; b }.
+  c :- not 1 { a; b } 1.
+  :- not c.
+  """,
+  ~S"""
+  { a; b }.
+  { c } :- 1 { a; b } 1.
+  :- not 2 { a; b; c } 2.
+  """,
+  ~S"""
+  { a ; b }.
+  { c } :- { a; b } 0.
+  :- not 1 { a; b; c } 1.
+  """,
+  ~S"""
+  { a; b }.
+  :- not 1 { a; b } 1.
+  b :- a.
+  a :- b.
+  """,
+  ~S"""
+  { a; b }.
+  :- not 1 { a; b } 1.
+  :- 1 { a; b } 1.
+  """,
+  ~S"""
+  { a; b }.
+  c :- 1 { a }, { b } 0.
+  d :- 2 { not a; b }.
+  :- 1 { c }.
+  :- 1 { d }.
+  """
+]
+
+programs
+|> Enum.with_index(1)
+|> Enum.map(fn {program, index} ->
+  result = Clingo.solve!(program, models: :all)
+
+  %{
+    example: index,
+    program: program,
+    shown_sets: inspect(Enum.sort(Enum.map(result.models, & &1.shown))),
+    status: result.status,
+    exhausted: result.exhausted
+  }
+end)
+|> Kino.DataTable.new()
+```
+
+## Combine bounds and conditions
+
+Read each choice bound together with the rule body that activates it. Compare programs that look similar but constrain different sets or activate under different conditions.
+
+The programs below are independent variations. Predict each answer set before running the cell. Edit one program in the list and compare its row again; answer-set order has no meaning.
+
+```elixir
+programs = [
+  ~S"""
+  { a; b }.
+  :- not 1 { a; b } 1.
+  """,
+  ~S"""
+  1 { a; b } 1.
+  """,
+  ~S"""
+  { a; b; c }.
+  :- not 2 { a; b; c }.
+  """,
+  ~S"""
+  2 { a; b; c }.
+  """,
+  ~S"""
+  { a; b }.
+  :- not 1 { a; b } 1.
+  { b; c }.
+  :- not 1 { b; c } 1.
+  """,
+  ~S"""
+  1 { a; b } 1.
+  1 { b; c } 1.
+  """,
+  ~S"""
+  { a; b }.
+  :- not { a; b } 1.
+  { b; c }.
+  :- not 1 { b; c }.
+  """,
+  ~S"""
+  { a; b } 1.
+  1 { b; c }.
+  """,
+  ~S"""
+  1 { a; b } 1.
+  c :- a.
+  d :- b.
+  :- { c; d } 0.
+  """,
+  ~S"""
+  1 { a; b } 1.
+  c :- a.
+  d :- b.
+  :- 1 { c ; d }.
+  """,
+  ~S"""
+  1 { a; b }.
+  1 { c; d } 1 :- a.
+  :- b, 2 { a; c; d }.
+  """,
+  ~S"""
+  1 { a; b }.
+  1 { c; d } 1 :- a.
+  :- not 2 { a; b; c; d }.
+  """,
+  ~S"""
+  { a; b } 1.
+  1 { b; c } :- a.
+  """,
+  ~S"""
+  1 { a; b } 1.
+  1 { b; c } 1 :- a.
+  """,
+  ~S"""
+  1 { a } 1 :- { b } 0.
+  1 { b } 1 :- { c } 0.
+  """
+]
+
+programs
+|> Enum.with_index(1)
+|> Enum.map(fn {program, index} ->
+  result = Clingo.solve!(program, models: :all)
+
+  %{
+    example: index,
+    program: program,
+    shown_sets: inspect(Enum.sort(Enum.map(result.models, & &1.shown))),
+    status: result.status,
+    exhausted: result.exhausted
+  }
+end)
+|> Kino.DataTable.new()
+```
+
+## Generate and filter structured choices
+
+Use the domain to generate optional atoms, then apply constraints to rule out combinations. Check that every remaining shown set satisfies both the choice bounds and the restrictions.
+
+The programs below are independent variations. Predict each answer set before running the cell. Edit one program in the list and compare its row again; answer-set order has no meaning.
+
+```elixir
+programs = [
+  ~S"""
+  { a(Item) : b(Item) }.
+  b(1). b(2).
+  """,
+  ~S"""
+  { a(Item) : b(Item) }.
+  b(1). b(2). b(3).
+  """,
+  ~S"""
+  1 { a(Item) : b(Item) } 1.
+  b(1). b(2).
+  c(Item) :- a(Item).
+  """,
+  ~S"""
+  1 { a(Item) : b(Item) } 1.
+  b(1). b(2). b(3).
+  c(Item) :- a(Item).
+  """,
+  ~S"""
+  1 { a(Item,Other) : b(Item), c(Other) } 1.
+  b(1). b(2). c(3). c(4).
+  d(Item,Other) :- a(Item,Other).
+  #show d/2.
+  """,
+  ~S"""
+  { a(Item,Other) : b(Item), c(Other) } 1.
+  b(1). b(2). c(3). c(4).
+  d(Item,Other) :- a(Item,Other).
+  #show d/2.
+  """,
+  ~S"""
+  { a(Item) : b(Item) }.
+  b(1). b(2).
+  :- b(Item), Other=Item-1, a(Other).
+  """,
+  ~S"""
+  { a(Item) : b(Item) }.
+  b(1). b(2). b(3).
+  :- b(Item), Other=Item-1, a(Other).
+  """,
+  ~S"""
+  1 { a(Item) : b(Item) } 1.
+  b(1). b(2).
+  c(Item) :- a(Item).
+  :- b(Item), not a(Item).
+  """,
+  ~S"""
+  1 { a(Item) : b(Item) } 1.
+  b(1).
+  c(Item) :- a(Item).
+  :- b(Item), not a(Item).
+  """,
+  ~S"""
+  1 { a(Item,Other) : b(Item) } 1 :- c(Other).
+  b(1). b(2). c(3). c(4).
+  d(Item,Other) :- a(Item,Other).
+  #show d/2.
+  """,
+  ~S"""
+  1 { a(Item,Other) : b(Item) } 1 :- c(Other).
+  b(1). b(2). b(3). c(4).
+  d(Item,Other) :- a(Item,Other).
+  #show d/2.
+  """
+]
+
+programs
+|> Enum.with_index(1)
+|> Enum.map(fn {program, index} ->
+  result = Clingo.solve!(program, models: :all)
+
+  %{
+    example: index,
+    program: program,
+    shown_sets: inspect(Enum.sort(Enum.map(result.models, & &1.shown))),
+    status: result.status,
+    exhausted: result.exhausted
+  }
+end)
+|> Kino.DataTable.new()
+```
+
+## Choices, consequences and constraints
+
+```elixir
+workdir = Course.workspace()
+```
+
+The examples separate three modeling operations: choose candidate atoms, derive consequences, and reject candidates that violate a condition. File cells write to a disposable workspace; subsequent solves load those files through the NIF.
+
+A rule with a normal head derives that atom when its body holds. A headless rule is an integrity constraint: it excludes models where its body holds. A choice rule makes alternatives available without requiring every alternative to be true. Read the displayed models as sets, regardless of their enumeration order.
+
+### Follow the small examples
+
+Run each file-writing cell before its solve. Compare the models after adding a rule or changing the domain.
+
+```elixir
+Course.write(workdir, "example1.lp", ~S"""
+{a}.
+b :- a.
+:- not b.
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "example1.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+~S"""
+{a}.
+b :- a.
+:- not b.
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "example2.lp", ~S"""
+{a}.
+ b :- a.
+{c}:- not a.
+ d :- not b, not c.
+   :- c, not a.
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "example2.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+~S"""
+{a}.
+{b}.
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+```elixir
+~S"""
+{b}.
+{a}.
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+### Use variables over a domain
+
+A variable stands for ground terms supplied by the program. Adding domain facts can create additional choices, while a constraint can eliminate choices that were previously allowed.
+
+```elixir
+Course.write(workdir, "example3.lp", ~S"""
+ n(1).
+{a(Item)}:- n(Item).
+ b(Item) :- a(Item).
+      :- n(Item), not b(Item).
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "example3.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+~S"""
+n(1,2).
+{a(Item,Other)}:- n(Item,Other).
+ b(Item)   :- a(Item,Other).
+        :- n(Item,Other), not b(Item).
+"""
+|> Clingo.solve!(models: :all)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "example4.lp", ~S"""
+ n(1).   n(2).
+{a(Item)}:- n(Item).
+ b(Item) :- a(Item).
+      :- n(Item), not b(Item).
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "example4.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "example5.lp", ~S"""
+{a}.
+b :- c.
+c :- a.
+a :- b.
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "example5.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "example6.lp", ~S"""
+{a}.
+{b} :- c.
+{c} :- a.
+{a} :- b.
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "example6.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "traveling.lp", ~S"""
+start(a).
+road(a,b). road(b,c). road(c,d). road(d,a).
+visit(Other) :- road(Item,Other), start(Item).
+visit(Other) :- road(Item,Other), visit(Item).
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "traveling.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "numbers.lp", ~S"""
+next(1,2). next(2,3). next(3,4). next(4,5).
+odd(1).
+even(N) :-  odd(M), next(M,N).
+ odd(N) :- even(M), next(M,N).
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "numbers.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "negative_recursion.lp", ~S"""
+{a}.
+b :- not c.
+c :- not a.
+a :- not b.
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "negative_recursion.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "positive_recursion.lp", ~S"""
+{a}.
+b :- c.
+c :- a.
+a :- b.
+d :- e, not a.
+e :- d, not b.
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "positive_recursion.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "example7.lp", ~S"""
+{a}.
+ b  :- c.
+{c} :- a.
+{a} :- b.
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "example7.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "example8.lp", ~S"""
+{a}.
+{b} :- a.
+ c  :- b.
+ d  :- c.
+{e} :- d.
+ f  :- e.
+ g  :- f.
+ a  :- g.
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "example8.lp")], models: :all)
+|> Course.display()
+```
+
+```elixir
+Course.write(workdir, "flying.lp", ~S"""
+ start(a). flight(a,b). road(b,c).
+road(c,d). flight(d,e). road(e,a).
+  visit(Item)   :- start(Item).
+  visit(Other)   :- road(Item,Other), visit(Item).
+{ fly(Item,Other) } :- flight(Item,Other), visit(Item).
+  visit(Other)   :- fly(Item,Other).
+#show visit/1.
+#show fly/2.
+""")
+```
+
+```elixir
+Clingo.solve!(files: [Path.join(workdir, "flying.lp")], models: :all)
+|> Course.display()
+```
+
+### Workspace cleanup
+
+Save edited files before running cleanup. Rerun this section’s workspace cell to start again.
+
+```elixir
+File.rm_rf!(workdir)
+:ok
+```

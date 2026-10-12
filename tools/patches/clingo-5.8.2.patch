@@ -1,0 +1,450 @@
+--- a/libgringo/gringo/lexerstate.hh
++++ b/libgringo/gringo/lexerstate.hh
+@@ -255,11 +255,11 @@
+ template <class T> void LexerState<T>::step() { state().step(); }
+ 
+ template <class T> int32_t LexerState<T>::signed_integer() const {
+-    int32_t r = 0;
+-    int32_t s = 1;
++    uint32_t r = 0;
++    bool negative = false;
+     char *i = state().start;
+     if (i != state().cursor && *i == '-') {
+-        s = -1;
++        negative = true;
+         // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+         ++i;
+     }
+@@ -268,7 +268,7 @@
+         r *= 10;
+         r += *i - '0';
+     }
+-    return s * r;
++    return static_cast<int32_t>(negative ? 0U - r : r);
+ }
+ 
+ template <class T> uint32_t LexerState<T>::unsigned_integer() const {
+@@ -283,7 +283,7 @@
+ 
+ template <class T> int LexerState<T>::clingo_number() const {
+     int s = 0;
+-    int base = 10;
++    uint32_t base = 10;
+     if (state().cursor - state().start >= 2) {
+         if (strncmp("0b", state().start, 2) == 0) {
+             base = 2;
+@@ -296,7 +296,7 @@
+             s = 2;
+         }
+     }
+-    int r = 0;
++    uint32_t r = 0;
+     // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+     for (char *i = state().start + s; i != state().cursor; i++) {
+         r *= base;
+@@ -308,7 +308,7 @@
+             r += *i - 'a' + 10;
+         }
+     }
+-    return r;
++    return static_cast<int>(r);
+ }
+ 
+ template <class T> int LexerState<T>::line() const { return state().line; }
+--- a/libgringo/src/input/groundtermparser.cc
++++ b/libgringo/src/input/groundtermparser.cc
+@@ -54,10 +54,10 @@
+         int num = a.num();
+         switch (op) {
+             case UnOp::NEG: {
+-                return Symbol::createNum(-num);
++                return Symbol::createNum(static_cast<int>(0U - static_cast<unsigned>(num)));
+             }
+             case UnOp::ABS: {
+-                return Symbol::createNum(std::abs(num));
++                return Symbol::createNum((num < 0 ? static_cast<int>(0U - static_cast<unsigned>(num)) : num));
+             }
+             case UnOp::NOT: {
+                 return Symbol::createNum(~num);
+--- a/libgringo/src/term.cc
++++ b/libgringo/src/term.cc
+@@ -752,10 +752,10 @@
+ int eval(UnOp op, int x) {
+     switch (op) {
+         case UnOp::NEG: {
+-            return -x;
++            return static_cast<int>(0U - static_cast<unsigned>(x));
+         }
+         case UnOp::ABS: {
+-            return std::abs(x);
++            return (x < 0 ? static_cast<int>(0U - static_cast<unsigned>(x)) : x);
+         }
+         case UnOp::NOT: {
+             return ~x;
+@@ -1834,10 +1834,10 @@
+         int num = value.num();
+         switch (op_) {
+             case UnOp::NEG: {
+-                return Symbol::createNum(-num);
++                return Symbol::createNum(static_cast<int>(0U - static_cast<unsigned>(num)));
+             }
+             case UnOp::ABS: {
+-                return Symbol::createNum(std::abs(num));
++                return Symbol::createNum((num < 0 ? static_cast<int>(0U - static_cast<unsigned>(num)) : num));
+             }
+             case UnOp::NOT: {
+                 return Symbol::createNum(~num);
+--- a/libgringo/src/symbol.cc
++++ b/libgringo/src/symbol.cc
+@@ -538,7 +538,7 @@
+     assert(type() == SymbolType::Fun || type() == SymbolType::Num);
+     switch (symbolType_(rep_)) {
+         case SymbolType_::Num: {
+-            return Symbol::createNum(-num());
++            return Symbol::createNum(static_cast<int>(0U - static_cast<unsigned>(num())));
+         }
+         case SymbolType_::IdP: {
+             return Symbol(setUpper(static_cast<uint16_t>(SymbolType_::IdN), rep_));
+--- a/libgringo/src/input/groundtermlexer.xh
++++ b/libgringo/src/input/groundtermlexer.xh
+@@ -32,7 +32,7 @@
+ /*!re2c
+     DEC        = "0"|([1-9][0-9]*);
+     HEX        = "0x"([0-9A-Fa-f]+);
+-    OCT        = "0o"([1-7]+);
++    OCT        = "0o"([0-7]+);
+     BIN        = "0b"([0-1]+);
+     NUMBER     = DEC | HEX | OCT | BIN;
+     ANY        = [\000-\377];
+--- a/libgringo/src/input/nongroundlexer.xch
++++ b/libgringo/src/input/nongroundlexer.xch
+@@ -37,7 +37,7 @@
+ 
+     DEC        = "0"|([1-9][0-9]*);
+     HEX        = "0x"([0-9A-Fa-f]+);
+-    OCT        = "0o"([1-7]+);
++    OCT        = "0o"([0-7]+);
+     BIN        = "0b"([0-1]+);
+     NUMBER     = DEC | HEX | OCT | BIN;
+     ANY        = [\000-\377];
+--- a/libgringo/gen/src/input/groundtermlexer.hh
++++ b/libgringo/gen/src/input/groundtermlexer.hh
+@@ -450,6 +450,7 @@
+ yy38:
+ 	yych = *++YYCURSOR;
+ 	switch (yych) {
++		case '0':
+ 		case '1':
+ 		case '2':
+ 		case '3':
+@@ -512,6 +513,7 @@
+ 	if (YYLIMIT <= YYCURSOR) YYFILL(1);
+ 	yych = *YYCURSOR;
+ 	switch (yych) {
++		case '0':
+ 		case '1':
+ 		case '2':
+ 		case '3':
+--- a/libgringo/gen/src/input/nongroundlexer.hh
++++ b/libgringo/gen/src/input/nongroundlexer.hh
+@@ -593,6 +593,7 @@
+ yy50:
+ 	yych = *++YYCURSOR;
+ 	switch (yych) {
++		case '0':
+ 		case '1':
+ 		case '2':
+ 		case '3':
+@@ -691,6 +692,7 @@
+ 	if (YYLIMIT <= YYCURSOR) YYFILL(1);
+ 	yych = *YYCURSOR;
+ 	switch (yych) {
++		case '0':
+ 		case '1':
+ 		case '2':
+ 		case '3':
+@@ -2321,6 +2323,7 @@
+ yy175:
+ 	yych = *++YYCURSOR;
+ 	switch (yych) {
++		case '0':
+ 		case '1':
+ 		case '2':
+ 		case '3':
+@@ -2512,6 +2515,7 @@
+ 	if (YYLIMIT <= YYCURSOR) YYFILL(1);
+ 	yych = *YYCURSOR;
+ 	switch (yych) {
++		case '0':
+ 		case '1':
+ 		case '2':
+ 		case '3':
+@@ -5127,6 +5131,7 @@
+ yy331:
+ 	yych = *++YYCURSOR;
+ 	switch (yych) {
++		case '0':
+ 		case '1':
+ 		case '2':
+ 		case '3':
+@@ -5327,6 +5332,7 @@
+ 		case '\r':
+ 		case ' ': goto yy327;
+ 		case '.': goto yy329;
++		case '0':
+ 		case '1':
+ 		case '2':
+ 		case '3':
+@@ -6446,6 +6452,7 @@
+ yy410:
+ 	yych = *++YYCURSOR;
+ 	switch (yych) {
++		case '0':
+ 		case '1':
+ 		case '2':
+ 		case '3':
+@@ -6541,6 +6548,7 @@
+ 	if (YYLIMIT <= YYCURSOR) YYFILL(1);
+ 	yych = *YYCURSOR;
+ 	switch (yych) {
++		case '0':
+ 		case '1':
+ 		case '2':
+ 		case '3':
+--- a/clasp/clasp/logic_program.h
++++ b/clasp/clasp/logic_program.h
+@@ -629,6 +629,7 @@
+ 	VarVec      frozen_;      // list of frozen atoms
+ 	LpLitVec    assume_;      // set of assumptions
+ 	NonHcfSet   nonHcfs_;     // set of non-hcf sccs
++	PrgAtom     trueAtom_;    // per-program sentinel: preprocessing mutates it
+ 	TheoryData* theory_;      // optional map of theory data
+ 	AtomRange   input_;       // input atoms of current step
+ 	int         statsId_;     // which stats to update (0 or 1)
+--- a/clasp/src/logic_program.cpp
++++ b/clasp/src/logic_program.cpp
+@@ -166,10 +166,8 @@
+ /////////////////////////////////////////////////////////////////////////////////////////
+ // class LogicProgram
+ /////////////////////////////////////////////////////////////////////////////////////////
+-static PrgAtom trueAtom_g(0, false);
+ static const uint32 falseId = PrgNode::noNode;
+ static const uint32 bodyId  = PrgNode::noNode + 1;
+-static bool init_trueAtom_g = (trueAtom_g.setEq(0), true);
+ inline bool isAtom(Id_t uid) { return Potassco::atom(Potassco::lit(uid)) < bodyId; }
+ inline bool isBody(Id_t uid) { return Potassco::atom(Potassco::lit(uid)) >= bodyId; }
+ inline Id_t nodeId(Id_t uid) { return Potassco::atom(Potassco::lit(uid)) - (isAtom(uid) ? 0 : bodyId); }
+@@ -227,8 +225,8 @@
+ 	bool     outState;
+ };
+ 
+-LogicProgram::LogicProgram() : theory_(0), input_(1, UINT32_MAX), statsId_(0), auxData_(0), incData_(0) {
+-	POTASSCO_ASSERT(init_trueAtom_g, "invalid static init");
++LogicProgram::LogicProgram() : trueAtom_(0, false), theory_(0), input_(1, UINT32_MAX), statsId_(0), auxData_(0), incData_(0) {
++	trueAtom_.setEq(0);
+ 	index_ = new IndexData();
+ 	auxData_ = new Aux();
+ }
+@@ -285,7 +283,7 @@
+ }
+ void LogicProgram::deleteAtoms(uint32 start) {
+ 	for (AtomList::const_iterator it = atoms_.begin() + start, end = atoms_.end(); it != end; ++it) {
+-		if (*it != &trueAtom_g) { delete *it; }
++		if (*it != &trueAtom_) { delete *it; }
+ 	}
+ }
+ bool LogicProgram::doStartProgram() {
+@@ -1014,7 +1012,7 @@
+ 				if      (bIt->isBody()) { getBody(bIt->node())->markHeadsDirty(); }
+ 				else if (bIt->isDisj()) { getDisj(bIt->node())->markDirty(); }
+ 			}
+-			atoms_[*it] = &trueAtom_g;
++			atoms_[*it] = &trueAtom_;
+ 			delete a;
+ 		}
+ 		else {
+--- a/clasp/clasp/shared_context.h
++++ b/clasp/clasp/shared_context.h
+@@ -927,6 +927,7 @@
+ 	ProblemStats stats_;         // problem statistics
+ 	VarVec       varInfo_;       // varInfo[v] stores info about variable v
+ 	ImpGraph     btig_;          // binary-/ternary implication graph
++	BasicSatConfig defaultConfig_; // per-context mutable default
+ 	Config       config_;        // active configuration
+ 	SolverVec    solvers_;       // solvers associated with this context
+ 	Minimize*    mini_;          // pointer to set of weak constraints
+--- a/clasp/src/shared_context.cpp
++++ b/clasp/src/shared_context.cpp
+@@ -776,14 +776,13 @@
+ /////////////////////////////////////////////////////////////////////////////////////////
+ // SharedContext
+ /////////////////////////////////////////////////////////////////////////////////////////
+-static BasicSatConfig config_def_s;
+ SharedContext::SharedContext()
+ 	: mini_(0), progress_(0), lastTopLevel_(0) {
+ 	static_assert(sizeof(Share) == sizeof(uint32_t), "unexpected size");
+ 	// sentinel always present
+ 	setFrozen(addVar(Var_t::Atom, 0), true);
+ 	stats_.vars.num = 0;
+-	config_ = &config_def_s;
++	config_ = &defaultConfig_;
+ 	config_.release();
+ 	pushSolver();
+ }
+@@ -853,7 +852,7 @@
+ 
+ void SharedContext::setConfiguration(Configuration* c, Ownership_t::Type ownership) {
+ 	bool own = ownership == Ownership_t::Acquire;
+-	if (c == 0) { c = &config_def_s; own = false; }
++	if (c == 0) { c = &defaultConfig_; own = false; }
+ 	report(Event::subsystem_facade);
+ 	if (config_.get() != c) {
+ 		config_ = c;
+--- a/clasp/clasp/solve_algorithms.h
++++ b/clasp/clasp/solve_algorithms.h
+@@ -272,7 +272,7 @@
+ private:
+ 	typedef SingleOwnerPtr<BasicSolve> SolvePtr;
+ 	SolvePtr     solve_;
+-	volatile int term_;
++	Atomic_t<int>::type term_;
+ };
+ 
+ //! Options for controlling solving.
+--- a/clasp/src/solve_algorithms.cpp
++++ b/clasp/src/solve_algorithms.cpp
+@@ -415,14 +415,14 @@
+ /////////////////////////////////////////////////////////////////////////////////////////
+ namespace {
+ struct InterruptHandler : public MessageHandler {
+-	InterruptHandler(Solver* s, volatile int* t) : solver(s), term(t) {
++	InterruptHandler(Solver* s, Atomic_t<int>::type* t) : solver(s), term(t) {
+ 		if (s && t) { s->addPost(this); }
+ 	}
+ 	~InterruptHandler()  { if (solver) { solver->removePost(this); solver = 0; } }
+ 	bool handleMessages(){ return !*term || (solver->setStopConflict(), false); }
+ 	bool propagateFixpoint(Solver&, PostPropagator*){ return InterruptHandler::handleMessages(); }
+ 	Solver*       solver;
+-	volatile int* term;
++	Atomic_t<int>::type* term;
+ };
+ }
+ SequentialSolve::SequentialSolve(const SolveLimits& limit)
+--- a/clasp/src/clasp_facade.cpp
++++ b/clasp/src/clasp_facade.cpp
+@@ -472,7 +472,18 @@
+ 	void reset();
+ 	void prepareEnum(SharedContext& ctx, EnumMode mode, const EnumOptions& options);
+ 	bool interrupt(int sig) {
+-		if (solving()) { return active->interrupt(sig); }
++#if CLASP_HAS_THREADS
++		mt::unique_lock<mt::mutex> lock(activeMutex);
++#endif
++		if (solving()) {
++			SolveStrategy* current = active;
++			// Ordinary shutdown is serialized by the caller. Do not hold the
++			// publication mutex while cancellation waits for the solver thread.
++#if CLASP_HAS_THREADS
++			if (sig == SolveStrategy::SIGCANCEL) { lock.unlock(); }
++#endif
++			return current->interrupt(sig);
++		}
+ 		if (!qSig && sig != SolveStrategy::SIGCANCEL) { qSig = sig; }
+ 		return false;
+ 	}
+@@ -500,6 +511,9 @@
+ 	EnumPtr        en;
+ 	AlgoPtr        algo;
+ 	SolveStrategy* active;
++#if CLASP_HAS_THREADS
++	mt::mutex      activeMutex; // publication/removal versus asynchronous interrupt
++#endif
+ 	BoundArray     costs;
+ 	BoundArray     lower;
+ 	SafeIntType    qSig;
+@@ -517,7 +531,15 @@
+ 	}
+ }
+ void ClaspFacade::SolveData::reset() {
+-	if (active)     { active->interrupt(SolveStrategy::SIGCANCEL); active->release(); active = 0; }
++	SolveStrategy* previous;
++	{
++#if CLASP_HAS_THREADS
++		mt::lock_guard<mt::mutex> lock(activeMutex);
++#endif
++		previous = active;
++		active = 0;
++	}
++	if (previous) { previous->interrupt(SolveStrategy::SIGCANCEL); previous->release(); }
+ 	if (algo.get()) { algo->resetSolve(); }
+ 	if (en.get())   { en->reset(); }
+ 	prepared = solved = false;
+@@ -1024,7 +1046,12 @@
+ 
+ ClaspFacade::SolveHandle ClaspFacade::solve(SolveMode_t p, const LitVec& a, EventHandler* eh) {
+ 	prepare();
+-	solve_->active = SolveStrategy::create(p, *this, *solve_->algo.get());
++	{
++#if CLASP_HAS_THREADS
++		mt::lock_guard<mt::mutex> lock(solve_->activeMutex);
++#endif
++		solve_->active = SolveStrategy::create(p, *this, *solve_->algo.get());
++	}
+ 	solve_->active->start(eh, a);
+ 	return SolveHandle(solve_->active);
+ }
+--- a/clasp/clasp/statistics.h
++++ b/clasp/clasp/statistics.h
+@@ -147,10 +147,7 @@
+ 		StatisticObject(*at)(ObjPtr, const char*);
+ 		const char* (*key)(ObjPtr, uint32);
+ 	};
+-	static uint32 registerType(const I* vtab) {
+-		types_s.push_back(vtab);
+-		return static_cast<uint32>(types_s.size() - 1);
+-	}
++	static uint32 registerType(const I* vtab);
+ 	template <class T, double(*f)(const T*)>
+ 	static uint32 registerValue();
+ 	template <class T>
+--- a/clasp/src/statistics.cpp
++++ b/clasp/src/statistics.cpp
+@@ -29,6 +29,9 @@
+ #include POTASSCO_EXT_INCLUDE(unordered_map)
+ #include POTASSCO_EXT_INCLUDE(unordered_set)
+ #include <stdexcept>
++#if CLASP_HAS_THREADS
++#include <clasp/mt/mutex.h>
++#endif
+ #include <cstring>
+ #ifdef _MSC_VER
+ #pragma warning (disable : 4996)
+@@ -40,6 +43,18 @@
+ StatisticObject::I      StatisticObject::empty_s(Potassco::Statistics_t::Empty);
+ StatisticObject::RegVec StatisticObject::types_s(1, &StatisticObject::empty_s);
+ 
++#if CLASP_HAS_THREADS
++namespace {
++mt::mutex& statisticTypesMutex() { static mt::mutex mutex; return mutex; }
++}
++#endif
++uint32 StatisticObject::registerType(const I* vtab) {
++#if CLASP_HAS_THREADS
++	mt::lock_guard<mt::mutex> lock(statisticTypesMutex());
++#endif
++	types_s.push_back(vtab);
++	return static_cast<uint32>(types_s.size() - 1);
++}
+ StatisticObject::StatisticObject() : handle_(0) {}
+ StatisticObject::StatisticObject(const void* obj, uint32 type) {
+ 	handle_  = static_cast<uint64>(type) << 48;
+@@ -53,6 +68,9 @@
+ 	return static_cast<uint32>(handle_ >> 48);
+ }
+ const StatisticObject::I* StatisticObject::tid() const {
++#if CLASP_HAS_THREADS
++	mt::lock_guard<mt::mutex> lock(statisticTypesMutex());
++#endif
+ 	return types_s.at(static_cast<uint32>(handle_ >> 48));
+ }
+ StatisticObject::Type StatisticObject::type() const {
