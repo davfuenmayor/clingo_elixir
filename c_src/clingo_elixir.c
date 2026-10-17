@@ -159,9 +159,8 @@ typedef struct {
 #define CLINGO_MAX_ALLOC (64u * 1024u * 1024u)
 #endif
 #define MAX_ALLOC ((size_t)CLINGO_MAX_ALLOC)
-#if !defined(__linux__) || !defined(__x86_64__)
-#error "This binding currently supports Linux x86_64"
-#endif
+_Static_assert(sizeof(void *) == 8 && sizeof(size_t) == 8,
+               "clingo_elixir requires a 64-bit runtime");
 
 typedef struct Session Session;
 typedef struct Cursor Cursor;
@@ -2198,6 +2197,7 @@ static int load(ErlNifEnv *e, void **priv, ERL_NIF_TERM info) {
     (void)priv;
     (void)info;
     int major, minor, revision;
+    initialize_globals();
     clingo_version(&major, &minor, &revision);
     if (major != 5 || minor != 8 || revision != 2 || !ast_metadata_matches())
         return -1;

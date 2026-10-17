@@ -2,6 +2,9 @@
 
 Nineteen notebooks in five topic folders bring worked examples, prediction exercises and larger projects together. Start with [facts and rules](language/01-facts-and-rules.livemd) to learn ASP, or [Getting started](elixir/01-getting-started.livemd) if you already know ASP and want the Elixir API. Use the [concept and API index](CONCEPTS.md) to find a particular technique.
 
+New to Livebook? Open the [launch guide](intro.livemd) for installation,
+Windows/Unix launch commands, and your first setup check.
+
 ## Choose a route
 
 For a first course, follow the six language notebooks in order, then graphs, grids and planning. The classification and configuration notebook applies the same ideas to different search spaces. The Elixir notebooks cover inputs, results, streams, incremental controls and inspection. Continue to extensions when you need callbacks, theory constraints, meta-programming or preferences.
@@ -78,15 +81,28 @@ configuration lesson demonstrates the ordinary model-set comparison.
 
 ## Run locally
 
-Keep the repository layout intact. Use a local Elixir 1.20 / OTP 29 Livebook runtime and the native build tools listed in the [project README](../README.md). Each notebook has one setup cell installing this checkout and Kino 0.19.0. The first installation needs network access.
+Follow the [launch guide](intro.livemd), then choose **Evaluate all** in any
+lesson using the default **Standalone** runtime. Setup needs Elixir 1.20.x /
+OTP 29+ and a [platform with an available bundle](../README.md#platforms-and-installation).
+It installs this checkout and Kino 0.19.0; no compiler, clingo installation,
+or path configuration is needed. The first Kino installation needs network access.
 
-Evaluate top to bottom. Edit ASP in a code cell, predict the result and reevaluate dependent cells. Worked examples check their stated answers; update those checks when changing a program. Exercise comparison tables keep independent variations in one editable list and show each program’s answer sets, status and exhaustion flag.
+Every lesson starts with an **Introduction** and **Preliminaries**. The latter
+runs a real query and displays `ready`, so you can confirm setup before starting
+the examples. Keep notebooks in their repository folders so relative paths work.
 
-`Clingo.solve!` returns ordinary Elixir data; the display pipeline only presents it. `models: :all` enumerates models, and `files: [...]` loads files directly. All solving uses the wrapper. No notebook executes a CLI or shell. Theory syntax inspection does not install a theory solver.
+Edit ASP in a cell, predict the result, and reevaluate that cell and its
+dependants. Worked examples check their stated answers; update those checks
+when changing a program. Each ordinary solve closes its native control;
+scoped examples manage incremental state within one cell.
 
-File-based sections create their own disposable workspace. Run that section’s workspace cell before its file cells, download your edits before cleanup, and rerun the workspace cell for fresh files. The small `assets/` directory contains only linked lesson inputs, starter encodings and selected expected answers. Scheduling lessons share one instance; files written in cells are generated in the workspace. The shared `support/course.exs` handles files and presentation.
+File-based sections create disposable workspaces. Run their workspace cell
+before editing files, download changes you want to keep, and then run cleanup.
+All solving uses the wrapper directly. The shared `support/course.exs` handles
+files and presentation; it does not replace the solver API.
 
 ## Edit and test
+
 
 Edit the `.livemd` files directly. After adding, renaming or moving a notebook, refresh the Markdown navigation:
 

@@ -1,9 +1,10 @@
 # Validation
 
-The supported target is Linux x86_64 with glibc, Elixir 1.20.x, OTP 29.x and
-pinned, patched clingo 5.8.2. Release checks run on Debian 13 / glibc 2.41,
-Elixir 1.20.4, OTP 29 and GCC 14.2. Other platforms and optional Python/Lua
-builds are unvalidated.
+See [MULTIPLATFORM.md](../MULTIPLATFORM.md) for bundle construction, target
+status, platform test procedures, and remaining native-runner checks. The
+reference native host is Debian 13 / glibc 2.41, Elixir 1.20.4, OTP 29 and
+GCC 14.2, using pinned, patched clingo 5.8.2. Optional Python/Lua builds
+remain unvalidated.
 
 ## Reproduce checks
 
@@ -45,13 +46,15 @@ Allocation probes inject wrapper heap, ERTS environment/resource and upstream
 construction failures in separate VMs, checking failure propagation and recovery.
 These are bounded probes, not exhaustive allocation-failure coverage.
 
-Package acceptance builds the actual Hex source archive, compiles it through a
-clean upstream bootstrap, relocates the application and exercises native solving,
+Package acceptance builds the actual Hex archive, installs its checked bundle
+with build tools absent from `PATH`, relocates the application and exercises native solving,
 parallel controls, integer boundaries, grounding callbacks, ASTs, ASPIF/reification,
 DIMACS and application output. The minimal runtime has no libffi, Mix, compiler,
-CMake or Python. Build tools are required only when compiling the source package.
+CMake or Python. Normal package installation needs no native build tools;
+explicit source builds and contributor probes do.
 
-The 19 Livebooks span five topics with 390 executable cells and 60 linked assets.
+The launch guide introduces 19 lessons spanning five topics with 409 executable
+cells and 60 linked assets.
 Native tests check lesson claims, model sets and links. Separate tools evaluate
 cells and import/evaluate fresh real Livebook sessions. Their reports record
 content fingerprints, versions and full versus subset coverage. See

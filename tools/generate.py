@@ -5,6 +5,11 @@ from pathlib import Path
 root = Path(__file__).resolve().parents[1]
 nodes = json.loads(subprocess.check_output(['clang', '-Xclang', '-ast-dump=json', '-fsyntax-only', str(root/'c_src/clingo.h')]))['inner']
 aliases = {n['name']: n['type']['qualType'] for n in nodes if n['kind']=='TypedefDecl'}
+# Keep the checked-in inventory independent of the generator host's libc and
+# LP64/LLP64 typedef spelling. The supported runtimes all have 64-bit size_t.
+aliases.update({'int32_t': 'int', 'uint32_t': 'unsigned int',
+                'int64_t': 'long long', 'uint64_t': 'unsigned long long',
+                'size_t': 'uint64_t'})
 records = {f"struct {n['name']}": n for n in nodes if n['kind']=='RecordDecl' and n.get('name','').startswith('clingo_')}
 types, ids = [], {}
 def qualifiers(s):
@@ -121,8 +126,11 @@ for i,f in enumerate(functions):
         f['name'],f['name'],f['result'],len(f['args']),i,f['variadic'],
         f['result_qualifiers'],'NULL' if f['variadic'] else f'direct_{i}',flags))
 lines.extend(['};','static Global globals[] = {'])
-for g in globals_:lines.append('{"%s",%d,&%s},'%(g['name'],g['type'],g['name']))
-lines.extend(['};','static Constant constants[] = {'])
+for g in globals_:lines.append('{"%s",%d,NULL},'%(g['name'],g['type']))
+# Imported DLL data addresses are resolved at load time on Windows.
+lines.extend(['};','static void initialize_globals(void) {'])
+for i,g in enumerate(globals_):lines.append('  globals[%d].address = &%s;'%(i,g['name']))
+lines.extend(['}','static Constant constants[] = {'])
 for e in enums:lines.append('{"%s",%s},'%(e,e))
 lines.extend(['{"CLINGO_VERSION_MAJOR",CLINGO_VERSION_MAJOR},{"CLINGO_VERSION_MINOR",CLINGO_VERSION_MINOR},{"CLINGO_VERSION_REVISION",CLINGO_VERSION_REVISION}','};'])
 (root/'c_src/api.inc').write_text('\n'.join(lines)+'\n')

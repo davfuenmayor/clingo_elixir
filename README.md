@@ -34,24 +34,45 @@ own lifetimes. See [native ownership](docs/NATIVE_OWNERSHIP.md) for allocation
 scopes and limits.
 The selected release is **5.8.2**, commit `a99ffb2a58293c68b28fcc283a1d1c9ccad900fe`, verified against the [stable releases](https://github.com/potassco/clingo/releases) on 3 October 2026. The exact [release header](https://github.com/potassco/clingo/blob/v5.8.2/libclingo/clingo.h) is vendored and authoritative. The NIF refuses another clingo version. The [5.8 C documentation](https://potassco.org/clingo/c-api/5.8/) explains semantics, but its version macros describe 5.8.0; the pinned header determines this binding's inventory.
 
-Supported environment: Linux x86_64 with glibc, Elixir 1.20.x and Erlang/OTP 29.x. Release validation targets Debian 13 (glibc 2.41), Elixir 1.20.4, OTP 29 / ERTS 17.1, GCC 14.2 and patched clingo 5.8.2. Other Linux distributions/toolchains are unvalidated. Other operating systems and architectures are not supported in this iteration. NIF hot upgrades while resources or registered scripts are alive are unsupported; restart the VM for native code upgrades. Python and Lua are disabled by default; `CLINGO_PYTHON=ON` / `CLINGO_LUA=ON` enable optional upstream builds when their development dependencies are installed (not validated here); the specialized scripting adapter remains available.
+## Platforms and installation
 
-## Build and test
+Requires **64-bit Elixir 1.20.x and OTP 29+**. Mix selects and verifies a bundled
+clingo 5.8.2 runtime and NIF. Available bundles need no system clingo, compiler,
+or source download, including in Livebook.
 
-Build prerequisites on Debian:
+| Platform | Status |
+| --- | --- |
+| Linux x86-64 | glibc 2.38+; bundled; full suite and all 19 Livebooks pass natively |
+| Linux ARM64 | glibc 2.38+; bundled; NIF and CLI smoke checks pass under QEMU; full suite pending |
+| Windows x86-64 | Windows 10+ intended; bundled; full suite and notebook cell checks pass under Wine; native Windows validation pending |
+| macOS Intel / Apple Silicon | macOS 12+ intended; build path prepared; bundles and native validation pending |
+
+Musl/Alpine, 32-bit BEAM, and Windows ARM64 are excluded. macOS is not yet
+available out of the box. See [MULTIPLATFORM.md](MULTIPLATFORM.md) for build
+and test instructions, recorded results, and remaining work.
 
 ```sh
-apt-get update
-apt-get install -y build-essential cmake git pkg-config
-cd clingo_elixir
-./tools/bootstrap.sh
 mix test
 CLINGO_RETAINED_COVERAGE=1 mix test
 ```
 
-`bootstrap.sh` reuses the adjacent `clingo-5.8.2` checkout when present, otherwise clones upstream, and verifies the pinned commit, applies the [documented upstream fixes](tools/patches/README.md) to a private source export, builds its shared library and installs it locally. The original checkout remains unchanged. To reuse the provided release checkout, run `CLINGO_SOURCE=/workspace/clingo-5.8.2 ./tools/bootstrap.sh`. `BUILD_JOBS` controls parallel compilation. The Mix compiler runs Make, verifies the installed header and copies `libclingo.so.4` into `priv`; the NIF loads that copy using `$ORIGIN`. Running the library requires the usual C/C++ runtime libraries. There is no libffi dependency; typed generated adapters cover callbacks, function pointers and AST constructors. A CLI driver is built for specialized application use; Livebooks never invoke it. No Hex packages are needed.
+From another project, add `{:clingo_elixir, path: "/path/to/clingo_elixir"}`.
+The package includes a small CLI driver for specialized application use;
+Livebooks use the NIF directly. Python and Lua are disabled in bundles;
+Elixir scripting hooks remain available. Restart the VM after native upgrades.
 
-For use from another Mix project, add `{:clingo_elixir, path: "/path/to/clingo_elixir"}` to its dependencies after bootstrapping. `CLINGO_PREFIX` can select another local installation of **exactly 5.8.2**, with the identical public header and matching upstream patch record. Build such a prefix with `CLINGO_INSTALL_DIR=/path/to/prefix tools/bootstrap.sh`. Changing build flags requires `make clean` before rebuilding. Remove `_native` when switching upstream checkout paths.
+### Build or bring your own bundle
+
+Run `tools/build-runtime.sh`, then `mix clean` and `mix test`. On macOS install
+Xcode Command Line Tools and CMake/Ninja; on Windows use MSYS2 MINGW64 with the
+POSIX MinGW toolchain and Windows Erlang/Elixir on `PATH`. CPU tuning permits
+local performance experiments, but reliability and speed must be tested.
+
+Set `CLINGO_ELIXIR_BUNDLE` to a complete archive’s absolute native path before
+compiling or starting Livebook, with its matching `.sha256` alongside it.
+The same checksum and target checks apply. `CLINGO_PREFIX` retains the explicit
+source-development route for custom/sanitizer builds; it requires the exact
+patched header and matching patch record. See [the full build guide](MULTIPLATFORM.md).
 
 ## Capabilities and compatibility
 
@@ -90,12 +111,13 @@ File-only jobs accept options directly: `Clingo.solve!(files: [path], models: :a
 
 See [validation](docs/VALIDATION.md) and [contributor guidance](CONTRIBUTING.md).
 
-`mix hex.build` creates a source package; installing it automatically bootstraps the pinned upstream library when no `CLINGO_PREFIX` is supplied. CI covers GCC/Clang, scheduler configurations, allocation probes, packaging and a full upstream sanitizer build. No package is published automatically.
+`mix hex.build` includes the available native bundles and their notices. Installing the package extracts a checked bundle without compiling upstream. Contributor checks cover native generation, allocation probes, sanitizers, and compiler-free packaging; see [validation](docs/VALIDATION.md). No package is published automatically.
 
 Callback transport accepts at most 4,096 structural steps and nesting depth 32 per native job or reply. Oversized terms fail promptly; array writes inside callbacks are submitted in bounded chunks so they can progress even when every dirty CPU scheduler is waiting on a callback. Deeply nested job arguments and large callback return terms can still exceed this transport limit.
 
 ## Livebooks
 
+Start with the [Livebook launch guide](livebooks/intro.livemd) for first-time setup.
 The [ASP and Elixir course](livebooks/README.md) contains 19 notebooks across five topic folders, bringing worked examples and exercises together. Start with [facts and rules](livebooks/language/01-facts-and-rules.livemd) to learn ASP, or [Getting started](livebooks/elixir/01-getting-started.livemd) for the wrapper API. See the course README for setup and testing.
 
 ## License

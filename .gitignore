@@ -12,15 +12,18 @@
 /_upstream-*/
 
 # Compiled runtime assets
-/priv/*.so*
-/priv/clingo
+/priv/
 
 # Crash dumps and Python caches
 /core*
 /erl_crash.dump
+*.stackdump
 __pycache__/
 *.py[cod]
 
 # Local Elixir language-server state
 /.expert/
 /.elixir_ls/
+.DS_Store
+Thumbs.db
+Desktop.ini

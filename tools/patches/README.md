@@ -22,9 +22,10 @@ Bootstrap uses those vendored lexer tables for reproducible release builds.
 
 `tools/bootstrap.sh` verifies the clean pinned checkout, exports it into its own
 build directory, applies the patch, and records the exact patch in the installed
-prefix. It never changes the original checkout. Mix rebuilds the default prefix
-when the patch changes; an explicit `CLINGO_PREFIX` must carry the matching patch
-record. Changing the patch invalidates the private source export. Upstream
+prefix. It never changes the original checkout. The bundle builder includes
+the same patch record; an explicit `CLINGO_PREFIX` must carry the matching patch
+record. Changing the patch invalidates the private source export and requires
+rebuilding distributed bundles. Upstream
 version upgrades must review/remove this patch and reset the build directories.
 
 `test/integer_literals_test.exs` exercises every radix, both signs, boundaries,
@@ -118,3 +119,9 @@ Cross-process cancellation belongs to the wrapper: it first signals through
 call mutex. The public C cancellation method is not assumed to be safe alongside
 synchronous model retrieval or model copying. No upstream synchronous-wait patch
 is needed. The callback regression verifies that cancellation drains active search.
+
+### MinGW cross-build header spelling
+
+The private patch uses `<windows.h>` instead of `<Windows.h>` in Gringo's
+shared mutex header. The lowercase spelling supports MinGW cross-compilation
+on case-sensitive Linux filesystems and preserves native Windows semantics.

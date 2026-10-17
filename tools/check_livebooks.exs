@@ -47,6 +47,7 @@ defmodule CourseCheck do
           otp: System.otp_release(),
           kino: Application.spec(:kino, :vsn) |> to_string(),
           complete_inventory: true,
+          evaluations_per_lesson: 2,
           fingerprints: Clingo.LivebookCheck.fingerprints(root),
           notebooks: results,
           widget_checks: ["archive download after cleanup"]
@@ -58,7 +59,11 @@ defmodule CourseCheck do
     failures = Enum.filter(results, &(Map.has_key?(&1, :failure) or &1.failures != []))
     if failures != [], do: raise("Livebook cell checks failed: #{inspect(failures)}")
 
-    IO.puts("PASS #{length(results)} notebooks; pending exercises are reported separately.")
+    lessons = Enum.count(notebooks, &(&1["code_cells"] > 0))
+
+    IO.puts(
+      "PASS #{lessons} lessons evaluated twice; guides and pending exercises reported separately."
+    )
   end
 
   # Exercise the real pinned Kino event protocol, including the deferred read.
@@ -99,6 +104,16 @@ defmodule CourseCheck do
   end
 
   defp evaluate(path, notebook) do
+    results = for _ <- 1..2, do: evaluate_once(path, notebook)
+
+    %{
+      path: notebook["livebook"],
+      counts: Enum.reduce(results, %{}, &Map.merge(&2, &1.counts, fn _, a, b -> a + b end)),
+      failures: Enum.flat_map(results, & &1.failures)
+    }
+  end
+
+  defp evaluate_once(path, notebook) do
     cells =
       Regex.scan(~r/^```elixir\n(.*?)^```/ms, File.read!(path), capture: :all_but_first)
       |> List.flatten()
@@ -109,19 +124,15 @@ defmodule CourseCheck do
     # Dependencies match notebook setup. Each file-based section now creates
     # its own workspace explicitly; retain those paths for failure cleanup.
     executable = Enum.drop(cells, 1)
+    initial = {[], Code.env_for_eval(file: path), %{}, [], MapSet.new()}
 
-    {_, counts, failures, workspaces} =
+    {_, _, counts, failures, workspaces} =
       Enum.zip(executable, policies)
       |> Enum.with_index(1)
-      |> Enum.reduce({[], %{}, [], MapSet.new()}, fn {{source, policy}, index},
-                                                     {binding, counts, failures, workspaces} ->
+      |> Enum.reduce(initial, fn {{source, policy}, index},
+                                 {binding, env, counts, failures, workspaces} ->
         try do
-          {_, next} =
-            Code.eval_string(
-              "alias ASPCourse, as: Course; alias Clingo.Control\n" <> source,
-              binding,
-              file: path
-            )
+          {_, next, env} = Code.eval_quoted_with_env(Code.string_to_quoted!(source), binding, env)
 
           workspaces =
             case Keyword.get(next, :workdir) do
@@ -129,10 +140,10 @@ defmodule CourseCheck do
               dir -> MapSet.put(workspaces, dir)
             end
 
-          {next, Map.update(counts, policy, 1, &(&1 + 1)), failures, workspaces}
+          {next, env, Map.update(counts, policy, 1, &(&1 + 1)), failures, workspaces}
         rescue
           error ->
-            {binding, counts, failures ++ [%{cell: index, error: Exception.message(error)}],
+            {binding, env, counts, failures ++ [%{cell: index, error: Exception.message(error)}],
              workspaces}
         end
       end)

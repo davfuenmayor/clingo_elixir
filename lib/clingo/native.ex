@@ -2,13 +2,16 @@ defmodule Clingo.Native do
   @moduledoc false
   @on_load :load
   def load do
-    path = :filename.join(:code.priv_dir(:clingo_elixir), ~c"clingo_elixir")
+    path =
+      :code.priv_dir(:clingo_elixir)
+      |> :filename.join(~c"clingo_elixir")
+      |> :filename.nativename()
 
     case :erlang.load_nif(path, 0) do
       {:error, {reason, message}} = error ->
         IO.warn(
           "clingo_elixir could not load #{path}: #{reason}: #{message}. " <>
-            "Supported: Linux x86_64, Elixir 1.20/OTP 29, clingo 5.8.2. " <>
+            "Requires a matching 64-bit bundle, Elixir 1.20/OTP 29, clingo 5.8.2. " <>
             "Rebuild the package for this runtime and restart the VM; see README.md."
         )
 

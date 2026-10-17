@@ -5,20 +5,43 @@ Mix.install([
   {:clingo_elixir, path: Path.expand("../..", __DIR__)},
   {:kino, "== 0.19.0"}
 ])
-
-Code.require_file(Path.expand("../support/course.exs", __DIR__))
-alias ASPCourse, as: Course
-alias Clingo.Control
 ```
+
+## Introduction
 
 Reuse a control with external atoms and named program parts. Compare assumptions, permanent constraints and released inputs.
 
-Run top to bottom. Worked examples check their stated answers; update those checks when editing ASP. Exercise templates are deliberately incomplete. File-based sections create their own disposable workspace; download edits before that section’s cleanup. All solving uses the Elixir wrapper.
+Use a local Livebook **Standalone** runtime with Elixir 1.20 / OTP 29 on a
+[platform with an available bundle](../../README.md#platforms-and-installation).
+The setup cell installs this checkout, its bundled clingo runtime, and Kino.
+No separate clingo installation, compiler, or environment variables are needed.
+The first Kino installation needs network access; the examples use local data.
 
+Choose **Evaluate all**, or evaluate cells in order from the top. Worked examples
+check their stated answers; update those checks when editing ASP. Exercise
+templates are deliberately incomplete. File sections create disposable workspaces;
+download your edits before running their cleanup cell.
+
+New to Livebook? Start with the [launch guide](../intro.livemd).
 [Course contents](../README.md) · [Concept and API index](../CONCEPTS.md).
 
+- [Check your setup](#preliminaries-check-your-setup)
 - [Change inputs and ground new parts](#change-inputs-and-ground-new-parts)
 - [Reuse a control between solves](#reuse-a-control-between-solves)
+
+## Preliminaries: check your setup
+
+Evaluate this cell after setup finishes. A **satisfiable** result showing `ready`
+confirms that the bundled clingo is running inside the notebook. Each solve
+closes its own native control; this check is safe to reevaluate.
+
+```elixir
+Code.require_file(Path.expand("../support/course.exs", __DIR__))
+alias ASPCourse, as: Course
+alias Clingo.Control
+
+Clingo.solve!("ready. #show ready/0.") |> Course.display()
+```
 
 ## Change inputs and ground new parts
 

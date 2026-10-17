@@ -3,6 +3,7 @@ defmodule Clingo.LivebookCheck do
 
   # Discover executable material directly; no parallel content manifest.
   def inventory(root) do
+    root = Path.expand(root)
     directory = Path.join(root, "livebooks")
 
     for path <- Path.wildcard(Path.join(directory, "**/*.livemd")) do
@@ -45,6 +46,7 @@ defmodule Clingo.LivebookCheck do
   end
 
   def fingerprints(root) do
+    root = Path.expand(root)
     paths =
       [
         "livebooks/**/*.livemd",
@@ -52,8 +54,7 @@ defmodule Clingo.LivebookCheck do
         "livebooks/assets/**/*",
         "lib/**/*",
         "c_src/**/*",
-        "priv/*.so*",
-        "priv/clingo",
+        "priv/*",
         "mix.exs",
         "mix.lock",
         "Makefile",

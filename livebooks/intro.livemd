@@ -1,0 +1,99 @@
+# Learn answer set programming with Elixir
+
+## Introduction
+
+Nineteen guided lessons introduce answer set programming (ASP), constraint
+modeling, search, and the Elixir wrapper. Clingo grounds and solves the ASP;
+Elixir supplies inputs and presents copied results in tables.
+
+Start with **Facts, rules and alternatives** if ASP is new to you. Choose
+**Getting started with clingo_elixir** if you already know ASP. Each lesson
+contains its own setup and can be opened independently.
+
+## Open your first notebook
+
+1. Keep this repository on the same machine as your Livebook runtime. Use
+   **Elixir 1.20.x and OTP 29+**, both 64-bit, on a
+   [platform with an available bundle](../README.md#platforms-and-installation).
+   Clingo and the NIF are bundled; no separate solver or compiler is needed.
+2. If Livebook is not installed, install the version used to validate the course:
+
+   ```sh
+   mix escript.install hex livebook 0.19.9 --force
+   ```
+
+3. Open a terminal in the `clingo_elixir` project folder and start Livebook:
+
+   ```sh
+   ~/.mix/escripts/livebook server livebooks/intro.livemd
+   ```
+
+   On Windows, use PowerShell:
+
+   ```powershell
+   & "$HOME\.mix\escripts\livebook.bat" server livebooks/intro.livemd
+   ```
+
+   Open the local URL printed in the terminal if your browser does not open
+   automatically. Keep that terminal running while using the notebooks.
+4. Open [Facts, rules and alternatives](language/01-facts-and-rules.livemd) or
+   [Getting started with clingo_elixir](elixir/01-getting-started.livemd).
+   Use Livebook's default **Standalone** runtime and choose **Evaluate all**.
+5. Wait for dependency setup to finish. It installs this checkout and Kino
+   0.19.0; the first Kino installation needs network access. The
+   **Preliminaries** cell then runs a real clingo query. A **satisfiable**
+   table containing `ready` confirms that setup worked.
+
+Keep notebooks in their repository folders so setup can find the wrapper,
+presentation helper, and lesson inputs. No project-path environment variable
+is needed. The default Standalone runtime must use the Elixir/OTP versions
+above. When using a remote runtime, make the whole checkout available there.
+
+## Choose a route
+
+### Learn ASP
+
+Start with [facts and rules](language/01-facts-and-rules.livemd), then continue
+through [negation](language/02-negation-and-recursion.livemd),
+[choices and constraints](language/03-choices-and-constraints.livemd),
+[grounding and arithmetic](language/04-domains-and-grounding.livemd),
+[aggregates](language/05-aggregates-and-conditionals.livemd), and
+[optimization](language/06-optimization-and-projection.livemd).
+
+### Model a problem
+
+Explore [graphs and sets](modeling/01-graphs-and-sets.livemd),
+[grids and puzzles](modeling/02-grids-and-puzzles.livemd),
+[learning and configuration](modeling/03-learning-and-configuration.livemd),
+[planning](planning/01-actions-and-robots.livemd), and
+[scheduling](planning/02-scheduling-and-resources.livemd).
+
+### Use the Elixir API
+
+Read [Getting started](elixir/01-getting-started.livemd), then work with
+[inputs, results, and streams](elixir/02-inputs-results-and-streams.livemd),
+[incremental controls](elixir/03-incremental-solving.livemd), and
+[inspection and export](elixir/04-inspection-and-export.livemd).
+
+The [course contents](README.md) links every lesson, including the advanced
+solver extensions. The [concept and API index](CONCEPTS.md) helps you find a
+particular operation.
+
+## Work through a lesson
+
+Read the explanation, evaluate its cell, and inspect the returned models. Edit
+ASP inside an Elixir string and reevaluate that cell and its dependants. The
+**Evaluate all** action also works when starting a lesson again. Worked-answer
+checks describe the original input; update them when an edit changes the answer.
+
+Each ordinary solve closes its native control automatically. Incremental
+examples use scoped controls within one cell. File-based sections create
+editable copies of their inputs: run their workspace cell first, download
+changes you want to keep, then evaluate the cleanup cell. Rerunning the workspace
+cell gives you a fresh copy. Gated exercise cells stay disabled until you choose
+to run your completed encoding.
+
+If you update the checkout or replace a native bundle, restart the notebook
+runtime before evaluating again. Clingo remains loaded for that runtime's
+lifetime. Setup, inputs, solving, and presentation all stay local after the
+initial dependency installation.

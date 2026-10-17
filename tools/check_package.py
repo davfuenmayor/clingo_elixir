@@ -55,11 +55,15 @@ with tempfile.TemporaryDirectory(prefix='clingo-package-') as directory:
         with tarfile.open(fileobj=contents, mode='r:gz') as inner:
             assert not any('__pycache__' in item.name or item.name.endswith('.pyc') for item in inner.getmembers()), 'Python cache included in source package'
             inner.extractall(source, filter='data')
-    # Exercise automatic bootstrap with no adjacent source or reused installation.
+    # Install the checked bundle without a compiler or upstream checkout.
     env = {key: value for key, value in os.environ.items() if not key.startswith('CLINGO_')}
-    run(['mix', 'compile'], cwd=source, env=env)
-    assert (source / '_source/.git').is_dir(), 'Bootstrap did not clone its own pinned source'
-    assert (source / '_upstream/share/clingo_elixir/upstream.patch').read_bytes() == (source / 'tools/patches/clingo-5.8.2.patch').read_bytes()
+    tools = work / 'bin'
+    tools.mkdir()
+    for name in ['sh', 'elixir', 'erl', 'dirname', 'basename', 'readlink']:
+        (tools / name).symlink_to(shutil.which(name))
+    run([shutil.which('mix'), 'compile'], cwd=source, env=dict(env, PATH=str(tools)))
+    assert not (source / '_source').exists(), 'Installation fetched upstream source'
+    assert (source / 'priv/upstream.patch').read_bytes() == (source / 'tools/patches/clingo-5.8.2.patch').read_bytes()
     runtime = work / 'runtime'
     runtime.mkdir()
     app = runtime / 'apps/clingo_elixir'
@@ -131,7 +135,7 @@ with tempfile.TemporaryDirectory(prefix='clingo-package-') as directory:
     artifact.parent.mkdir(exist_ok=True)
     shutil.copy2(archive, artifact)
     archive_hash = hashlib.sha256(artifact.read_bytes()).hexdigest()
-    report = {'checked_at': datetime.now(timezone.utc).isoformat(), 'artifact': str(artifact.relative_to(root)), 'archive_sha256': archive_hash, 'source_archive': 'passed', 'clean_bootstrap': 'passed', 'integer_literal_patch': 'passed', 'relocation': 'passed', 'minimal_runtime': 'passed',
+    report = {'checked_at': datetime.now(timezone.utc).isoformat(), 'artifact': str(artifact.relative_to(root)), 'archive_sha256': archive_hash, 'bundled_archive': 'passed', 'compiler_free_install': 'passed', 'integer_literal_patch': 'passed', 'relocation': 'passed', 'minimal_runtime': 'passed',
               'libffi': 'absent', 'build_tools': 'absent', 'smoke': ['solve', 'parallel_controls', 'integer_boundaries', 'grounding_callback', 'ast', 'native_reify', 'aspif_roundtrip', 'dimacs', 'specialized_cli']}
     (root / '_build/validation/package.json').write_text(json.dumps(report, indent=2) + '\n')
 

@@ -36,7 +36,8 @@ defmodule Clingo.Ground do
         Control.solve!(control, collect: false)
       end)
 
-      File.read!(path)
+      # Native Windows text streams emit CRLF; ASPIF string parsing expects LF.
+      File.read!(path) |> String.replace("\r\n", "\n")
     after
       File.rm_rf!(directory)
     end

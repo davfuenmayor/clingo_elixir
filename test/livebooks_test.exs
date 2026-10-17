@@ -4,9 +4,9 @@ defmodule Clingo.LivebooksTest do
   Code.require_file(Path.join(@root, "support/course.exs"))
 
   test "teaching notebooks have one setup and stay within the topic budget" do
-    paths = Path.wildcard(Path.join(@root, "**/*.livemd"))
+    paths = Path.wildcard(Path.join(@root, "*/*.livemd"))
     assert length(paths) in 10..20
-    assert Path.wildcard(Path.join(@root, "*.livemd")) == []
+    assert Path.wildcard(Path.join(@root, "*.livemd")) == [Path.join(@root, "intro.livemd")]
 
     topics =
       paths

@@ -1,54 +1,54 @@
 /* Generated typed adapters; do not edit. */
-typedef void (*cb_type_25)(clingo_warning_t, const char *, void *);
-typedef bool (*cb_type_119)(const clingo_location_t *, const char *, const clingo_symbol_t *, size_t, void *, clingo_symbol_callback_t, void *);
-typedef bool (*cb_type_124)(const clingo_symbol_t *, size_t, void *);
-typedef bool (*cb_type_127)(clingo_solve_event_type_t, void *, void *, bool *);
-typedef bool (*cb_type_133)(clingo_propagate_init_t *, void *);
-typedef bool (*cb_type_134)(clingo_propagate_control_t *, const clingo_literal_t *, size_t, void *);
-typedef void (*cb_type_135)(const clingo_propagate_control_t *, const clingo_literal_t *, size_t, void *);
-typedef bool (*cb_type_136)(clingo_propagate_control_t *, void *);
-typedef bool (*cb_type_137)(clingo_id_t, const clingo_assignment_t *, clingo_literal_t, void *, clingo_literal_t *);
-typedef bool (*cb_type_144)(bool, void *);
-typedef bool (*cb_type_145)(void *);
-typedef bool (*cb_type_146)(bool, const clingo_atom_t *, size_t, const clingo_literal_t *, size_t, void *);
-typedef bool (*cb_type_147)(bool, const clingo_atom_t *, size_t, clingo_weight_t, const clingo_weighted_literal_t *, size_t, void *);
-typedef bool (*cb_type_148)(clingo_weight_t, const clingo_weighted_literal_t *, size_t, void *);
-typedef bool (*cb_type_149)(const clingo_atom_t *, size_t, void *);
-typedef bool (*cb_type_150)(clingo_symbol_t, clingo_atom_t, void *);
-typedef bool (*cb_type_151)(clingo_symbol_t, const clingo_literal_t *, size_t, void *);
-typedef bool (*cb_type_152)(clingo_atom_t, clingo_external_type_t, void *);
-typedef bool (*cb_type_153)(const clingo_literal_t *, size_t, void *);
-typedef bool (*cb_type_154)(clingo_atom_t, clingo_heuristic_type_t, int, unsigned int, const clingo_literal_t *, size_t, void *);
-typedef bool (*cb_type_155)(int, int, const clingo_literal_t *, size_t, void *);
-typedef bool (*cb_type_156)(clingo_id_t, int, void *);
-typedef bool (*cb_type_157)(clingo_id_t, const char *, void *);
-typedef bool (*cb_type_158)(clingo_id_t, int, const clingo_id_t *, size_t, void *);
-typedef bool (*cb_type_159)(clingo_id_t, const clingo_id_t *, size_t, const clingo_literal_t *, size_t, void *);
-typedef bool (*cb_type_160)(clingo_id_t, clingo_id_t, const clingo_id_t *, size_t, void *);
-typedef bool (*cb_type_161)(clingo_id_t, clingo_id_t, const clingo_id_t *, size_t, clingo_id_t, clingo_id_t, void *);
-typedef bool (*cb_type_174)(clingo_ast_t *, void *);
-typedef bool (*cb_type_183)(const char *, void *);
-typedef const char *(*cb_type_187)(void *);
-typedef unsigned int (*cb_type_188)(void *);
-typedef bool (*cb_type_190)(clingo_control_t *, const char *const *, size_t, void *);
-typedef bool (*cb_type_192)(const clingo_model_t *, clingo_default_model_printer_t, void *, void *);
-typedef bool (*cb_type_194)(clingo_options_t *, void *);
-typedef bool (*cb_type_198)(const clingo_location_t *, const char *, void *);
-typedef bool (*cb_type_199)(const clingo_location_t *, const char *, const clingo_symbol_t *, size_t, clingo_symbol_callback_t, void *, void *);
-typedef bool (*cb_type_200)(const char *, bool *, void *);
-typedef bool (*cb_type_201)(clingo_control_t *, void *);
-typedef void (*cb_type_202)(void *);
+typedef void (*cb_type_23)(clingo_warning_t, const char *, void *);
+typedef bool (*cb_type_115)(const clingo_location_t *, const char *, const clingo_symbol_t *, size_t, void *, clingo_symbol_callback_t, void *);
+typedef bool (*cb_type_120)(const clingo_symbol_t *, size_t, void *);
+typedef bool (*cb_type_123)(clingo_solve_event_type_t, void *, void *, bool *);
+typedef bool (*cb_type_129)(clingo_propagate_init_t *, void *);
+typedef bool (*cb_type_130)(clingo_propagate_control_t *, const clingo_literal_t *, size_t, void *);
+typedef void (*cb_type_131)(const clingo_propagate_control_t *, const clingo_literal_t *, size_t, void *);
+typedef bool (*cb_type_132)(clingo_propagate_control_t *, void *);
+typedef bool (*cb_type_133)(clingo_id_t, const clingo_assignment_t *, clingo_literal_t, void *, clingo_literal_t *);
+typedef bool (*cb_type_140)(bool, void *);
+typedef bool (*cb_type_141)(void *);
+typedef bool (*cb_type_142)(bool, const clingo_atom_t *, size_t, const clingo_literal_t *, size_t, void *);
+typedef bool (*cb_type_143)(bool, const clingo_atom_t *, size_t, clingo_weight_t, const clingo_weighted_literal_t *, size_t, void *);
+typedef bool (*cb_type_144)(clingo_weight_t, const clingo_weighted_literal_t *, size_t, void *);
+typedef bool (*cb_type_145)(const clingo_atom_t *, size_t, void *);
+typedef bool (*cb_type_146)(clingo_symbol_t, clingo_atom_t, void *);
+typedef bool (*cb_type_147)(clingo_symbol_t, const clingo_literal_t *, size_t, void *);
+typedef bool (*cb_type_148)(clingo_atom_t, clingo_external_type_t, void *);
+typedef bool (*cb_type_149)(const clingo_literal_t *, size_t, void *);
+typedef bool (*cb_type_150)(clingo_atom_t, clingo_heuristic_type_t, int, unsigned int, const clingo_literal_t *, size_t, void *);
+typedef bool (*cb_type_151)(int, int, const clingo_literal_t *, size_t, void *);
+typedef bool (*cb_type_152)(clingo_id_t, int, void *);
+typedef bool (*cb_type_153)(clingo_id_t, const char *, void *);
+typedef bool (*cb_type_154)(clingo_id_t, int, const clingo_id_t *, size_t, void *);
+typedef bool (*cb_type_155)(clingo_id_t, const clingo_id_t *, size_t, const clingo_literal_t *, size_t, void *);
+typedef bool (*cb_type_156)(clingo_id_t, clingo_id_t, const clingo_id_t *, size_t, void *);
+typedef bool (*cb_type_157)(clingo_id_t, clingo_id_t, const clingo_id_t *, size_t, clingo_id_t, clingo_id_t, void *);
+typedef bool (*cb_type_170)(clingo_ast_t *, void *);
+typedef bool (*cb_type_179)(const char *, void *);
+typedef const char *(*cb_type_183)(void *);
+typedef unsigned int (*cb_type_184)(void *);
+typedef bool (*cb_type_186)(clingo_control_t *, const char *const *, size_t, void *);
+typedef bool (*cb_type_188)(const clingo_model_t *, clingo_default_model_printer_t, void *, void *);
+typedef bool (*cb_type_190)(clingo_options_t *, void *);
+typedef bool (*cb_type_194)(const clingo_location_t *, const char *, void *);
+typedef bool (*cb_type_195)(const clingo_location_t *, const char *, const clingo_symbol_t *, size_t, clingo_symbol_callback_t, void *, void *);
+typedef bool (*cb_type_196)(const char *, bool *, void *);
+typedef bool (*cb_type_197)(clingo_control_t *, void *);
+typedef void (*cb_type_198)(void *);
 static int call_typed(int type, void (*address)(void), void **values, void *result) {
   (void)values; (void)result;
   switch (resolve(type)) {
-  case 25: {
+  case 23: {
     clingo_warning_t a0; memcpy(&a0, values[0], sizeof(a0));
     const char * a1; memcpy(&a1, values[1], sizeof(a1));
     void * a2; memcpy(&a2, values[2], sizeof(a2));
-    ((cb_type_25)address)(a0, a1, a2);
+    ((cb_type_23)address)(a0, a1, a2);
     return 1;
   }
-  case 119: {
+  case 115: {
     const clingo_location_t * a0; memcpy(&a0, values[0], sizeof(a0));
     const char * a1; memcpy(&a1, values[1], sizeof(a1));
     const clingo_symbol_t * a2; memcpy(&a2, values[2], sizeof(a2));
@@ -56,83 +56,83 @@ static int call_typed(int type, void (*address)(void), void **values, void *resu
     void * a4; memcpy(&a4, values[4], sizeof(a4));
     clingo_symbol_callback_t a5; memcpy(&a5, values[5], sizeof(a5));
     void * a6; memcpy(&a6, values[6], sizeof(a6));
-    bool ret = ((cb_type_119)address)(a0, a1, a2, a3, a4, a5, a6); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_115)address)(a0, a1, a2, a3, a4, a5, a6); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 124: {
+  case 120: {
     const clingo_symbol_t * a0; memcpy(&a0, values[0], sizeof(a0));
     size_t a1; memcpy(&a1, values[1], sizeof(a1));
     void * a2; memcpy(&a2, values[2], sizeof(a2));
-    bool ret = ((cb_type_124)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_120)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 127: {
+  case 123: {
     clingo_solve_event_type_t a0; memcpy(&a0, values[0], sizeof(a0));
     void * a1; memcpy(&a1, values[1], sizeof(a1));
     void * a2; memcpy(&a2, values[2], sizeof(a2));
     bool * a3; memcpy(&a3, values[3], sizeof(a3));
-    bool ret = ((cb_type_127)address)(a0, a1, a2, a3); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_123)address)(a0, a1, a2, a3); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 133: {
+  case 129: {
     clingo_propagate_init_t * a0; memcpy(&a0, values[0], sizeof(a0));
     void * a1; memcpy(&a1, values[1], sizeof(a1));
-    bool ret = ((cb_type_133)address)(a0, a1); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_129)address)(a0, a1); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 134: {
+  case 130: {
     clingo_propagate_control_t * a0; memcpy(&a0, values[0], sizeof(a0));
     const clingo_literal_t * a1; memcpy(&a1, values[1], sizeof(a1));
     size_t a2; memcpy(&a2, values[2], sizeof(a2));
     void * a3; memcpy(&a3, values[3], sizeof(a3));
-    bool ret = ((cb_type_134)address)(a0, a1, a2, a3); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_130)address)(a0, a1, a2, a3); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 135: {
+  case 131: {
     const clingo_propagate_control_t * a0; memcpy(&a0, values[0], sizeof(a0));
     const clingo_literal_t * a1; memcpy(&a1, values[1], sizeof(a1));
     size_t a2; memcpy(&a2, values[2], sizeof(a2));
     void * a3; memcpy(&a3, values[3], sizeof(a3));
-    ((cb_type_135)address)(a0, a1, a2, a3);
+    ((cb_type_131)address)(a0, a1, a2, a3);
     return 1;
   }
-  case 136: {
+  case 132: {
     clingo_propagate_control_t * a0; memcpy(&a0, values[0], sizeof(a0));
     void * a1; memcpy(&a1, values[1], sizeof(a1));
-    bool ret = ((cb_type_136)address)(a0, a1); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_132)address)(a0, a1); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 137: {
+  case 133: {
     clingo_id_t a0; memcpy(&a0, values[0], sizeof(a0));
     const clingo_assignment_t * a1; memcpy(&a1, values[1], sizeof(a1));
     clingo_literal_t a2; memcpy(&a2, values[2], sizeof(a2));
     void * a3; memcpy(&a3, values[3], sizeof(a3));
     clingo_literal_t * a4; memcpy(&a4, values[4], sizeof(a4));
-    bool ret = ((cb_type_137)address)(a0, a1, a2, a3, a4); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_133)address)(a0, a1, a2, a3, a4); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 144: {
+  case 140: {
     bool a0; memcpy(&a0, values[0], sizeof(a0));
     void * a1; memcpy(&a1, values[1], sizeof(a1));
-    bool ret = ((cb_type_144)address)(a0, a1); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_140)address)(a0, a1); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 145: {
+  case 141: {
     void * a0; memcpy(&a0, values[0], sizeof(a0));
-    bool ret = ((cb_type_145)address)(a0); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_141)address)(a0); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 146: {
+  case 142: {
     bool a0; memcpy(&a0, values[0], sizeof(a0));
     const clingo_atom_t * a1; memcpy(&a1, values[1], sizeof(a1));
     size_t a2; memcpy(&a2, values[2], sizeof(a2));
     const clingo_literal_t * a3; memcpy(&a3, values[3], sizeof(a3));
     size_t a4; memcpy(&a4, values[4], sizeof(a4));
     void * a5; memcpy(&a5, values[5], sizeof(a5));
-    bool ret = ((cb_type_146)address)(a0, a1, a2, a3, a4, a5); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_142)address)(a0, a1, a2, a3, a4, a5); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 147: {
+  case 143: {
     bool a0; memcpy(&a0, values[0], sizeof(a0));
     const clingo_atom_t * a1; memcpy(&a1, values[1], sizeof(a1));
     size_t a2; memcpy(&a2, values[2], sizeof(a2));
@@ -140,54 +140,54 @@ static int call_typed(int type, void (*address)(void), void **values, void *resu
     const clingo_weighted_literal_t * a4; memcpy(&a4, values[4], sizeof(a4));
     size_t a5; memcpy(&a5, values[5], sizeof(a5));
     void * a6; memcpy(&a6, values[6], sizeof(a6));
-    bool ret = ((cb_type_147)address)(a0, a1, a2, a3, a4, a5, a6); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_143)address)(a0, a1, a2, a3, a4, a5, a6); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 148: {
+  case 144: {
     clingo_weight_t a0; memcpy(&a0, values[0], sizeof(a0));
     const clingo_weighted_literal_t * a1; memcpy(&a1, values[1], sizeof(a1));
     size_t a2; memcpy(&a2, values[2], sizeof(a2));
     void * a3; memcpy(&a3, values[3], sizeof(a3));
-    bool ret = ((cb_type_148)address)(a0, a1, a2, a3); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_144)address)(a0, a1, a2, a3); memcpy(result, &ret, sizeof(ret));
+    return 1;
+  }
+  case 145: {
+    const clingo_atom_t * a0; memcpy(&a0, values[0], sizeof(a0));
+    size_t a1; memcpy(&a1, values[1], sizeof(a1));
+    void * a2; memcpy(&a2, values[2], sizeof(a2));
+    bool ret = ((cb_type_145)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
+    return 1;
+  }
+  case 146: {
+    clingo_symbol_t a0; memcpy(&a0, values[0], sizeof(a0));
+    clingo_atom_t a1; memcpy(&a1, values[1], sizeof(a1));
+    void * a2; memcpy(&a2, values[2], sizeof(a2));
+    bool ret = ((cb_type_146)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
+    return 1;
+  }
+  case 147: {
+    clingo_symbol_t a0; memcpy(&a0, values[0], sizeof(a0));
+    const clingo_literal_t * a1; memcpy(&a1, values[1], sizeof(a1));
+    size_t a2; memcpy(&a2, values[2], sizeof(a2));
+    void * a3; memcpy(&a3, values[3], sizeof(a3));
+    bool ret = ((cb_type_147)address)(a0, a1, a2, a3); memcpy(result, &ret, sizeof(ret));
+    return 1;
+  }
+  case 148: {
+    clingo_atom_t a0; memcpy(&a0, values[0], sizeof(a0));
+    clingo_external_type_t a1; memcpy(&a1, values[1], sizeof(a1));
+    void * a2; memcpy(&a2, values[2], sizeof(a2));
+    bool ret = ((cb_type_148)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
   case 149: {
-    const clingo_atom_t * a0; memcpy(&a0, values[0], sizeof(a0));
+    const clingo_literal_t * a0; memcpy(&a0, values[0], sizeof(a0));
     size_t a1; memcpy(&a1, values[1], sizeof(a1));
     void * a2; memcpy(&a2, values[2], sizeof(a2));
     bool ret = ((cb_type_149)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
   case 150: {
-    clingo_symbol_t a0; memcpy(&a0, values[0], sizeof(a0));
-    clingo_atom_t a1; memcpy(&a1, values[1], sizeof(a1));
-    void * a2; memcpy(&a2, values[2], sizeof(a2));
-    bool ret = ((cb_type_150)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
-    return 1;
-  }
-  case 151: {
-    clingo_symbol_t a0; memcpy(&a0, values[0], sizeof(a0));
-    const clingo_literal_t * a1; memcpy(&a1, values[1], sizeof(a1));
-    size_t a2; memcpy(&a2, values[2], sizeof(a2));
-    void * a3; memcpy(&a3, values[3], sizeof(a3));
-    bool ret = ((cb_type_151)address)(a0, a1, a2, a3); memcpy(result, &ret, sizeof(ret));
-    return 1;
-  }
-  case 152: {
-    clingo_atom_t a0; memcpy(&a0, values[0], sizeof(a0));
-    clingo_external_type_t a1; memcpy(&a1, values[1], sizeof(a1));
-    void * a2; memcpy(&a2, values[2], sizeof(a2));
-    bool ret = ((cb_type_152)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
-    return 1;
-  }
-  case 153: {
-    const clingo_literal_t * a0; memcpy(&a0, values[0], sizeof(a0));
-    size_t a1; memcpy(&a1, values[1], sizeof(a1));
-    void * a2; memcpy(&a2, values[2], sizeof(a2));
-    bool ret = ((cb_type_153)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
-    return 1;
-  }
-  case 154: {
     clingo_atom_t a0; memcpy(&a0, values[0], sizeof(a0));
     clingo_heuristic_type_t a1; memcpy(&a1, values[1], sizeof(a1));
     int a2; memcpy(&a2, values[2], sizeof(a2));
@@ -195,61 +195,61 @@ static int call_typed(int type, void (*address)(void), void **values, void *resu
     const clingo_literal_t * a4; memcpy(&a4, values[4], sizeof(a4));
     size_t a5; memcpy(&a5, values[5], sizeof(a5));
     void * a6; memcpy(&a6, values[6], sizeof(a6));
-    bool ret = ((cb_type_154)address)(a0, a1, a2, a3, a4, a5, a6); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_150)address)(a0, a1, a2, a3, a4, a5, a6); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 155: {
+  case 151: {
     int a0; memcpy(&a0, values[0], sizeof(a0));
     int a1; memcpy(&a1, values[1], sizeof(a1));
     const clingo_literal_t * a2; memcpy(&a2, values[2], sizeof(a2));
     size_t a3; memcpy(&a3, values[3], sizeof(a3));
     void * a4; memcpy(&a4, values[4], sizeof(a4));
-    bool ret = ((cb_type_155)address)(a0, a1, a2, a3, a4); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_151)address)(a0, a1, a2, a3, a4); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 156: {
+  case 152: {
     clingo_id_t a0; memcpy(&a0, values[0], sizeof(a0));
     int a1; memcpy(&a1, values[1], sizeof(a1));
     void * a2; memcpy(&a2, values[2], sizeof(a2));
-    bool ret = ((cb_type_156)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_152)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 157: {
+  case 153: {
     clingo_id_t a0; memcpy(&a0, values[0], sizeof(a0));
     const char * a1; memcpy(&a1, values[1], sizeof(a1));
     void * a2; memcpy(&a2, values[2], sizeof(a2));
-    bool ret = ((cb_type_157)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_153)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 158: {
+  case 154: {
     clingo_id_t a0; memcpy(&a0, values[0], sizeof(a0));
     int a1; memcpy(&a1, values[1], sizeof(a1));
     const clingo_id_t * a2; memcpy(&a2, values[2], sizeof(a2));
     size_t a3; memcpy(&a3, values[3], sizeof(a3));
     void * a4; memcpy(&a4, values[4], sizeof(a4));
-    bool ret = ((cb_type_158)address)(a0, a1, a2, a3, a4); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_154)address)(a0, a1, a2, a3, a4); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 159: {
+  case 155: {
     clingo_id_t a0; memcpy(&a0, values[0], sizeof(a0));
     const clingo_id_t * a1; memcpy(&a1, values[1], sizeof(a1));
     size_t a2; memcpy(&a2, values[2], sizeof(a2));
     const clingo_literal_t * a3; memcpy(&a3, values[3], sizeof(a3));
     size_t a4; memcpy(&a4, values[4], sizeof(a4));
     void * a5; memcpy(&a5, values[5], sizeof(a5));
-    bool ret = ((cb_type_159)address)(a0, a1, a2, a3, a4, a5); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_155)address)(a0, a1, a2, a3, a4, a5); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 160: {
+  case 156: {
     clingo_id_t a0; memcpy(&a0, values[0], sizeof(a0));
     clingo_id_t a1; memcpy(&a1, values[1], sizeof(a1));
     const clingo_id_t * a2; memcpy(&a2, values[2], sizeof(a2));
     size_t a3; memcpy(&a3, values[3], sizeof(a3));
     void * a4; memcpy(&a4, values[4], sizeof(a4));
-    bool ret = ((cb_type_160)address)(a0, a1, a2, a3, a4); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_156)address)(a0, a1, a2, a3, a4); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 161: {
+  case 157: {
     clingo_id_t a0; memcpy(&a0, values[0], sizeof(a0));
     clingo_id_t a1; memcpy(&a1, values[1], sizeof(a1));
     const clingo_id_t * a2; memcpy(&a2, values[2], sizeof(a2));
@@ -257,61 +257,61 @@ static int call_typed(int type, void (*address)(void), void **values, void *resu
     clingo_id_t a4; memcpy(&a4, values[4], sizeof(a4));
     clingo_id_t a5; memcpy(&a5, values[5], sizeof(a5));
     void * a6; memcpy(&a6, values[6], sizeof(a6));
-    bool ret = ((cb_type_161)address)(a0, a1, a2, a3, a4, a5, a6); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_157)address)(a0, a1, a2, a3, a4, a5, a6); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 174: {
+  case 170: {
     clingo_ast_t * a0; memcpy(&a0, values[0], sizeof(a0));
     void * a1; memcpy(&a1, values[1], sizeof(a1));
-    bool ret = ((cb_type_174)address)(a0, a1); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_170)address)(a0, a1); memcpy(result, &ret, sizeof(ret));
+    return 1;
+  }
+  case 179: {
+    const char * a0; memcpy(&a0, values[0], sizeof(a0));
+    void * a1; memcpy(&a1, values[1], sizeof(a1));
+    bool ret = ((cb_type_179)address)(a0, a1); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
   case 183: {
-    const char * a0; memcpy(&a0, values[0], sizeof(a0));
-    void * a1; memcpy(&a1, values[1], sizeof(a1));
-    bool ret = ((cb_type_183)address)(a0, a1); memcpy(result, &ret, sizeof(ret));
-    return 1;
-  }
-  case 187: {
     void * a0; memcpy(&a0, values[0], sizeof(a0));
-    const char * ret = ((cb_type_187)address)(a0); memcpy(result, &ret, sizeof(ret));
+    const char * ret = ((cb_type_183)address)(a0); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 188: {
+  case 184: {
     void * a0; memcpy(&a0, values[0], sizeof(a0));
-    unsigned int ret = ((cb_type_188)address)(a0); memcpy(result, &ret, sizeof(ret));
+    unsigned int ret = ((cb_type_184)address)(a0); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 190: {
+  case 186: {
     clingo_control_t * a0; memcpy(&a0, values[0], sizeof(a0));
     const char *const * a1; memcpy(&a1, values[1], sizeof(a1));
     size_t a2; memcpy(&a2, values[2], sizeof(a2));
     void * a3; memcpy(&a3, values[3], sizeof(a3));
-    bool ret = ((cb_type_190)address)(a0, a1, a2, a3); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_186)address)(a0, a1, a2, a3); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 192: {
+  case 188: {
     const clingo_model_t * a0; memcpy(&a0, values[0], sizeof(a0));
     clingo_default_model_printer_t a1; memcpy(&a1, values[1], sizeof(a1));
     void * a2; memcpy(&a2, values[2], sizeof(a2));
     void * a3; memcpy(&a3, values[3], sizeof(a3));
-    bool ret = ((cb_type_192)address)(a0, a1, a2, a3); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_188)address)(a0, a1, a2, a3); memcpy(result, &ret, sizeof(ret));
+    return 1;
+  }
+  case 190: {
+    clingo_options_t * a0; memcpy(&a0, values[0], sizeof(a0));
+    void * a1; memcpy(&a1, values[1], sizeof(a1));
+    bool ret = ((cb_type_190)address)(a0, a1); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
   case 194: {
-    clingo_options_t * a0; memcpy(&a0, values[0], sizeof(a0));
-    void * a1; memcpy(&a1, values[1], sizeof(a1));
-    bool ret = ((cb_type_194)address)(a0, a1); memcpy(result, &ret, sizeof(ret));
-    return 1;
-  }
-  case 198: {
     const clingo_location_t * a0; memcpy(&a0, values[0], sizeof(a0));
     const char * a1; memcpy(&a1, values[1], sizeof(a1));
     void * a2; memcpy(&a2, values[2], sizeof(a2));
-    bool ret = ((cb_type_198)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_194)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 199: {
+  case 195: {
     const clingo_location_t * a0; memcpy(&a0, values[0], sizeof(a0));
     const char * a1; memcpy(&a1, values[1], sizeof(a1));
     const clingo_symbol_t * a2; memcpy(&a2, values[2], sizeof(a2));
@@ -319,25 +319,25 @@ static int call_typed(int type, void (*address)(void), void **values, void *resu
     clingo_symbol_callback_t a4; memcpy(&a4, values[4], sizeof(a4));
     void * a5; memcpy(&a5, values[5], sizeof(a5));
     void * a6; memcpy(&a6, values[6], sizeof(a6));
-    bool ret = ((cb_type_199)address)(a0, a1, a2, a3, a4, a5, a6); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_195)address)(a0, a1, a2, a3, a4, a5, a6); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 200: {
+  case 196: {
     const char * a0; memcpy(&a0, values[0], sizeof(a0));
     bool * a1; memcpy(&a1, values[1], sizeof(a1));
     void * a2; memcpy(&a2, values[2], sizeof(a2));
-    bool ret = ((cb_type_200)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_196)address)(a0, a1, a2); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 201: {
+  case 197: {
     clingo_control_t * a0; memcpy(&a0, values[0], sizeof(a0));
     void * a1; memcpy(&a1, values[1], sizeof(a1));
-    bool ret = ((cb_type_201)address)(a0, a1); memcpy(result, &ret, sizeof(ret));
+    bool ret = ((cb_type_197)address)(a0, a1); memcpy(result, &ret, sizeof(ret));
     return 1;
   }
-  case 202: {
+  case 198: {
     void * a0; memcpy(&a0, values[0], sizeof(a0));
-    ((cb_type_202)address)(a0);
+    ((cb_type_198)address)(a0);
     return 1;
   }
   default: return 0;
@@ -349,7 +349,7 @@ static void callback_0_0(clingo_warning_t a0, const char * a1, void * a2) {
   void *values[] = {&a0, &a1, &a2};
   unsigned char unused = 0;
   if (bundle->callbacks[0]) callback(bundle->callbacks[0], &unused, values);
-  else call_typed(25, bundle->native[0], values, &unused);
+  else call_typed(23, bundle->native[0], values, &unused);
 }
 static void callback_1_0(clingo_warning_t a0, const char * a1, void * a2) {
   CallbackBundle *bundle = a2;
@@ -357,7 +357,7 @@ static void callback_1_0(clingo_warning_t a0, const char * a1, void * a2) {
   void *values[] = {&a0, &a1, &a2};
   unsigned char unused = 0;
   if (bundle->callbacks[0]) callback(bundle->callbacks[0], &unused, values);
-  else call_typed(25, bundle->native[0], values, &unused);
+  else call_typed(23, bundle->native[0], values, &unused);
 }
 static bool callback_2_0(const clingo_location_t * a0, const char * a1, const clingo_symbol_t * a2, size_t a3, void * a4, clingo_symbol_callback_t a5, void * a6) {
   CallbackBundle *bundle = a4;
@@ -365,7 +365,7 @@ static bool callback_2_0(const clingo_location_t * a0, const char * a1, const cl
   void *values[] = {&a0, &a1, &a2, &a3, &a4, &a5, &a6};
   bool ret = {0};
   if (bundle->callbacks[0]) callback(bundle->callbacks[0], &ret, values);
-  else call_typed(119, bundle->native[0], values, &ret);
+  else call_typed(115, bundle->native[0], values, &ret);
   return ret;
 }
 static bool callback_3_0(clingo_solve_event_type_t a0, void * a1, void * a2, bool * a3) {
@@ -374,7 +374,7 @@ static bool callback_3_0(clingo_solve_event_type_t a0, void * a1, void * a2, boo
   void *values[] = {&a0, &a1, &a2, &a3};
   bool ret = {0};
   if (bundle->callbacks[0]) callback(bundle->callbacks[0], &ret, values);
-  else call_typed(127, bundle->native[0], values, &ret);
+  else call_typed(123, bundle->native[0], values, &ret);
   return ret;
 }
 static bool callback_4_0(clingo_propagate_init_t * a0, void * a1) {
@@ -383,7 +383,7 @@ static bool callback_4_0(clingo_propagate_init_t * a0, void * a1) {
   void *values[] = {&a0, &a1};
   bool ret = {0};
   if (bundle->callbacks[0]) callback(bundle->callbacks[0], &ret, values);
-  else call_typed(133, bundle->native[0], values, &ret);
+  else call_typed(129, bundle->native[0], values, &ret);
   return ret;
 }
 static bool callback_4_1(clingo_propagate_control_t * a0, const clingo_literal_t * a1, size_t a2, void * a3) {
@@ -392,7 +392,7 @@ static bool callback_4_1(clingo_propagate_control_t * a0, const clingo_literal_t
   void *values[] = {&a0, &a1, &a2, &a3};
   bool ret = {0};
   if (bundle->callbacks[1]) callback(bundle->callbacks[1], &ret, values);
-  else call_typed(134, bundle->native[1], values, &ret);
+  else call_typed(130, bundle->native[1], values, &ret);
   return ret;
 }
 static void callback_4_2(const clingo_propagate_control_t * a0, const clingo_literal_t * a1, size_t a2, void * a3) {
@@ -401,7 +401,7 @@ static void callback_4_2(const clingo_propagate_control_t * a0, const clingo_lit
   void *values[] = {&a0, &a1, &a2, &a3};
   unsigned char unused = 0;
   if (bundle->callbacks[2]) callback(bundle->callbacks[2], &unused, values);
-  else call_typed(135, bundle->native[2], values, &unused);
+  else call_typed(131, bundle->native[2], values, &unused);
 }
 static bool callback_4_3(clingo_propagate_control_t * a0, void * a1) {
   CallbackBundle *bundle = a1;
@@ -409,7 +409,7 @@ static bool callback_4_3(clingo_propagate_control_t * a0, void * a1) {
   void *values[] = {&a0, &a1};
   bool ret = {0};
   if (bundle->callbacks[3]) callback(bundle->callbacks[3], &ret, values);
-  else call_typed(136, bundle->native[3], values, &ret);
+  else call_typed(132, bundle->native[3], values, &ret);
   return ret;
 }
 static bool callback_4_4(clingo_id_t a0, const clingo_assignment_t * a1, clingo_literal_t a2, void * a3, clingo_literal_t * a4) {
@@ -418,7 +418,7 @@ static bool callback_4_4(clingo_id_t a0, const clingo_assignment_t * a1, clingo_
   void *values[] = {&a0, &a1, &a2, &a3, &a4};
   bool ret = {0};
   if (bundle->callbacks[4]) callback(bundle->callbacks[4], &ret, values);
-  else call_typed(137, bundle->native[4], values, &ret);
+  else call_typed(133, bundle->native[4], values, &ret);
   return ret;
 }
 static bool callback_5_0(bool a0, void * a1) {
@@ -427,7 +427,7 @@ static bool callback_5_0(bool a0, void * a1) {
   void *values[] = {&a0, &a1};
   bool ret = {0};
   if (bundle->callbacks[0]) callback(bundle->callbacks[0], &ret, values);
-  else call_typed(144, bundle->native[0], values, &ret);
+  else call_typed(140, bundle->native[0], values, &ret);
   return ret;
 }
 static bool callback_5_1(void * a0) {
@@ -436,7 +436,7 @@ static bool callback_5_1(void * a0) {
   void *values[] = {&a0};
   bool ret = {0};
   if (bundle->callbacks[1]) callback(bundle->callbacks[1], &ret, values);
-  else call_typed(145, bundle->native[1], values, &ret);
+  else call_typed(141, bundle->native[1], values, &ret);
   return ret;
 }
 static bool callback_5_2(void * a0) {
@@ -445,7 +445,7 @@ static bool callback_5_2(void * a0) {
   void *values[] = {&a0};
   bool ret = {0};
   if (bundle->callbacks[2]) callback(bundle->callbacks[2], &ret, values);
-  else call_typed(145, bundle->native[2], values, &ret);
+  else call_typed(141, bundle->native[2], values, &ret);
   return ret;
 }
 static bool callback_5_3(bool a0, const clingo_atom_t * a1, size_t a2, const clingo_literal_t * a3, size_t a4, void * a5) {
@@ -454,7 +454,7 @@ static bool callback_5_3(bool a0, const clingo_atom_t * a1, size_t a2, const cli
   void *values[] = {&a0, &a1, &a2, &a3, &a4, &a5};
   bool ret = {0};
   if (bundle->callbacks[3]) callback(bundle->callbacks[3], &ret, values);
-  else call_typed(146, bundle->native[3], values, &ret);
+  else call_typed(142, bundle->native[3], values, &ret);
   return ret;
 }
 static bool callback_5_4(bool a0, const clingo_atom_t * a1, size_t a2, clingo_weight_t a3, const clingo_weighted_literal_t * a4, size_t a5, void * a6) {
@@ -463,7 +463,7 @@ static bool callback_5_4(bool a0, const clingo_atom_t * a1, size_t a2, clingo_we
   void *values[] = {&a0, &a1, &a2, &a3, &a4, &a5, &a6};
   bool ret = {0};
   if (bundle->callbacks[4]) callback(bundle->callbacks[4], &ret, values);
-  else call_typed(147, bundle->native[4], values, &ret);
+  else call_typed(143, bundle->native[4], values, &ret);
   return ret;
 }
 static bool callback_5_5(clingo_weight_t a0, const clingo_weighted_literal_t * a1, size_t a2, void * a3) {
@@ -472,7 +472,7 @@ static bool callback_5_5(clingo_weight_t a0, const clingo_weighted_literal_t * a
   void *values[] = {&a0, &a1, &a2, &a3};
   bool ret = {0};
   if (bundle->callbacks[5]) callback(bundle->callbacks[5], &ret, values);
-  else call_typed(148, bundle->native[5], values, &ret);
+  else call_typed(144, bundle->native[5], values, &ret);
   return ret;
 }
 static bool callback_5_6(const clingo_atom_t * a0, size_t a1, void * a2) {
@@ -481,7 +481,7 @@ static bool callback_5_6(const clingo_atom_t * a0, size_t a1, void * a2) {
   void *values[] = {&a0, &a1, &a2};
   bool ret = {0};
   if (bundle->callbacks[6]) callback(bundle->callbacks[6], &ret, values);
-  else call_typed(149, bundle->native[6], values, &ret);
+  else call_typed(145, bundle->native[6], values, &ret);
   return ret;
 }
 static bool callback_5_7(clingo_symbol_t a0, clingo_atom_t a1, void * a2) {
@@ -490,7 +490,7 @@ static bool callback_5_7(clingo_symbol_t a0, clingo_atom_t a1, void * a2) {
   void *values[] = {&a0, &a1, &a2};
   bool ret = {0};
   if (bundle->callbacks[7]) callback(bundle->callbacks[7], &ret, values);
-  else call_typed(150, bundle->native[7], values, &ret);
+  else call_typed(146, bundle->native[7], values, &ret);
   return ret;
 }
 static bool callback_5_8(clingo_symbol_t a0, const clingo_literal_t * a1, size_t a2, void * a3) {
@@ -499,7 +499,7 @@ static bool callback_5_8(clingo_symbol_t a0, const clingo_literal_t * a1, size_t
   void *values[] = {&a0, &a1, &a2, &a3};
   bool ret = {0};
   if (bundle->callbacks[8]) callback(bundle->callbacks[8], &ret, values);
-  else call_typed(151, bundle->native[8], values, &ret);
+  else call_typed(147, bundle->native[8], values, &ret);
   return ret;
 }
 static bool callback_5_9(clingo_atom_t a0, clingo_external_type_t a1, void * a2) {
@@ -508,7 +508,7 @@ static bool callback_5_9(clingo_atom_t a0, clingo_external_type_t a1, void * a2)
   void *values[] = {&a0, &a1, &a2};
   bool ret = {0};
   if (bundle->callbacks[9]) callback(bundle->callbacks[9], &ret, values);
-  else call_typed(152, bundle->native[9], values, &ret);
+  else call_typed(148, bundle->native[9], values, &ret);
   return ret;
 }
 static bool callback_5_10(const clingo_literal_t * a0, size_t a1, void * a2) {
@@ -517,7 +517,7 @@ static bool callback_5_10(const clingo_literal_t * a0, size_t a1, void * a2) {
   void *values[] = {&a0, &a1, &a2};
   bool ret = {0};
   if (bundle->callbacks[10]) callback(bundle->callbacks[10], &ret, values);
-  else call_typed(153, bundle->native[10], values, &ret);
+  else call_typed(149, bundle->native[10], values, &ret);
   return ret;
 }
 static bool callback_5_11(clingo_atom_t a0, clingo_heuristic_type_t a1, int a2, unsigned int a3, const clingo_literal_t * a4, size_t a5, void * a6) {
@@ -526,7 +526,7 @@ static bool callback_5_11(clingo_atom_t a0, clingo_heuristic_type_t a1, int a2, 
   void *values[] = {&a0, &a1, &a2, &a3, &a4, &a5, &a6};
   bool ret = {0};
   if (bundle->callbacks[11]) callback(bundle->callbacks[11], &ret, values);
-  else call_typed(154, bundle->native[11], values, &ret);
+  else call_typed(150, bundle->native[11], values, &ret);
   return ret;
 }
 static bool callback_5_12(int a0, int a1, const clingo_literal_t * a2, size_t a3, void * a4) {
@@ -535,7 +535,7 @@ static bool callback_5_12(int a0, int a1, const clingo_literal_t * a2, size_t a3
   void *values[] = {&a0, &a1, &a2, &a3, &a4};
   bool ret = {0};
   if (bundle->callbacks[12]) callback(bundle->callbacks[12], &ret, values);
-  else call_typed(155, bundle->native[12], values, &ret);
+  else call_typed(151, bundle->native[12], values, &ret);
   return ret;
 }
 static bool callback_5_13(clingo_id_t a0, int a1, void * a2) {
@@ -544,7 +544,7 @@ static bool callback_5_13(clingo_id_t a0, int a1, void * a2) {
   void *values[] = {&a0, &a1, &a2};
   bool ret = {0};
   if (bundle->callbacks[13]) callback(bundle->callbacks[13], &ret, values);
-  else call_typed(156, bundle->native[13], values, &ret);
+  else call_typed(152, bundle->native[13], values, &ret);
   return ret;
 }
 static bool callback_5_14(clingo_id_t a0, const char * a1, void * a2) {
@@ -553,7 +553,7 @@ static bool callback_5_14(clingo_id_t a0, const char * a1, void * a2) {
   void *values[] = {&a0, &a1, &a2};
   bool ret = {0};
   if (bundle->callbacks[14]) callback(bundle->callbacks[14], &ret, values);
-  else call_typed(157, bundle->native[14], values, &ret);
+  else call_typed(153, bundle->native[14], values, &ret);
   return ret;
 }
 static bool callback_5_15(clingo_id_t a0, int a1, const clingo_id_t * a2, size_t a3, void * a4) {
@@ -562,7 +562,7 @@ static bool callback_5_15(clingo_id_t a0, int a1, const clingo_id_t * a2, size_t
   void *values[] = {&a0, &a1, &a2, &a3, &a4};
   bool ret = {0};
   if (bundle->callbacks[15]) callback(bundle->callbacks[15], &ret, values);
-  else call_typed(158, bundle->native[15], values, &ret);
+  else call_typed(154, bundle->native[15], values, &ret);
   return ret;
 }
 static bool callback_5_16(clingo_id_t a0, const clingo_id_t * a1, size_t a2, const clingo_literal_t * a3, size_t a4, void * a5) {
@@ -571,7 +571,7 @@ static bool callback_5_16(clingo_id_t a0, const clingo_id_t * a1, size_t a2, con
   void *values[] = {&a0, &a1, &a2, &a3, &a4, &a5};
   bool ret = {0};
   if (bundle->callbacks[16]) callback(bundle->callbacks[16], &ret, values);
-  else call_typed(159, bundle->native[16], values, &ret);
+  else call_typed(155, bundle->native[16], values, &ret);
   return ret;
 }
 static bool callback_5_17(clingo_id_t a0, clingo_id_t a1, const clingo_id_t * a2, size_t a3, void * a4) {
@@ -580,7 +580,7 @@ static bool callback_5_17(clingo_id_t a0, clingo_id_t a1, const clingo_id_t * a2
   void *values[] = {&a0, &a1, &a2, &a3, &a4};
   bool ret = {0};
   if (bundle->callbacks[17]) callback(bundle->callbacks[17], &ret, values);
-  else call_typed(160, bundle->native[17], values, &ret);
+  else call_typed(156, bundle->native[17], values, &ret);
   return ret;
 }
 static bool callback_5_18(clingo_id_t a0, clingo_id_t a1, const clingo_id_t * a2, size_t a3, clingo_id_t a4, clingo_id_t a5, void * a6) {
@@ -589,7 +589,7 @@ static bool callback_5_18(clingo_id_t a0, clingo_id_t a1, const clingo_id_t * a2
   void *values[] = {&a0, &a1, &a2, &a3, &a4, &a5, &a6};
   bool ret = {0};
   if (bundle->callbacks[18]) callback(bundle->callbacks[18], &ret, values);
-  else call_typed(161, bundle->native[18], values, &ret);
+  else call_typed(157, bundle->native[18], values, &ret);
   return ret;
 }
 static bool callback_6_0(clingo_ast_t * a0, void * a1) {
@@ -598,7 +598,7 @@ static bool callback_6_0(clingo_ast_t * a0, void * a1) {
   void *values[] = {&a0, &a1};
   bool ret = {0};
   if (bundle->callbacks[0]) callback(bundle->callbacks[0], &ret, values);
-  else call_typed(174, bundle->native[0], values, &ret);
+  else call_typed(170, bundle->native[0], values, &ret);
   return ret;
 }
 static void callback_7_0(clingo_warning_t a0, const char * a1, void * a2) {
@@ -607,7 +607,7 @@ static void callback_7_0(clingo_warning_t a0, const char * a1, void * a2) {
   void *values[] = {&a0, &a1, &a2};
   unsigned char unused = 0;
   if (bundle->callbacks[0]) callback(bundle->callbacks[0], &unused, values);
-  else call_typed(25, bundle->native[0], values, &unused);
+  else call_typed(23, bundle->native[0], values, &unused);
 }
 static bool callback_8_0(clingo_ast_t * a0, void * a1) {
   CallbackBundle *bundle = a1;
@@ -615,7 +615,7 @@ static bool callback_8_0(clingo_ast_t * a0, void * a1) {
   void *values[] = {&a0, &a1};
   bool ret = {0};
   if (bundle->callbacks[0]) callback(bundle->callbacks[0], &ret, values);
-  else call_typed(174, bundle->native[0], values, &ret);
+  else call_typed(170, bundle->native[0], values, &ret);
   return ret;
 }
 static void callback_9_0(clingo_warning_t a0, const char * a1, void * a2) {
@@ -624,7 +624,7 @@ static void callback_9_0(clingo_warning_t a0, const char * a1, void * a2) {
   void *values[] = {&a0, &a1, &a2};
   unsigned char unused = 0;
   if (bundle->callbacks[0]) callback(bundle->callbacks[0], &unused, values);
-  else call_typed(25, bundle->native[0], values, &unused);
+  else call_typed(23, bundle->native[0], values, &unused);
 }
 static bool callback_10_0(clingo_ast_t * a0, void * a1) {
   CallbackBundle *bundle = a1;
@@ -632,7 +632,7 @@ static bool callback_10_0(clingo_ast_t * a0, void * a1) {
   void *values[] = {&a0, &a1};
   bool ret = {0};
   if (bundle->callbacks[0]) callback(bundle->callbacks[0], &ret, values);
-  else call_typed(174, bundle->native[0], values, &ret);
+  else call_typed(170, bundle->native[0], values, &ret);
   return ret;
 }
 static bool callback_11_0(const char * a0, void * a1) {
@@ -641,7 +641,7 @@ static bool callback_11_0(const char * a0, void * a1) {
   void *values[] = {&a0, &a1};
   bool ret = {0};
   if (bundle->callbacks[0]) callback(bundle->callbacks[0], &ret, values);
-  else call_typed(183, bundle->native[0], values, &ret);
+  else call_typed(179, bundle->native[0], values, &ret);
   return ret;
 }
 static const char * callback_12_0(void * a0) {
@@ -650,7 +650,7 @@ static const char * callback_12_0(void * a0) {
   void *values[] = {&a0};
   const char * ret = {0};
   if (bundle->callbacks[0]) callback(bundle->callbacks[0], &ret, values);
-  else call_typed(187, bundle->native[0], values, &ret);
+  else call_typed(183, bundle->native[0], values, &ret);
   return ret;
 }
 static const char * callback_12_1(void * a0) {
@@ -659,7 +659,7 @@ static const char * callback_12_1(void * a0) {
   void *values[] = {&a0};
   const char * ret = {0};
   if (bundle->callbacks[1]) callback(bundle->callbacks[1], &ret, values);
-  else call_typed(187, bundle->native[1], values, &ret);
+  else call_typed(183, bundle->native[1], values, &ret);
   return ret;
 }
 static unsigned int callback_12_2(void * a0) {
@@ -668,7 +668,7 @@ static unsigned int callback_12_2(void * a0) {
   void *values[] = {&a0};
   unsigned int ret = {0};
   if (bundle->callbacks[2]) callback(bundle->callbacks[2], &ret, values);
-  else call_typed(188, bundle->native[2], values, &ret);
+  else call_typed(184, bundle->native[2], values, &ret);
   return ret;
 }
 static bool callback_12_3(clingo_control_t * a0, const char *const * a1, size_t a2, void * a3) {
@@ -677,7 +677,7 @@ static bool callback_12_3(clingo_control_t * a0, const char *const * a1, size_t 
   void *values[] = {&a0, &a1, &a2, &a3};
   bool ret = {0};
   if (bundle->callbacks[3]) callback(bundle->callbacks[3], &ret, values);
-  else call_typed(190, bundle->native[3], values, &ret);
+  else call_typed(186, bundle->native[3], values, &ret);
   return ret;
 }
 static void callback_12_4(clingo_warning_t a0, const char * a1, void * a2) {
@@ -686,7 +686,7 @@ static void callback_12_4(clingo_warning_t a0, const char * a1, void * a2) {
   void *values[] = {&a0, &a1, &a2};
   unsigned char unused = 0;
   if (bundle->callbacks[4]) callback(bundle->callbacks[4], &unused, values);
-  else call_typed(25, bundle->native[4], values, &unused);
+  else call_typed(23, bundle->native[4], values, &unused);
 }
 static bool callback_12_5(const clingo_model_t * a0, clingo_default_model_printer_t a1, void * a2, void * a3) {
   CallbackBundle *bundle = a3;
@@ -694,7 +694,7 @@ static bool callback_12_5(const clingo_model_t * a0, clingo_default_model_printe
   void *values[] = {&a0, &a1, &a2, &a3};
   bool ret = {0};
   if (bundle->callbacks[5]) callback(bundle->callbacks[5], &ret, values);
-  else call_typed(192, bundle->native[5], values, &ret);
+  else call_typed(188, bundle->native[5], values, &ret);
   return ret;
 }
 static bool callback_12_6(clingo_options_t * a0, void * a1) {
@@ -703,7 +703,7 @@ static bool callback_12_6(clingo_options_t * a0, void * a1) {
   void *values[] = {&a0, &a1};
   bool ret = {0};
   if (bundle->callbacks[6]) callback(bundle->callbacks[6], &ret, values);
-  else call_typed(194, bundle->native[6], values, &ret);
+  else call_typed(190, bundle->native[6], values, &ret);
   return ret;
 }
 static bool callback_12_7(void * a0) {
@@ -712,7 +712,7 @@ static bool callback_12_7(void * a0) {
   void *values[] = {&a0};
   bool ret = {0};
   if (bundle->callbacks[7]) callback(bundle->callbacks[7], &ret, values);
-  else call_typed(145, bundle->native[7], values, &ret);
+  else call_typed(141, bundle->native[7], values, &ret);
   return ret;
 }
 static bool callback_13_0(const clingo_location_t * a0, const char * a1, void * a2) {
@@ -721,7 +721,7 @@ static bool callback_13_0(const clingo_location_t * a0, const char * a1, void * 
   void *values[] = {&a0, &a1, &a2};
   bool ret = {0};
   if (bundle->callbacks[0]) callback(bundle->callbacks[0], &ret, values);
-  else call_typed(198, bundle->native[0], values, &ret);
+  else call_typed(194, bundle->native[0], values, &ret);
   return ret;
 }
 static bool callback_13_1(const clingo_location_t * a0, const char * a1, const clingo_symbol_t * a2, size_t a3, clingo_symbol_callback_t a4, void * a5, void * a6) {
@@ -730,7 +730,7 @@ static bool callback_13_1(const clingo_location_t * a0, const char * a1, const c
   void *values[] = {&a0, &a1, &a2, &a3, &a4, &a5, &a6};
   bool ret = {0};
   if (bundle->callbacks[1]) callback(bundle->callbacks[1], &ret, values);
-  else call_typed(199, bundle->native[1], values, &ret);
+  else call_typed(195, bundle->native[1], values, &ret);
   return ret;
 }
 static bool callback_13_2(const char * a0, bool * a1, void * a2) {
@@ -739,7 +739,7 @@ static bool callback_13_2(const char * a0, bool * a1, void * a2) {
   void *values[] = {&a0, &a1, &a2};
   bool ret = {0};
   if (bundle->callbacks[2]) callback(bundle->callbacks[2], &ret, values);
-  else call_typed(200, bundle->native[2], values, &ret);
+  else call_typed(196, bundle->native[2], values, &ret);
   return ret;
 }
 static bool callback_13_3(clingo_control_t * a0, void * a1) {
@@ -748,7 +748,7 @@ static bool callback_13_3(clingo_control_t * a0, void * a1) {
   void *values[] = {&a0, &a1};
   bool ret = {0};
   if (bundle->callbacks[3]) callback(bundle->callbacks[3], &ret, values);
-  else call_typed(201, bundle->native[3], values, &ret);
+  else call_typed(197, bundle->native[3], values, &ret);
   return ret;
 }
 static void callback_13_4(void * a0) {
@@ -757,7 +757,7 @@ static void callback_13_4(void * a0) {
   void *values[] = {&a0};
   unsigned char unused = 0;
   if (bundle->callbacks[4]) callback(bundle->callbacks[4], &unused, values);
-  else call_typed(202, bundle->native[4], values, &unused);
+  else call_typed(198, bundle->native[4], values, &unused);
 }
 static int adapt_callbacks(Session *s, Function *fn, void **values) {
   if (!strcmp(fn->name, "clingo_parse_term")) {

@@ -7,7 +7,7 @@ behavioral ExUnit tests instead of Dialyzer specs or redundant abstraction layer
 
 ## Build and generation
 
-Start with the [build instructions](README.md#build-and-test). The library has no
+Start with the [build instructions](MULTIPLATFORM.md). The library has no
 runtime Hex dependencies or libffi dependency. Python and clang are contributor
 tools. Handwritten Elixir follows `.formatter.exs`; handwritten C follows
 `.clang-format`. Edit generators rather than generated files.
@@ -67,7 +67,7 @@ another ordinary operation in its own session.
 
 Run the [release checks](docs/VALIDATION.md) sequentially when they rebuild native
 libraries. Allocation probes and sanitizer scripts restore the normal delivery
-build. Package acceptance tests the actual source archive, clean bootstrap,
+build. Package acceptance tests the actual bundled archive, compiler-free installation,
 relocation and a minimal runtime; it never publishes. The Hex archive includes
 build inputs, library sources and documentation, with maintainer probes and run
 logs left out. Use the repository checkout for contributor checks.

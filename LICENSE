@@ -32,3 +32,6 @@ retains its original notice.
 Other dependencies retain their respective licenses. Redistributions of native
 binaries must include the applicable license and copyright notices for their
 bundled dependencies.
+
+Native runtime notices are distributed in native/licenses/ and included in
+each runtime archive. Build and validation details are in MULTIPLATFORM.md.

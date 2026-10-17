@@ -3,6 +3,56 @@ Code.require_file("../tools/raw_probe.exs", __DIR__)
 defmodule Clingo.TestSupport do
   alias Clingo.TestSupport.Raw, as: A
 
+  def vm(args, timeout \\ 20_000, env \\ []) do
+    paths = Path.wildcard(Path.join([Path.dirname(:code.lib_dir(:elixir)), "*", "ebin"]))
+    executable = System.find_executable("erl") |> String.to_charlist()
+    args = ["-noshell", "-pa"] ++ paths ++ ["-s", "elixir", "start_cli", "-extra"] ++ args
+
+    port =
+      Port.open({:spawn_executable, executable}, [
+        :binary,
+        :exit_status,
+        :use_stdio,
+        :stderr_to_stdout,
+        args: Enum.map(args, &String.to_charlist/1),
+        env:
+          Enum.map(env, fn {key, value} ->
+            {String.to_charlist(key), String.to_charlist(value)}
+          end)
+      ])
+
+    collect_vm(port, System.monotonic_time(:millisecond) + timeout, [])
+  end
+
+  defp collect_vm(port, deadline, output) do
+    receive do
+      {^port, {:data, data}} ->
+        collect_vm(port, deadline, [data | output])
+
+      {^port, {:exit_status, status}} ->
+        {output |> Enum.reverse() |> IO.iodata_to_binary(), status}
+    after
+      max(deadline - System.monotonic_time(:millisecond), 0) ->
+        if info = Port.info(port, :os_pid) do
+          {:os_pid, pid} = info
+
+          if :os.type() == {:win32, :nt} do
+            System.cmd(
+              Path.join([System.fetch_env!("SystemRoot"), "System32", "taskkill.exe"]),
+              ["/F", "/T", "/PID", to_string(pid)],
+              stderr_to_stdout: true
+            )
+          else
+            System.cmd("kill", ["-KILL", to_string(pid)], stderr_to_stdout: true)
+          end
+
+          Port.close(port)
+        end
+
+        raise "Child VM exceeded its #{deadline} deadline: #{output |> Enum.reverse() |> IO.iodata_to_binary()}"
+    end
+  end
+
   def out(s, function, args, type) do
     cell = Clingo.alloc(s, type)
     result = apply(A, function, [s | args ++ [cell]])

@@ -63,6 +63,7 @@ defmodule ASPCourse do
   end
 
   def archive(dir, name) do
+    dir = Path.expand(dir)
     files =
       Path.wildcard(Path.join(dir, "**/*"))
       |> Enum.filter(&File.regular?/1)

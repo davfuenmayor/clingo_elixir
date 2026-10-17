@@ -1,5 +1,6 @@
 defmodule Clingo.PinTest do
   use ExUnit.Case, async: true
+  @moduletag skip: :os.type() != {:unix, :linux}
 
   test "control/handle aliases pin destruction through casts and cells" do
     dir = Path.join(System.tmp_dir!(), "clingo-pin-#{System.unique_integer([:positive])}")

@@ -88,7 +88,7 @@
         },
         {
           "name": "signature",
-          "type": 11,
+          "type": 10,
           "c_type": "clingo_signature_t *",
           "qualifiers": 0,
           "const_string": false
@@ -138,7 +138,7 @@
       "args": [
         {
           "name": "signature",
-          "type": 12,
+          "type": 11,
           "c_type": "clingo_signature_t",
           "qualifiers": 0,
           "const_string": false
@@ -167,7 +167,7 @@
       "args": [
         {
           "name": "signature",
-          "type": 12,
+          "type": 11,
           "c_type": "clingo_signature_t",
           "qualifiers": 0,
           "const_string": false
@@ -196,7 +196,7 @@
       "args": [
         {
           "name": "signature",
-          "type": 12,
+          "type": 11,
           "c_type": "clingo_signature_t",
           "qualifiers": 0,
           "const_string": false
@@ -225,7 +225,7 @@
       "args": [
         {
           "name": "signature",
-          "type": 12,
+          "type": 11,
           "c_type": "clingo_signature_t",
           "qualifiers": 0,
           "const_string": false
@@ -254,14 +254,14 @@
       "args": [
         {
           "name": "a",
-          "type": 12,
+          "type": 11,
           "c_type": "clingo_signature_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "b",
-          "type": 12,
+          "type": 11,
           "c_type": "clingo_signature_t",
           "qualifiers": 0,
           "const_string": false
@@ -297,14 +297,14 @@
       "args": [
         {
           "name": "a",
-          "type": 12,
+          "type": 11,
           "c_type": "clingo_signature_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "b",
-          "type": 12,
+          "type": 11,
           "c_type": "clingo_signature_t",
           "qualifiers": 0,
           "const_string": false
@@ -334,13 +334,13 @@
     },
     {
       "name": "clingo_signature_hash",
-      "result": 16,
+      "result": 14,
       "result_c_type": "size_t",
       "result_qualifiers": 0,
       "args": [
         {
           "name": "signature",
-          "type": 12,
+          "type": 11,
           "c_type": "clingo_signature_t",
           "qualifiers": 0,
           "const_string": false
@@ -376,7 +376,7 @@
         },
         {
           "name": "symbol",
-          "type": 17,
+          "type": 15,
           "c_type": "clingo_symbol_t *",
           "qualifiers": 0,
           "const_string": false
@@ -412,7 +412,7 @@
       "args": [
         {
           "name": "symbol",
-          "type": 17,
+          "type": 15,
           "c_type": "clingo_symbol_t *",
           "qualifiers": 0,
           "const_string": false
@@ -441,7 +441,7 @@
       "args": [
         {
           "name": "symbol",
-          "type": 17,
+          "type": 15,
           "c_type": "clingo_symbol_t *",
           "qualifiers": 0,
           "const_string": false
@@ -477,7 +477,7 @@
         },
         {
           "name": "symbol",
-          "type": 17,
+          "type": 15,
           "c_type": "clingo_symbol_t *",
           "qualifiers": 0,
           "const_string": false
@@ -527,7 +527,7 @@
         },
         {
           "name": "symbol",
-          "type": 17,
+          "type": 15,
           "c_type": "clingo_symbol_t *",
           "qualifiers": 0,
           "const_string": false
@@ -577,14 +577,14 @@
         },
         {
           "name": "arguments",
-          "type": 17,
+          "type": 15,
           "c_type": "const clingo_symbol_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "arguments_size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -598,7 +598,7 @@
         },
         {
           "name": "symbol",
-          "type": 17,
+          "type": 15,
           "c_type": "clingo_symbol_t *",
           "qualifiers": 0,
           "const_string": false
@@ -655,7 +655,7 @@
       "args": [
         {
           "name": "symbol",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
@@ -698,14 +698,14 @@
       "args": [
         {
           "name": "symbol",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "name",
-          "type": 19,
+          "type": 17,
           "c_type": "const char **",
           "qualifiers": 2,
           "const_string": false
@@ -741,14 +741,14 @@
       "args": [
         {
           "name": "symbol",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "string",
-          "type": 19,
+          "type": 17,
           "c_type": "const char **",
           "qualifiers": 2,
           "const_string": false
@@ -784,14 +784,14 @@
       "args": [
         {
           "name": "symbol",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "positive",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -827,14 +827,14 @@
       "args": [
         {
           "name": "symbol",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "negative",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -870,21 +870,21 @@
       "args": [
         {
           "name": "symbol",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "arguments",
-          "type": 21,
+          "type": 19,
           "c_type": "const clingo_symbol_t **",
           "qualifiers": 2,
           "const_string": false
         },
         {
           "name": "arguments_size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -921,13 +921,13 @@
     },
     {
       "name": "clingo_symbol_type",
-      "result": 23,
+      "result": 21,
       "result_c_type": "clingo_symbol_type_t",
       "result_qualifiers": 0,
       "args": [
         {
           "name": "symbol",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
@@ -956,14 +956,14 @@
       "args": [
         {
           "name": "symbol",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -999,7 +999,7 @@
       "args": [
         {
           "name": "symbol",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
@@ -1013,7 +1013,7 @@
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -1056,14 +1056,14 @@
       "args": [
         {
           "name": "a",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "b",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
@@ -1099,14 +1099,14 @@
       "args": [
         {
           "name": "a",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "b",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
@@ -1136,13 +1136,13 @@
     },
     {
       "name": "clingo_symbol_hash",
-      "result": 16,
+      "result": 14,
       "result_c_type": "size_t",
       "result_qualifiers": 0,
       "args": [
         {
           "name": "symbol",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
@@ -1178,7 +1178,7 @@
         },
         {
           "name": "result",
-          "type": 19,
+          "type": 17,
           "c_type": "const char **",
           "qualifiers": 2,
           "const_string": false
@@ -1221,28 +1221,28 @@
         },
         {
           "name": "logger",
-          "type": 24,
+          "type": 22,
           "c_type": "clingo_logger_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "logger_data",
-          "type": 26,
+          "type": 24,
           "c_type": "void *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "message_limit",
-          "type": 10,
+          "type": 9,
           "c_type": "unsigned int",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "symbol",
-          "type": 17,
+          "type": 15,
           "c_type": "clingo_symbol_t *",
           "qualifiers": 0,
           "const_string": false
@@ -1299,14 +1299,14 @@
       "args": [
         {
           "name": "atoms",
-          "type": 27,
+          "type": 25,
           "c_type": "const clingo_symbolic_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -1342,21 +1342,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 27,
+          "type": 25,
           "c_type": "const clingo_symbolic_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "signature",
-          "type": 11,
+          "type": 10,
           "c_type": "const clingo_signature_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "iterator",
-          "type": 30,
+          "type": 28,
           "c_type": "clingo_symbolic_atom_iterator_t *",
           "qualifiers": 0,
           "const_string": false
@@ -1399,14 +1399,14 @@
       "args": [
         {
           "name": "atoms",
-          "type": 27,
+          "type": 25,
           "c_type": "const clingo_symbolic_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "iterator",
-          "type": 30,
+          "type": 28,
           "c_type": "clingo_symbolic_atom_iterator_t *",
           "qualifiers": 0,
           "const_string": false
@@ -1442,21 +1442,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 27,
+          "type": 25,
           "c_type": "const clingo_symbolic_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "symbol",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "iterator",
-          "type": 30,
+          "type": 28,
           "c_type": "clingo_symbolic_atom_iterator_t *",
           "qualifiers": 0,
           "const_string": false
@@ -1499,28 +1499,28 @@
       "args": [
         {
           "name": "atoms",
-          "type": 27,
+          "type": 25,
           "c_type": "const clingo_symbolic_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "a",
-          "type": 31,
+          "type": 29,
           "c_type": "clingo_symbolic_atom_iterator_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "b",
-          "type": 31,
+          "type": 29,
           "c_type": "clingo_symbolic_atom_iterator_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "equal",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -1570,21 +1570,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 27,
+          "type": 25,
           "c_type": "const clingo_symbolic_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "iterator",
-          "type": 31,
+          "type": 29,
           "c_type": "clingo_symbolic_atom_iterator_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "symbol",
-          "type": 17,
+          "type": 15,
           "c_type": "clingo_symbol_t *",
           "qualifiers": 0,
           "const_string": false
@@ -1627,21 +1627,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 27,
+          "type": 25,
           "c_type": "const clingo_symbolic_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "iterator",
-          "type": 31,
+          "type": 29,
           "c_type": "clingo_symbolic_atom_iterator_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "fact",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -1684,21 +1684,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 27,
+          "type": 25,
           "c_type": "const clingo_symbolic_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "iterator",
-          "type": 31,
+          "type": 29,
           "c_type": "clingo_symbolic_atom_iterator_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "external",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -1741,21 +1741,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 27,
+          "type": 25,
           "c_type": "const clingo_symbolic_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "iterator",
-          "type": 31,
+          "type": 29,
           "c_type": "clingo_symbolic_atom_iterator_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 32,
+          "type": 30,
           "c_type": "clingo_literal_t *",
           "qualifiers": 0,
           "const_string": false
@@ -1798,14 +1798,14 @@
       "args": [
         {
           "name": "atoms",
-          "type": 27,
+          "type": 25,
           "c_type": "const clingo_symbolic_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -1841,21 +1841,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 27,
+          "type": 25,
           "c_type": "const clingo_symbolic_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "signatures",
-          "type": 11,
+          "type": 10,
           "c_type": "clingo_signature_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -1898,21 +1898,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 27,
+          "type": 25,
           "c_type": "const clingo_symbolic_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "iterator",
-          "type": 31,
+          "type": 29,
           "c_type": "clingo_symbolic_atom_iterator_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "next",
-          "type": 30,
+          "type": 28,
           "c_type": "clingo_symbolic_atom_iterator_t *",
           "qualifiers": 0,
           "const_string": false
@@ -1955,21 +1955,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 27,
+          "type": 25,
           "c_type": "const clingo_symbolic_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "iterator",
-          "type": 31,
+          "type": 29,
           "c_type": "clingo_symbolic_atom_iterator_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "valid",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -2012,21 +2012,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "term",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "type",
-          "type": 40,
+          "type": 37,
           "c_type": "clingo_theory_term_type_t *",
           "qualifiers": 0,
           "const_string": false
@@ -2069,14 +2069,14 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "term",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
@@ -2126,21 +2126,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "term",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "name",
-          "type": 19,
+          "type": 17,
           "c_type": "const char **",
           "qualifiers": 2,
           "const_string": false
@@ -2183,28 +2183,28 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "term",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "arguments",
-          "type": 42,
+          "type": 39,
           "c_type": "const clingo_id_t **",
           "qualifiers": 2,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -2254,21 +2254,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "term",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -2311,14 +2311,14 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "term",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
@@ -2332,7 +2332,7 @@
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -2382,28 +2382,28 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "element",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "tuple",
-          "type": 42,
+          "type": 39,
           "c_type": "const clingo_id_t **",
           "qualifiers": 2,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -2453,28 +2453,28 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "element",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "condition",
-          "type": 44,
+          "type": 41,
           "c_type": "const clingo_literal_t **",
           "qualifiers": 2,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -2524,21 +2524,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "element",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "condition",
-          "type": 32,
+          "type": 30,
           "c_type": "clingo_literal_t *",
           "qualifiers": 0,
           "const_string": false
@@ -2581,21 +2581,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "element",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -2638,14 +2638,14 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "element",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
@@ -2659,7 +2659,7 @@
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -2709,14 +2709,14 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -2752,21 +2752,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "atom",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "term",
-          "type": 43,
+          "type": 40,
           "c_type": "clingo_id_t *",
           "qualifiers": 0,
           "const_string": false
@@ -2809,28 +2809,28 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "atom",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "elements",
-          "type": 42,
+          "type": 39,
           "c_type": "const clingo_id_t **",
           "qualifiers": 2,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -2880,21 +2880,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "atom",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "has_guard",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -2937,28 +2937,28 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "atom",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "connective",
-          "type": 19,
+          "type": 17,
           "c_type": "const char **",
           "qualifiers": 2,
           "const_string": false
         },
         {
           "name": "term",
-          "type": 43,
+          "type": 40,
           "c_type": "clingo_id_t *",
           "qualifiers": 0,
           "const_string": false
@@ -3008,21 +3008,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "atom",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 32,
+          "type": 30,
           "c_type": "clingo_literal_t *",
           "qualifiers": 0,
           "const_string": false
@@ -3065,21 +3065,21 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "atom",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -3122,14 +3122,14 @@
       "args": [
         {
           "name": "atoms",
-          "type": 36,
+          "type": 33,
           "c_type": "const clingo_theory_atoms_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "atom",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
@@ -3143,7 +3143,7 @@
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -3193,7 +3193,7 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
@@ -3222,7 +3222,7 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
@@ -3251,7 +3251,7 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
@@ -3280,14 +3280,14 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
@@ -3323,21 +3323,21 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "level",
-          "type": 48,
+          "type": 45,
           "c_type": "uint32_t *",
           "qualifiers": 0,
           "const_string": false
@@ -3380,7 +3380,7 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
@@ -3394,7 +3394,7 @@
         },
         {
           "name": "literal",
-          "type": 32,
+          "type": 30,
           "c_type": "clingo_literal_t *",
           "qualifiers": 0,
           "const_string": false
@@ -3437,21 +3437,21 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "is_fixed",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -3494,21 +3494,21 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "is_true",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -3551,21 +3551,21 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "is_false",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -3608,21 +3608,21 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 49,
+          "type": 46,
           "c_type": "clingo_truth_value_t *",
           "qualifiers": 0,
           "const_string": false
@@ -3659,13 +3659,13 @@
     },
     {
       "name": "clingo_assignment_size",
-      "result": 16,
+      "result": 14,
       "result_c_type": "size_t",
       "result_qualifiers": 0,
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
@@ -3694,21 +3694,21 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "offset",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 32,
+          "type": 30,
           "c_type": "clingo_literal_t *",
           "qualifiers": 0,
           "const_string": false
@@ -3751,7 +3751,7 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
@@ -3780,14 +3780,14 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 48,
+          "type": 45,
           "c_type": "uint32_t *",
           "qualifiers": 0,
           "const_string": false
@@ -3823,7 +3823,7 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
@@ -3837,7 +3837,7 @@
         },
         {
           "name": "offset",
-          "type": 48,
+          "type": 45,
           "c_type": "uint32_t *",
           "qualifiers": 0,
           "const_string": false
@@ -3880,7 +3880,7 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
@@ -3894,7 +3894,7 @@
         },
         {
           "name": "offset",
-          "type": 48,
+          "type": 45,
           "c_type": "uint32_t *",
           "qualifiers": 0,
           "const_string": false
@@ -3937,7 +3937,7 @@
       "args": [
         {
           "name": "assignment",
-          "type": 45,
+          "type": 42,
           "c_type": "const clingo_assignment_t *",
           "qualifiers": 1,
           "const_string": false
@@ -3951,7 +3951,7 @@
         },
         {
           "name": "literal",
-          "type": 32,
+          "type": 30,
           "c_type": "clingo_literal_t *",
           "qualifiers": 0,
           "const_string": false
@@ -3994,21 +3994,21 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "const clingo_propagate_init_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "aspif_literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "solver_literal",
-          "type": 32,
+          "type": 30,
           "c_type": "clingo_literal_t *",
           "qualifiers": 0,
           "const_string": false
@@ -4051,14 +4051,14 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "clingo_propagate_init_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "solver_literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
@@ -4094,21 +4094,21 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "clingo_propagate_init_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "solver_literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "thread_id",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
@@ -4151,14 +4151,14 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "clingo_propagate_init_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "solver_literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
@@ -4194,14 +4194,14 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "clingo_propagate_init_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "solver_literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
@@ -4251,14 +4251,14 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "clingo_propagate_init_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "solver_literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
@@ -4294,14 +4294,14 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "const clingo_propagate_init_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "atoms",
-          "type": 54,
+          "type": 51,
           "c_type": "const clingo_symbolic_atoms_t **",
           "qualifiers": 2,
           "const_string": false
@@ -4337,14 +4337,14 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "const clingo_propagate_init_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "atoms",
-          "type": 55,
+          "type": 52,
           "c_type": "const clingo_theory_atoms_t **",
           "qualifiers": 2,
           "const_string": false
@@ -4380,7 +4380,7 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "const clingo_propagate_init_t *",
           "qualifiers": 1,
           "const_string": false
@@ -4409,14 +4409,14 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "clingo_propagate_init_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "mode",
-          "type": 56,
+          "type": 53,
           "c_type": "clingo_propagator_check_mode_t",
           "qualifiers": 0,
           "const_string": false
@@ -4446,13 +4446,13 @@
     },
     {
       "name": "clingo_propagate_init_get_check_mode",
-      "result": 56,
+      "result": 53,
       "result_c_type": "clingo_propagator_check_mode_t",
       "result_qualifiers": 0,
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "const clingo_propagate_init_t *",
           "qualifiers": 1,
           "const_string": false
@@ -4481,14 +4481,14 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "clingo_propagate_init_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "mode",
-          "type": 57,
+          "type": 54,
           "c_type": "clingo_propagator_undo_mode_t",
           "qualifiers": 0,
           "const_string": false
@@ -4518,13 +4518,13 @@
     },
     {
       "name": "clingo_propagate_init_get_undo_mode",
-      "result": 57,
+      "result": 54,
       "result_c_type": "clingo_propagator_undo_mode_t",
       "result_qualifiers": 0,
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "const clingo_propagate_init_t *",
           "qualifiers": 1,
           "const_string": false
@@ -4547,13 +4547,13 @@
     },
     {
       "name": "clingo_propagate_init_assignment",
-      "result": 45,
+      "result": 42,
       "result_c_type": "const clingo_assignment_t *",
       "result_qualifiers": 1,
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "const clingo_propagate_init_t *",
           "qualifiers": 1,
           "const_string": false
@@ -4582,7 +4582,7 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "clingo_propagate_init_t *",
           "qualifiers": 0,
           "const_string": false
@@ -4596,7 +4596,7 @@
         },
         {
           "name": "result",
-          "type": 32,
+          "type": 30,
           "c_type": "clingo_literal_t *",
           "qualifiers": 0,
           "const_string": false
@@ -4639,28 +4639,28 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "clingo_propagate_init_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "clause",
-          "type": 32,
+          "type": 30,
           "c_type": "const clingo_literal_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "result",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -4710,42 +4710,42 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "clingo_propagate_init_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "literals",
-          "type": 58,
+          "type": 55,
           "c_type": "const clingo_weighted_literal_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "bound",
-          "type": 61,
+          "type": 58,
           "c_type": "clingo_weight_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "type",
-          "type": 62,
+          "type": 59,
           "c_type": "clingo_weight_constraint_type_t",
           "qualifiers": 0,
           "const_string": false
@@ -4759,7 +4759,7 @@
         },
         {
           "name": "result",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -4837,28 +4837,28 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "clingo_propagate_init_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "weight",
-          "type": 61,
+          "type": 58,
           "c_type": "clingo_weight_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "priority",
-          "type": 61,
+          "type": 58,
           "c_type": "clingo_weight_t",
           "qualifiers": 0,
           "const_string": false
@@ -4908,14 +4908,14 @@
       "args": [
         {
           "name": "init",
-          "type": 51,
+          "type": 48,
           "c_type": "clingo_propagate_init_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "result",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -4945,13 +4945,13 @@
     },
     {
       "name": "clingo_propagate_control_thread_id",
-      "result": 39,
+      "result": 36,
       "result_c_type": "clingo_id_t",
       "result_qualifiers": 0,
       "args": [
         {
           "name": "control",
-          "type": 63,
+          "type": 60,
           "c_type": "const clingo_propagate_control_t *",
           "qualifiers": 1,
           "const_string": false
@@ -4974,13 +4974,13 @@
     },
     {
       "name": "clingo_propagate_control_assignment",
-      "result": 45,
+      "result": 42,
       "result_c_type": "const clingo_assignment_t *",
       "result_qualifiers": 1,
       "args": [
         {
           "name": "control",
-          "type": 63,
+          "type": 60,
           "c_type": "const clingo_propagate_control_t *",
           "qualifiers": 1,
           "const_string": false
@@ -5009,14 +5009,14 @@
       "args": [
         {
           "name": "control",
-          "type": 63,
+          "type": 60,
           "c_type": "clingo_propagate_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "result",
-          "type": 32,
+          "type": 30,
           "c_type": "clingo_literal_t *",
           "qualifiers": 0,
           "const_string": false
@@ -5052,14 +5052,14 @@
       "args": [
         {
           "name": "control",
-          "type": 63,
+          "type": 60,
           "c_type": "clingo_propagate_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
@@ -5095,14 +5095,14 @@
       "args": [
         {
           "name": "control",
-          "type": 63,
+          "type": 60,
           "c_type": "const clingo_propagate_control_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
@@ -5138,14 +5138,14 @@
       "args": [
         {
           "name": "control",
-          "type": 63,
+          "type": 60,
           "c_type": "clingo_propagate_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
@@ -5181,35 +5181,35 @@
       "args": [
         {
           "name": "control",
-          "type": 63,
+          "type": 60,
           "c_type": "clingo_propagate_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "clause",
-          "type": 32,
+          "type": 30,
           "c_type": "const clingo_literal_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "type",
-          "type": 66,
+          "type": 63,
           "c_type": "clingo_clause_type_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "result",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -5266,14 +5266,14 @@
       "args": [
         {
           "name": "control",
-          "type": 63,
+          "type": 60,
           "c_type": "clingo_propagate_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "result",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -5309,7 +5309,7 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
@@ -5338,7 +5338,7 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
@@ -5367,7 +5367,7 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
@@ -5381,28 +5381,28 @@
         },
         {
           "name": "head",
-          "type": 70,
+          "type": 67,
           "c_type": "const clingo_atom_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "head_size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "body",
-          "type": 32,
+          "type": 30,
           "c_type": "const clingo_literal_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "body_size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -5466,7 +5466,7 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
@@ -5480,35 +5480,35 @@
         },
         {
           "name": "head",
-          "type": 70,
+          "type": 67,
           "c_type": "const clingo_atom_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "head_size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "lower_bound",
-          "type": 61,
+          "type": 58,
           "c_type": "clingo_weight_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "body",
-          "type": 58,
+          "type": 55,
           "c_type": "const clingo_weighted_literal_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "body_size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -5579,28 +5579,28 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "priority",
-          "type": 61,
+          "type": 58,
           "c_type": "clingo_weight_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "literals",
-          "type": 58,
+          "type": 55,
           "c_type": "const clingo_weighted_literal_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -5650,21 +5650,21 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "atoms",
-          "type": 70,
+          "type": 67,
           "c_type": "const clingo_atom_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -5707,21 +5707,21 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "atom",
-          "type": 71,
+          "type": 68,
           "c_type": "clingo_atom_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "type",
-          "type": 72,
+          "type": 69,
           "c_type": "clingo_external_type_t",
           "qualifiers": 0,
           "const_string": false
@@ -5764,21 +5764,21 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "literals",
-          "type": 32,
+          "type": 30,
           "c_type": "const clingo_literal_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -5821,21 +5821,21 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "atom",
-          "type": 71,
+          "type": 68,
           "c_type": "clingo_atom_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "type",
-          "type": 73,
+          "type": 70,
           "c_type": "clingo_heuristic_type_t",
           "qualifiers": 0,
           "const_string": false
@@ -5849,21 +5849,21 @@
         },
         {
           "name": "priority",
-          "type": 10,
+          "type": 9,
           "c_type": "unsigned int",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "condition",
-          "type": 32,
+          "type": 30,
           "c_type": "const clingo_literal_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -5934,7 +5934,7 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
@@ -5955,14 +5955,14 @@
         },
         {
           "name": "condition",
-          "type": 32,
+          "type": 30,
           "c_type": "const clingo_literal_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -6019,21 +6019,21 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "symbol",
-          "type": 17,
+          "type": 15,
           "c_type": "clingo_symbol_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "atom",
-          "type": 70,
+          "type": 67,
           "c_type": "clingo_atom_t *",
           "qualifiers": 0,
           "const_string": false
@@ -6076,7 +6076,7 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
@@ -6090,7 +6090,7 @@
         },
         {
           "name": "term_id",
-          "type": 43,
+          "type": 40,
           "c_type": "clingo_id_t *",
           "qualifiers": 0,
           "const_string": false
@@ -6133,7 +6133,7 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
@@ -6147,7 +6147,7 @@
         },
         {
           "name": "term_id",
-          "type": 43,
+          "type": 40,
           "c_type": "clingo_id_t *",
           "qualifiers": 0,
           "const_string": false
@@ -6190,35 +6190,35 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "type",
-          "type": 74,
+          "type": 71,
           "c_type": "clingo_theory_sequence_type_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "arguments",
-          "type": 43,
+          "type": 40,
           "c_type": "const clingo_id_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "term_id",
-          "type": 43,
+          "type": 40,
           "c_type": "clingo_id_t *",
           "qualifiers": 0,
           "const_string": false
@@ -6275,7 +6275,7 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
@@ -6289,21 +6289,21 @@
         },
         {
           "name": "arguments",
-          "type": 43,
+          "type": 40,
           "c_type": "const clingo_id_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "term_id",
-          "type": 43,
+          "type": 40,
           "c_type": "clingo_id_t *",
           "qualifiers": 0,
           "const_string": false
@@ -6360,21 +6360,21 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "symbol",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "term_id",
-          "type": 43,
+          "type": 40,
           "c_type": "clingo_id_t *",
           "qualifiers": 0,
           "const_string": false
@@ -6417,42 +6417,42 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "tuple",
-          "type": 43,
+          "type": 40,
           "c_type": "const clingo_id_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "tuple_size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "condition",
-          "type": 32,
+          "type": 30,
           "c_type": "const clingo_literal_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "condition_size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "element_id",
-          "type": 43,
+          "type": 40,
           "c_type": "clingo_id_t *",
           "qualifiers": 0,
           "const_string": false
@@ -6516,42 +6516,42 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "atom",
-          "type": 71,
+          "type": 68,
           "c_type": "clingo_atom_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "term_id",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "elements",
-          "type": 43,
+          "type": 40,
           "c_type": "const clingo_id_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "atom_id",
-          "type": 70,
+          "type": 67,
           "c_type": "clingo_atom_t *",
           "qualifiers": 0,
           "const_string": false
@@ -6615,35 +6615,35 @@
       "args": [
         {
           "name": "backend",
-          "type": 67,
+          "type": 64,
           "c_type": "clingo_backend_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "atom",
-          "type": 71,
+          "type": 68,
           "c_type": "clingo_atom_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "term_id",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "elements",
-          "type": 43,
+          "type": 40,
           "c_type": "const clingo_id_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -6657,14 +6657,14 @@
         },
         {
           "name": "right_hand_side_id",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "atom_id",
-          "type": 70,
+          "type": 67,
           "c_type": "clingo_atom_t *",
           "qualifiers": 0,
           "const_string": false
@@ -6742,14 +6742,14 @@
       "args": [
         {
           "name": "configuration",
-          "type": 75,
+          "type": 72,
           "c_type": "const clingo_configuration_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 43,
+          "type": 40,
           "c_type": "clingo_id_t *",
           "qualifiers": 0,
           "const_string": false
@@ -6785,21 +6785,21 @@
       "args": [
         {
           "name": "configuration",
-          "type": 75,
+          "type": 72,
           "c_type": "const clingo_configuration_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "type",
-          "type": 78,
+          "type": 75,
           "c_type": "clingo_configuration_type_bitset_t *",
           "qualifiers": 0,
           "const_string": false
@@ -6842,21 +6842,21 @@
       "args": [
         {
           "name": "configuration",
-          "type": 75,
+          "type": 72,
           "c_type": "const clingo_configuration_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "description",
-          "type": 19,
+          "type": 17,
           "c_type": "const char **",
           "qualifiers": 2,
           "const_string": false
@@ -6899,21 +6899,21 @@
       "args": [
         {
           "name": "configuration",
-          "type": 75,
+          "type": 72,
           "c_type": "const clingo_configuration_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -6956,28 +6956,28 @@
       "args": [
         {
           "name": "configuration",
-          "type": 75,
+          "type": 72,
           "c_type": "const clingo_configuration_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "offset",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "subkey",
-          "type": 43,
+          "type": 40,
           "c_type": "clingo_id_t *",
           "qualifiers": 0,
           "const_string": false
@@ -7027,21 +7027,21 @@
       "args": [
         {
           "name": "configuration",
-          "type": 75,
+          "type": 72,
           "c_type": "const clingo_configuration_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -7084,14 +7084,14 @@
       "args": [
         {
           "name": "configuration",
-          "type": 75,
+          "type": 72,
           "c_type": "const clingo_configuration_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
@@ -7105,7 +7105,7 @@
         },
         {
           "name": "result",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -7155,28 +7155,28 @@
       "args": [
         {
           "name": "configuration",
-          "type": 75,
+          "type": 72,
           "c_type": "const clingo_configuration_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "offset",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "name",
-          "type": 19,
+          "type": 17,
           "c_type": "const char **",
           "qualifiers": 2,
           "const_string": false
@@ -7226,14 +7226,14 @@
       "args": [
         {
           "name": "configuration",
-          "type": 75,
+          "type": 72,
           "c_type": "const clingo_configuration_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
@@ -7247,7 +7247,7 @@
         },
         {
           "name": "subkey",
-          "type": 43,
+          "type": 40,
           "c_type": "clingo_id_t *",
           "qualifiers": 0,
           "const_string": false
@@ -7297,21 +7297,21 @@
       "args": [
         {
           "name": "configuration",
-          "type": 75,
+          "type": 72,
           "c_type": "const clingo_configuration_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "assigned",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -7354,21 +7354,21 @@
       "args": [
         {
           "name": "configuration",
-          "type": 75,
+          "type": 72,
           "c_type": "const clingo_configuration_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -7411,14 +7411,14 @@
       "args": [
         {
           "name": "configuration",
-          "type": 75,
+          "type": 72,
           "c_type": "const clingo_configuration_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
@@ -7432,7 +7432,7 @@
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -7482,14 +7482,14 @@
       "args": [
         {
           "name": "configuration",
-          "type": 75,
+          "type": 72,
           "c_type": "clingo_configuration_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 39,
+          "type": 36,
           "c_type": "clingo_id_t",
           "qualifiers": 0,
           "const_string": false
@@ -7539,14 +7539,14 @@
       "args": [
         {
           "name": "statistics",
-          "type": 80,
+          "type": 77,
           "c_type": "const clingo_statistics_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 83,
+          "type": 80,
           "c_type": "uint64_t *",
           "qualifiers": 0,
           "const_string": false
@@ -7582,21 +7582,21 @@
       "args": [
         {
           "name": "statistics",
-          "type": 80,
+          "type": 77,
           "c_type": "const clingo_statistics_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 13,
+          "type": 12,
           "c_type": "uint64_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "type",
-          "type": 84,
+          "type": 81,
           "c_type": "clingo_statistics_type_t *",
           "qualifiers": 0,
           "const_string": false
@@ -7639,21 +7639,21 @@
       "args": [
         {
           "name": "statistics",
-          "type": 80,
+          "type": 77,
           "c_type": "const clingo_statistics_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 13,
+          "type": 12,
           "c_type": "uint64_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -7696,28 +7696,28 @@
       "args": [
         {
           "name": "statistics",
-          "type": 80,
+          "type": 77,
           "c_type": "const clingo_statistics_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 13,
+          "type": 12,
           "c_type": "uint64_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "offset",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "subkey",
-          "type": 83,
+          "type": 80,
           "c_type": "uint64_t *",
           "qualifiers": 0,
           "const_string": false
@@ -7767,28 +7767,28 @@
       "args": [
         {
           "name": "statistics",
-          "type": 80,
+          "type": 77,
           "c_type": "clingo_statistics_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 13,
+          "type": 12,
           "c_type": "uint64_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "type",
-          "type": 85,
+          "type": 82,
           "c_type": "clingo_statistics_type_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "subkey",
-          "type": 83,
+          "type": 80,
           "c_type": "uint64_t *",
           "qualifiers": 0,
           "const_string": false
@@ -7838,21 +7838,21 @@
       "args": [
         {
           "name": "statistics",
-          "type": 80,
+          "type": 77,
           "c_type": "const clingo_statistics_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 13,
+          "type": 12,
           "c_type": "uint64_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -7895,14 +7895,14 @@
       "args": [
         {
           "name": "statistics",
-          "type": 80,
+          "type": 77,
           "c_type": "const clingo_statistics_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 13,
+          "type": 12,
           "c_type": "uint64_t",
           "qualifiers": 0,
           "const_string": false
@@ -7916,7 +7916,7 @@
         },
         {
           "name": "result",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -7966,28 +7966,28 @@
       "args": [
         {
           "name": "statistics",
-          "type": 80,
+          "type": 77,
           "c_type": "const clingo_statistics_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 13,
+          "type": 12,
           "c_type": "uint64_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "offset",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "name",
-          "type": 19,
+          "type": 17,
           "c_type": "const char **",
           "qualifiers": 2,
           "const_string": false
@@ -8037,14 +8037,14 @@
       "args": [
         {
           "name": "statistics",
-          "type": 80,
+          "type": 77,
           "c_type": "const clingo_statistics_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 13,
+          "type": 12,
           "c_type": "uint64_t",
           "qualifiers": 0,
           "const_string": false
@@ -8058,7 +8058,7 @@
         },
         {
           "name": "subkey",
-          "type": 83,
+          "type": 80,
           "c_type": "uint64_t *",
           "qualifiers": 0,
           "const_string": false
@@ -8108,14 +8108,14 @@
       "args": [
         {
           "name": "statistics",
-          "type": 80,
+          "type": 77,
           "c_type": "clingo_statistics_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 13,
+          "type": 12,
           "c_type": "uint64_t",
           "qualifiers": 0,
           "const_string": false
@@ -8129,14 +8129,14 @@
         },
         {
           "name": "type",
-          "type": 85,
+          "type": 82,
           "c_type": "clingo_statistics_type_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "subkey",
-          "type": 83,
+          "type": 80,
           "c_type": "uint64_t *",
           "qualifiers": 0,
           "const_string": false
@@ -8193,21 +8193,21 @@
       "args": [
         {
           "name": "statistics",
-          "type": 80,
+          "type": 77,
           "c_type": "const clingo_statistics_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 13,
+          "type": 12,
           "c_type": "uint64_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 86,
+          "type": 83,
           "c_type": "double *",
           "qualifiers": 0,
           "const_string": false
@@ -8250,21 +8250,21 @@
       "args": [
         {
           "name": "statistics",
-          "type": 80,
+          "type": 77,
           "c_type": "clingo_statistics_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "key",
-          "type": 13,
+          "type": 12,
           "c_type": "uint64_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 87,
+          "type": 84,
           "c_type": "double",
           "qualifiers": 0,
           "const_string": false
@@ -8307,14 +8307,14 @@
       "args": [
         {
           "name": "model",
-          "type": 88,
+          "type": 85,
           "c_type": "const clingo_model_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "type",
-          "type": 91,
+          "type": 88,
           "c_type": "clingo_model_type_t *",
           "qualifiers": 0,
           "const_string": false
@@ -8350,14 +8350,14 @@
       "args": [
         {
           "name": "model",
-          "type": 88,
+          "type": 85,
           "c_type": "const clingo_model_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "number",
-          "type": 83,
+          "type": 80,
           "c_type": "uint64_t *",
           "qualifiers": 0,
           "const_string": false
@@ -8393,21 +8393,21 @@
       "args": [
         {
           "name": "model",
-          "type": 88,
+          "type": 85,
           "c_type": "const clingo_model_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "show",
-          "type": 93,
+          "type": 90,
           "c_type": "clingo_show_type_bitset_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -8450,28 +8450,28 @@
       "args": [
         {
           "name": "model",
-          "type": 88,
+          "type": 85,
           "c_type": "const clingo_model_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "show",
-          "type": 93,
+          "type": 90,
           "c_type": "clingo_show_type_bitset_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "symbols",
-          "type": 17,
+          "type": 15,
           "c_type": "clingo_symbol_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -8521,21 +8521,21 @@
       "args": [
         {
           "name": "model",
-          "type": 88,
+          "type": 85,
           "c_type": "const clingo_model_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "atom",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "contained",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -8578,21 +8578,21 @@
       "args": [
         {
           "name": "model",
-          "type": 88,
+          "type": 85,
           "c_type": "const clingo_model_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "result",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -8635,21 +8635,21 @@
       "args": [
         {
           "name": "model",
-          "type": 88,
+          "type": 85,
           "c_type": "const clingo_model_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "result",
-          "type": 94,
+          "type": 91,
           "c_type": "clingo_consequence_t *",
           "qualifiers": 0,
           "const_string": false
@@ -8692,14 +8692,14 @@
       "args": [
         {
           "name": "model",
-          "type": 88,
+          "type": 85,
           "c_type": "const clingo_model_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -8735,21 +8735,21 @@
       "args": [
         {
           "name": "model",
-          "type": 88,
+          "type": 85,
           "c_type": "const clingo_model_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "costs",
-          "type": 96,
+          "type": 93,
           "c_type": "int64_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -8792,21 +8792,21 @@
       "args": [
         {
           "name": "model",
-          "type": 88,
+          "type": 85,
           "c_type": "const clingo_model_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "priorities",
-          "type": 100,
+          "type": 96,
           "c_type": "clingo_weight_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -8849,14 +8849,14 @@
       "args": [
         {
           "name": "model",
-          "type": 88,
+          "type": 85,
           "c_type": "const clingo_model_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "proven",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -8892,14 +8892,14 @@
       "args": [
         {
           "name": "model",
-          "type": 88,
+          "type": 85,
           "c_type": "const clingo_model_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "id",
-          "type": 43,
+          "type": 40,
           "c_type": "clingo_id_t *",
           "qualifiers": 0,
           "const_string": false
@@ -8935,21 +8935,21 @@
       "args": [
         {
           "name": "model",
-          "type": 88,
+          "type": 85,
           "c_type": "clingo_model_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "symbols",
-          "type": 17,
+          "type": 15,
           "c_type": "const clingo_symbol_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -8992,14 +8992,14 @@
       "args": [
         {
           "name": "model",
-          "type": 88,
+          "type": 85,
           "c_type": "const clingo_model_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "control",
-          "type": 101,
+          "type": 97,
           "c_type": "clingo_solve_control_t **",
           "qualifiers": 0,
           "const_string": false
@@ -9035,14 +9035,14 @@
       "args": [
         {
           "name": "control",
-          "type": 102,
+          "type": 98,
           "c_type": "const clingo_solve_control_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "atoms",
-          "type": 54,
+          "type": 51,
           "c_type": "const clingo_symbolic_atoms_t **",
           "qualifiers": 2,
           "const_string": false
@@ -9078,21 +9078,21 @@
       "args": [
         {
           "name": "control",
-          "type": 102,
+          "type": 98,
           "c_type": "clingo_solve_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "clause",
-          "type": 32,
+          "type": 30,
           "c_type": "const clingo_literal_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -9135,14 +9135,14 @@
       "args": [
         {
           "name": "handle",
-          "type": 105,
+          "type": 101,
           "c_type": "clingo_solve_handle_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "result",
-          "type": 108,
+          "type": 104,
           "c_type": "clingo_solve_result_bitset_t *",
           "qualifiers": 0,
           "const_string": false
@@ -9178,21 +9178,21 @@
       "args": [
         {
           "name": "handle",
-          "type": 105,
+          "type": 101,
           "c_type": "clingo_solve_handle_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "timeout",
-          "type": 87,
+          "type": 84,
           "c_type": "double",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "result",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -9235,14 +9235,14 @@
       "args": [
         {
           "name": "handle",
-          "type": 105,
+          "type": 101,
           "c_type": "clingo_solve_handle_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "model",
-          "type": 110,
+          "type": 106,
           "c_type": "const clingo_model_t **",
           "qualifiers": 2,
           "const_string": false
@@ -9278,21 +9278,21 @@
       "args": [
         {
           "name": "handle",
-          "type": 105,
+          "type": 101,
           "c_type": "clingo_solve_handle_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "core",
-          "type": 44,
+          "type": 41,
           "c_type": "const clingo_literal_t **",
           "qualifiers": 2,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -9335,14 +9335,14 @@
       "args": [
         {
           "name": "handle",
-          "type": 105,
+          "type": 101,
           "c_type": "clingo_solve_handle_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "model",
-          "type": 110,
+          "type": 106,
           "c_type": "const clingo_model_t **",
           "qualifiers": 2,
           "const_string": false
@@ -9378,7 +9378,7 @@
       "args": [
         {
           "name": "handle",
-          "type": 105,
+          "type": 101,
           "c_type": "clingo_solve_handle_t *",
           "qualifiers": 0,
           "const_string": false
@@ -9409,7 +9409,7 @@
       "args": [
         {
           "name": "handle",
-          "type": 105,
+          "type": 101,
           "c_type": "clingo_solve_handle_t *",
           "qualifiers": 0,
           "const_string": false
@@ -9438,7 +9438,7 @@
       "args": [
         {
           "name": "handle",
-          "type": 105,
+          "type": 101,
           "c_type": "clingo_solve_handle_t *",
           "qualifiers": 0,
           "const_string": false
@@ -9469,42 +9469,42 @@
       "args": [
         {
           "name": "arguments",
-          "type": 19,
+          "type": 17,
           "c_type": "const char *const *",
           "qualifiers": 3,
           "const_string": false
         },
         {
           "name": "arguments_size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "logger",
-          "type": 24,
+          "type": 22,
           "c_type": "clingo_logger_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "logger_data",
-          "type": 26,
+          "type": 24,
           "c_type": "void *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "message_limit",
-          "type": 10,
+          "type": 9,
           "c_type": "unsigned int",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "control",
-          "type": 111,
+          "type": 107,
           "c_type": "clingo_control_t **",
           "qualifiers": 0,
           "const_string": false
@@ -9568,7 +9568,7 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
@@ -9599,7 +9599,7 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
@@ -9642,21 +9642,21 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "files",
-          "type": 19,
+          "type": 17,
           "c_type": "const char **",
           "qualifiers": 2,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -9699,7 +9699,7 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
@@ -9713,14 +9713,14 @@
         },
         {
           "name": "parameters",
-          "type": 19,
+          "type": 17,
           "c_type": "const char *const *",
           "qualifiers": 3,
           "const_string": false
         },
         {
           "name": "parameters_size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -9784,35 +9784,35 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "parts",
-          "type": 115,
+          "type": 111,
           "c_type": "const clingo_part_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "parts_size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "ground_callback",
-          "type": 118,
+          "type": 114,
           "c_type": "clingo_ground_callback_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "ground_callback_data",
-          "type": 26,
+          "type": 24,
           "c_type": "void *",
           "qualifiers": 0,
           "const_string": false
@@ -9871,49 +9871,49 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "mode",
-          "type": 125,
+          "type": 121,
           "c_type": "clingo_solve_mode_bitset_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "assumptions",
-          "type": 32,
+          "type": 30,
           "c_type": "const clingo_literal_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "assumptions_size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "notify",
-          "type": 126,
+          "type": 122,
           "c_type": "clingo_solve_event_callback_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "data",
-          "type": 26,
+          "type": 24,
           "c_type": "void *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "handle",
-          "type": 129,
+          "type": 125,
           "c_type": "clingo_solve_handle_t **",
           "qualifiers": 0,
           "const_string": false
@@ -9984,7 +9984,7 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
@@ -10015,21 +10015,21 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 50,
+          "type": 47,
           "c_type": "clingo_truth_value_t",
           "qualifiers": 0,
           "const_string": false
@@ -10072,14 +10072,14 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0,
           "const_string": false
@@ -10115,7 +10115,7 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
@@ -10144,21 +10144,21 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "atoms",
-          "type": 70,
+          "type": 67,
           "c_type": "const clingo_atom_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -10215,21 +10215,21 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "propagator",
-          "type": 130,
+          "type": 126,
           "c_type": "const clingo_propagator_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "data",
-          "type": 26,
+          "type": 24,
           "c_type": "void *",
           "qualifiers": 0,
           "const_string": false
@@ -10286,7 +10286,7 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "const clingo_control_t *",
           "qualifiers": 1,
           "const_string": false
@@ -10315,14 +10315,14 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "const clingo_control_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "statistics",
-          "type": 138,
+          "type": 134,
           "c_type": "const clingo_statistics_t **",
           "qualifiers": 2,
           "const_string": false
@@ -10358,7 +10358,7 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
@@ -10387,14 +10387,14 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "configuration",
-          "type": 140,
+          "type": 136,
           "c_type": "clingo_configuration_t **",
           "qualifiers": 0,
           "const_string": false
@@ -10430,7 +10430,7 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
@@ -10473,7 +10473,7 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
@@ -10502,7 +10502,7 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
@@ -10545,7 +10545,7 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
@@ -10574,7 +10574,7 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "const clingo_control_t *",
           "qualifiers": 1,
           "const_string": false
@@ -10588,7 +10588,7 @@
         },
         {
           "name": "symbol",
-          "type": 17,
+          "type": 15,
           "c_type": "clingo_symbol_t *",
           "qualifiers": 0,
           "const_string": false
@@ -10631,7 +10631,7 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "const clingo_control_t *",
           "qualifiers": 1,
           "const_string": false
@@ -10645,7 +10645,7 @@
         },
         {
           "name": "exists",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -10688,14 +10688,14 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "const clingo_control_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "atoms",
-          "type": 54,
+          "type": 51,
           "c_type": "const clingo_symbolic_atoms_t **",
           "qualifiers": 2,
           "const_string": false
@@ -10731,14 +10731,14 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "const clingo_control_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "atoms",
-          "type": 55,
+          "type": 52,
           "c_type": "const clingo_theory_atoms_t **",
           "qualifiers": 2,
           "const_string": false
@@ -10774,14 +10774,14 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "observer",
-          "type": 141,
+          "type": 137,
           "c_type": "const clingo_ground_program_observer_t *",
           "qualifiers": 1,
           "const_string": false
@@ -10795,7 +10795,7 @@
         },
         {
           "name": "data",
-          "type": 26,
+          "type": 24,
           "c_type": "void *",
           "qualifiers": 0,
           "const_string": false
@@ -10845,14 +10845,14 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "type",
-          "type": 162,
+          "type": 158,
           "c_type": "clingo_backend_type_t",
           "qualifiers": 0,
           "const_string": false
@@ -10916,14 +10916,14 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "backend",
-          "type": 163,
+          "type": 159,
           "c_type": "clingo_backend_t **",
           "qualifiers": 0,
           "const_string": false
@@ -10959,14 +10959,14 @@
       "args": [
         {
           "name": "type",
-          "type": 164,
+          "type": 160,
           "c_type": "clingo_ast_type_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "ast",
-          "type": 165,
+          "type": 161,
           "c_type": "clingo_ast_t **",
           "qualifiers": 0,
           "const_string": false
@@ -11002,7 +11002,7 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
@@ -11033,7 +11033,7 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
@@ -11064,14 +11064,14 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "copy",
-          "type": 165,
+          "type": 161,
           "c_type": "clingo_ast_t **",
           "qualifiers": 0,
           "const_string": false
@@ -11107,14 +11107,14 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "copy",
-          "type": 165,
+          "type": 161,
           "c_type": "clingo_ast_t **",
           "qualifiers": 0,
           "const_string": false
@@ -11150,14 +11150,14 @@
       "args": [
         {
           "name": "a",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "b",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
@@ -11193,14 +11193,14 @@
       "args": [
         {
           "name": "a",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "b",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
@@ -11230,13 +11230,13 @@
     },
     {
       "name": "clingo_ast_hash",
-      "result": 16,
+      "result": 14,
       "result_c_type": "size_t",
       "result_qualifiers": 0,
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
@@ -11265,14 +11265,14 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -11308,7 +11308,7 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
@@ -11322,7 +11322,7 @@
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -11365,14 +11365,14 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "type",
-          "type": 169,
+          "type": 165,
           "c_type": "clingo_ast_type_t *",
           "qualifiers": 0,
           "const_string": false
@@ -11408,21 +11408,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "has_attribute",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -11465,21 +11465,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "type",
-          "type": 171,
+          "type": 167,
           "c_type": "clingo_ast_attribute_type_t *",
           "qualifiers": 0,
           "const_string": false
@@ -11522,14 +11522,14 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
@@ -11579,14 +11579,14 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
@@ -11636,21 +11636,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 17,
+          "type": 15,
           "c_type": "clingo_symbol_t *",
           "qualifiers": 0,
           "const_string": false
@@ -11693,21 +11693,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 18,
+          "type": 16,
           "c_type": "clingo_symbol_t",
           "qualifiers": 0,
           "const_string": false
@@ -11750,21 +11750,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 120,
+          "type": 116,
           "c_type": "clingo_location_t *",
           "qualifiers": 0,
           "const_string": false
@@ -11807,21 +11807,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 120,
+          "type": 116,
           "c_type": "const clingo_location_t *",
           "qualifiers": 1,
           "const_string": false
@@ -11864,21 +11864,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 19,
+          "type": 17,
           "c_type": "const char **",
           "qualifiers": 2,
           "const_string": false
@@ -11921,14 +11921,14 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
@@ -11978,21 +11978,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 165,
+          "type": 161,
           "c_type": "clingo_ast_t **",
           "qualifiers": 0,
           "const_string": false
@@ -12035,21 +12035,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
@@ -12092,21 +12092,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 165,
+          "type": 161,
           "c_type": "clingo_ast_t **",
           "qualifiers": 0,
           "const_string": false
@@ -12149,21 +12149,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
@@ -12206,28 +12206,28 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "index",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 19,
+          "type": 17,
           "c_type": "const char **",
           "qualifiers": 2,
           "const_string": false
@@ -12277,21 +12277,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "index",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -12348,21 +12348,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "index",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -12405,21 +12405,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -12462,21 +12462,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "index",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -12533,28 +12533,28 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "index",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 165,
+          "type": 161,
           "c_type": "clingo_ast_t **",
           "qualifiers": 0,
           "const_string": false
@@ -12604,28 +12604,28 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "index",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
@@ -12675,21 +12675,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "index",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
@@ -12732,21 +12732,21 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 22,
+          "type": 20,
           "c_type": "size_t *",
           "qualifiers": 0,
           "const_string": false
@@ -12789,28 +12789,28 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "index",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "value",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
@@ -12867,42 +12867,42 @@
         },
         {
           "name": "callback",
-          "type": 173,
+          "type": 169,
           "c_type": "clingo_ast_callback_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "callback_data",
-          "type": 26,
+          "type": 24,
           "c_type": "void *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "logger",
-          "type": 24,
+          "type": 22,
           "c_type": "clingo_logger_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "logger_data",
-          "type": 26,
+          "type": 24,
           "c_type": "void *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "message_limit",
-          "type": 10,
+          "type": 9,
           "c_type": "unsigned int",
           "qualifiers": 0,
           "const_string": false
@@ -12973,56 +12973,56 @@
       "args": [
         {
           "name": "files",
-          "type": 19,
+          "type": 17,
           "c_type": "const char *const *",
           "qualifiers": 3,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "callback",
-          "type": 173,
+          "type": 169,
           "c_type": "clingo_ast_callback_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "callback_data",
-          "type": 26,
+          "type": 24,
           "c_type": "void *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "logger",
-          "type": 24,
+          "type": 22,
           "c_type": "clingo_logger_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "logger_data",
-          "type": 26,
+          "type": 24,
           "c_type": "void *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "message_limit",
-          "type": 10,
+          "type": 9,
           "c_type": "unsigned int",
           "qualifiers": 0,
           "const_string": false
@@ -13100,14 +13100,14 @@
       "args": [
         {
           "name": "control",
-          "type": 112,
+          "type": 108,
           "c_type": "clingo_control_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "builder",
-          "type": 175,
+          "type": 171,
           "c_type": "clingo_program_builder_t **",
           "qualifiers": 0,
           "const_string": false
@@ -13143,7 +13143,7 @@
       "args": [
         {
           "name": "builder",
-          "type": 176,
+          "type": 172,
           "c_type": "clingo_program_builder_t *",
           "qualifiers": 0,
           "const_string": false
@@ -13172,7 +13172,7 @@
       "args": [
         {
           "name": "builder",
-          "type": 176,
+          "type": 172,
           "c_type": "clingo_program_builder_t *",
           "qualifiers": 0,
           "const_string": false
@@ -13201,14 +13201,14 @@
       "args": [
         {
           "name": "builder",
-          "type": 176,
+          "type": 172,
           "c_type": "clingo_program_builder_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
@@ -13244,28 +13244,28 @@
       "args": [
         {
           "name": "ast",
-          "type": 166,
+          "type": 162,
           "c_type": "clingo_ast_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "unpool_type",
-          "type": 179,
+          "type": 175,
           "c_type": "clingo_ast_unpool_type_bitset_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "callback",
-          "type": 173,
+          "type": 169,
           "c_type": "clingo_ast_callback_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "callback_data",
-          "type": 26,
+          "type": 24,
           "c_type": "void *",
           "qualifiers": 0,
           "const_string": false
@@ -13315,7 +13315,7 @@
       "args": [
         {
           "name": "options",
-          "type": 180,
+          "type": 176,
           "c_type": "clingo_options_t *",
           "qualifiers": 0,
           "const_string": false
@@ -13343,14 +13343,14 @@
         },
         {
           "name": "parse",
-          "type": 183,
+          "type": 179,
           "c_type": "bool (*)(const char *, void *)",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "data",
-          "type": 26,
+          "type": 24,
           "c_type": "void *",
           "qualifiers": 0,
           "const_string": false
@@ -13442,7 +13442,7 @@
       "args": [
         {
           "name": "options",
-          "type": 180,
+          "type": 176,
           "c_type": "clingo_options_t *",
           "qualifiers": 0,
           "const_string": false
@@ -13470,7 +13470,7 @@
         },
         {
           "name": "target",
-          "type": 20,
+          "type": 18,
           "c_type": "bool *",
           "qualifiers": 0,
           "const_string": false
@@ -13527,28 +13527,28 @@
       "args": [
         {
           "name": "application",
-          "type": 184,
+          "type": 180,
           "c_type": "clingo_application_t *",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "arguments",
-          "type": 19,
+          "type": 17,
           "c_type": "const char *const *",
           "qualifiers": 3,
           "const_string": false
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0,
           "const_string": false
         },
         {
           "name": "data",
-          "type": 26,
+          "type": 24,
           "c_type": "void *",
           "qualifiers": 0,
           "const_string": false
@@ -13605,14 +13605,14 @@
         },
         {
           "name": "script",
-          "type": 195,
+          "type": 191,
           "c_type": "const clingo_script_t *",
           "qualifiers": 1,
           "const_string": false
         },
         {
           "name": "data",
-          "type": 26,
+          "type": 24,
           "c_type": "void *",
           "qualifiers": 0,
           "const_string": false
@@ -13731,12 +13731,6 @@
       "target": 9
     },
     {
-      "name": "__uint32_t",
-      "c_type": "__uint32_t",
-      "kind": "alias",
-      "target": 10
-    },
-    {
       "name": "unsigned int",
       "c_type": "unsigned int",
       "kind": "unsigned"
@@ -13745,48 +13739,42 @@
       "name": "clingo_signature_t*",
       "c_type": "clingo_signature_t *",
       "kind": "pointer",
-      "target": 12
+      "target": 11
     },
     {
       "name": "clingo_signature_t",
       "c_type": "clingo_signature_t",
       "kind": "alias",
-      "target": 13
+      "target": 12
     },
     {
       "name": "uint64_t",
       "c_type": "uint64_t",
       "kind": "alias",
-      "target": 14
+      "target": 13
     },
     {
-      "name": "__uint64_t",
-      "c_type": "__uint64_t",
-      "kind": "alias",
-      "target": 15
-    },
-    {
-      "name": "unsigned long",
-      "c_type": "unsigned long",
+      "name": "unsigned long long",
+      "c_type": "unsigned long long",
       "kind": "unsigned"
     },
     {
       "name": "size_t",
       "c_type": "size_t",
       "kind": "alias",
-      "target": 15
+      "target": 12
     },
     {
       "name": "clingo_symbol_t*",
       "c_type": "clingo_symbol_t *",
       "kind": "pointer",
-      "target": 18
+      "target": 16
     },
     {
       "name": "clingo_symbol_t",
       "c_type": "clingo_symbol_t",
       "kind": "alias",
-      "target": 13
+      "target": 12
     },
     {
       "name": "char**",
@@ -13804,13 +13792,13 @@
       "name": "clingo_symbol_t**",
       "c_type": "const clingo_symbol_t **",
       "kind": "pointer",
-      "target": 17
+      "target": 15
     },
     {
       "name": "size_t*",
       "c_type": "size_t *",
       "kind": "pointer",
-      "target": 16
+      "target": 14
     },
     {
       "name": "clingo_symbol_type_t",
@@ -13822,7 +13810,7 @@
       "name": "clingo_logger_t",
       "c_type": "clingo_logger_t",
       "kind": "alias",
-      "target": 25
+      "target": 23
     },
     {
       "name": "void(*)(clingo_warning_t,char*,void*)",
@@ -13832,7 +13820,7 @@
       "args": [
         5,
         0,
-        26
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -13851,13 +13839,13 @@
       "name": "clingo_symbolic_atoms_t*",
       "c_type": "const clingo_symbolic_atoms_t *",
       "kind": "pointer",
-      "target": 28
+      "target": 26
     },
     {
       "name": "clingo_symbolic_atoms_t",
       "c_type": "clingo_symbolic_atoms_t",
       "kind": "alias",
-      "target": 29
+      "target": 27
     },
     {
       "name": "struct clingo_symbolic_atoms",
@@ -13869,35 +13857,29 @@
       "name": "clingo_symbolic_atom_iterator_t*",
       "c_type": "clingo_symbolic_atom_iterator_t *",
       "kind": "pointer",
-      "target": 31
+      "target": 29
     },
     {
       "name": "clingo_symbolic_atom_iterator_t",
       "c_type": "clingo_symbolic_atom_iterator_t",
       "kind": "alias",
-      "target": 13
+      "target": 12
     },
     {
       "name": "clingo_literal_t*",
       "c_type": "clingo_literal_t *",
       "kind": "pointer",
-      "target": 33
+      "target": 31
     },
     {
       "name": "clingo_literal_t",
       "c_type": "clingo_literal_t",
       "kind": "alias",
-      "target": 34
+      "target": 32
     },
     {
       "name": "int32_t",
       "c_type": "int32_t",
-      "kind": "alias",
-      "target": 35
-    },
-    {
-      "name": "__int32_t",
-      "c_type": "__int32_t",
       "kind": "alias",
       "target": 3
     },
@@ -13905,13 +13887,13 @@
       "name": "clingo_theory_atoms_t*",
       "c_type": "const clingo_theory_atoms_t *",
       "kind": "pointer",
-      "target": 37
+      "target": 34
     },
     {
       "name": "clingo_theory_atoms_t",
       "c_type": "clingo_theory_atoms_t",
       "kind": "alias",
-      "target": 38
+      "target": 35
     },
     {
       "name": "struct clingo_theory_atoms",
@@ -13929,7 +13911,7 @@
       "name": "clingo_theory_term_type_t*",
       "c_type": "clingo_theory_term_type_t *",
       "kind": "pointer",
-      "target": 41
+      "target": 38
     },
     {
       "name": "clingo_theory_term_type_t",
@@ -13941,31 +13923,31 @@
       "name": "clingo_id_t**",
       "c_type": "const clingo_id_t **",
       "kind": "pointer",
-      "target": 43
+      "target": 40
     },
     {
       "name": "clingo_id_t*",
       "c_type": "clingo_id_t*",
       "kind": "pointer",
-      "target": 39
+      "target": 36
     },
     {
       "name": "clingo_literal_t**",
       "c_type": "const clingo_literal_t **",
       "kind": "pointer",
-      "target": 32
+      "target": 30
     },
     {
       "name": "clingo_assignment_t*",
       "c_type": "const clingo_assignment_t *",
       "kind": "pointer",
-      "target": 46
+      "target": 43
     },
     {
       "name": "clingo_assignment_t",
       "c_type": "clingo_assignment_t",
       "kind": "alias",
-      "target": 47
+      "target": 44
     },
     {
       "name": "struct clingo_assignment",
@@ -13983,7 +13965,7 @@
       "name": "clingo_truth_value_t*",
       "c_type": "clingo_truth_value_t *",
       "kind": "pointer",
-      "target": 50
+      "target": 47
     },
     {
       "name": "clingo_truth_value_t",
@@ -13995,13 +13977,13 @@
       "name": "clingo_propagate_init_t*",
       "c_type": "const clingo_propagate_init_t *",
       "kind": "pointer",
-      "target": 52
+      "target": 49
     },
     {
       "name": "clingo_propagate_init_t",
       "c_type": "clingo_propagate_init_t",
       "kind": "alias",
-      "target": 53
+      "target": 50
     },
     {
       "name": "struct clingo_propagate_init",
@@ -14013,13 +13995,13 @@
       "name": "clingo_symbolic_atoms_t**",
       "c_type": "const clingo_symbolic_atoms_t **",
       "kind": "pointer",
-      "target": 27
+      "target": 25
     },
     {
       "name": "clingo_theory_atoms_t**",
       "c_type": "const clingo_theory_atoms_t **",
       "kind": "pointer",
-      "target": 36
+      "target": 33
     },
     {
       "name": "clingo_propagator_check_mode_t",
@@ -14037,13 +14019,13 @@
       "name": "clingo_weighted_literal_t*",
       "c_type": "const clingo_weighted_literal_t *",
       "kind": "pointer",
-      "target": 59
+      "target": 56
     },
     {
       "name": "clingo_weighted_literal_t",
       "c_type": "clingo_weighted_literal_t",
       "kind": "alias",
-      "target": 60
+      "target": 57
     },
     {
       "name": "struct clingo_weighted_literal",
@@ -14052,13 +14034,13 @@
       "fields": [
         {
           "name": "literal",
-          "type": 33,
+          "type": 31,
           "c_type": "clingo_literal_t",
           "qualifiers": 0
         },
         {
           "name": "weight",
-          "type": 61,
+          "type": 58,
           "c_type": "clingo_weight_t",
           "qualifiers": 0
         }
@@ -14068,7 +14050,7 @@
       "name": "clingo_weight_t",
       "c_type": "clingo_weight_t",
       "kind": "alias",
-      "target": 34
+      "target": 32
     },
     {
       "name": "clingo_weight_constraint_type_t",
@@ -14080,13 +14062,13 @@
       "name": "clingo_propagate_control_t*",
       "c_type": "const clingo_propagate_control_t *",
       "kind": "pointer",
-      "target": 64
+      "target": 61
     },
     {
       "name": "clingo_propagate_control_t",
       "c_type": "clingo_propagate_control_t",
       "kind": "alias",
-      "target": 65
+      "target": 62
     },
     {
       "name": "struct clingo_propagate_control",
@@ -14104,13 +14086,13 @@
       "name": "clingo_backend_t*",
       "c_type": "clingo_backend_t *",
       "kind": "pointer",
-      "target": 68
+      "target": 65
     },
     {
       "name": "clingo_backend_t",
       "c_type": "clingo_backend_t",
       "kind": "alias",
-      "target": 69
+      "target": 66
     },
     {
       "name": "struct clingo_backend",
@@ -14122,7 +14104,7 @@
       "name": "clingo_atom_t*",
       "c_type": "const clingo_atom_t *",
       "kind": "pointer",
-      "target": 71
+      "target": 68
     },
     {
       "name": "clingo_atom_t",
@@ -14152,13 +14134,13 @@
       "name": "clingo_configuration_t*",
       "c_type": "const clingo_configuration_t *",
       "kind": "pointer",
-      "target": 76
+      "target": 73
     },
     {
       "name": "clingo_configuration_t",
       "c_type": "clingo_configuration_t",
       "kind": "alias",
-      "target": 77
+      "target": 74
     },
     {
       "name": "struct clingo_configuration",
@@ -14170,25 +14152,25 @@
       "name": "clingo_configuration_type_bitset_t*",
       "c_type": "clingo_configuration_type_bitset_t *",
       "kind": "pointer",
-      "target": 79
+      "target": 76
     },
     {
       "name": "clingo_configuration_type_bitset_t",
       "c_type": "clingo_configuration_type_bitset_t",
       "kind": "alias",
-      "target": 10
+      "target": 9
     },
     {
       "name": "clingo_statistics_t*",
       "c_type": "const clingo_statistics_t *",
       "kind": "pointer",
-      "target": 81
+      "target": 78
     },
     {
       "name": "clingo_statistics_t",
       "c_type": "clingo_statistics_t",
       "kind": "alias",
-      "target": 82
+      "target": 79
     },
     {
       "name": "struct clingo_statistic",
@@ -14200,13 +14182,13 @@
       "name": "uint64_t*",
       "c_type": "uint64_t *",
       "kind": "pointer",
-      "target": 13
+      "target": 12
     },
     {
       "name": "clingo_statistics_type_t*",
       "c_type": "clingo_statistics_type_t *",
       "kind": "pointer",
-      "target": 85
+      "target": 82
     },
     {
       "name": "clingo_statistics_type_t",
@@ -14218,7 +14200,7 @@
       "name": "double*",
       "c_type": "double *",
       "kind": "pointer",
-      "target": 87
+      "target": 84
     },
     {
       "name": "double",
@@ -14229,13 +14211,13 @@
       "name": "clingo_model_t*",
       "c_type": "const clingo_model_t *",
       "kind": "pointer",
-      "target": 89
+      "target": 86
     },
     {
       "name": "clingo_model_t",
       "c_type": "clingo_model_t",
       "kind": "alias",
-      "target": 90
+      "target": 87
     },
     {
       "name": "struct clingo_model",
@@ -14247,7 +14229,7 @@
       "name": "clingo_model_type_t*",
       "c_type": "clingo_model_type_t *",
       "kind": "pointer",
-      "target": 92
+      "target": 89
     },
     {
       "name": "clingo_model_type_t",
@@ -14259,13 +14241,13 @@
       "name": "clingo_show_type_bitset_t",
       "c_type": "clingo_show_type_bitset_t",
       "kind": "alias",
-      "target": 10
+      "target": 9
     },
     {
       "name": "clingo_consequence_t*",
       "c_type": "clingo_consequence_t *",
       "kind": "pointer",
-      "target": 95
+      "target": 92
     },
     {
       "name": "clingo_consequence_t",
@@ -14277,48 +14259,42 @@
       "name": "int64_t*",
       "c_type": "int64_t *",
       "kind": "pointer",
-      "target": 97
+      "target": 94
     },
     {
       "name": "int64_t",
       "c_type": "int64_t",
       "kind": "alias",
-      "target": 98
+      "target": 95
     },
     {
-      "name": "__int64_t",
-      "c_type": "__int64_t",
-      "kind": "alias",
-      "target": 99
-    },
-    {
-      "name": "long",
-      "c_type": "long",
+      "name": "long long",
+      "c_type": "long long",
       "kind": "signed"
     },
     {
       "name": "clingo_weight_t*",
       "c_type": "clingo_weight_t *",
       "kind": "pointer",
-      "target": 61
+      "target": 58
     },
     {
       "name": "clingo_solve_control_t**",
       "c_type": "clingo_solve_control_t **",
       "kind": "pointer",
-      "target": 102
+      "target": 98
     },
     {
       "name": "clingo_solve_control_t*",
       "c_type": "clingo_solve_control_t*",
       "kind": "pointer",
-      "target": 103
+      "target": 99
     },
     {
       "name": "clingo_solve_control_t",
       "c_type": "clingo_solve_control_t",
       "kind": "alias",
-      "target": 104
+      "target": 100
     },
     {
       "name": "struct clingo_solve_control",
@@ -14330,13 +14306,13 @@
       "name": "clingo_solve_handle_t*",
       "c_type": "clingo_solve_handle_t *",
       "kind": "pointer",
-      "target": 106
+      "target": 102
     },
     {
       "name": "clingo_solve_handle_t",
       "c_type": "clingo_solve_handle_t",
       "kind": "alias",
-      "target": 107
+      "target": 103
     },
     {
       "name": "struct clingo_solve_handle",
@@ -14348,37 +14324,37 @@
       "name": "clingo_solve_result_bitset_t*",
       "c_type": "clingo_solve_result_bitset_t *",
       "kind": "pointer",
-      "target": 109
+      "target": 105
     },
     {
       "name": "clingo_solve_result_bitset_t",
       "c_type": "clingo_solve_result_bitset_t",
       "kind": "alias",
-      "target": 10
+      "target": 9
     },
     {
       "name": "clingo_model_t**",
       "c_type": "const clingo_model_t **",
       "kind": "pointer",
-      "target": 88
+      "target": 85
     },
     {
       "name": "clingo_control_t**",
       "c_type": "clingo_control_t **",
       "kind": "pointer",
-      "target": 112
+      "target": 108
     },
     {
       "name": "clingo_control_t*",
       "c_type": "clingo_control_t*",
       "kind": "pointer",
-      "target": 113
+      "target": 109
     },
     {
       "name": "clingo_control_t",
       "c_type": "clingo_control_t",
       "kind": "alias",
-      "target": 114
+      "target": 110
     },
     {
       "name": "struct clingo_control",
@@ -14390,13 +14366,13 @@
       "name": "clingo_part_t*",
       "c_type": "const clingo_part_t *",
       "kind": "pointer",
-      "target": 116
+      "target": 112
     },
     {
       "name": "clingo_part_t",
       "c_type": "clingo_part_t",
       "kind": "alias",
-      "target": 117
+      "target": 113
     },
     {
       "name": "struct clingo_part",
@@ -14411,13 +14387,13 @@
         },
         {
           "name": "params",
-          "type": 17,
+          "type": 15,
           "c_type": "const clingo_symbol_t *",
           "qualifiers": 1
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0
         }
@@ -14427,7 +14403,7 @@
       "name": "clingo_ground_callback_t",
       "c_type": "clingo_ground_callback_t",
       "kind": "alias",
-      "target": 119
+      "target": 115
     },
     {
       "name": "bool(*)(clingo_location_t*,char*,clingo_symbol_t*,size_t,void*,clingo_symbol_callback_t,void*)",
@@ -14435,13 +14411,13 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        120,
+        116,
         0,
-        17,
-        16,
-        26,
-        123,
-        26
+        15,
+        14,
+        24,
+        119,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -14458,13 +14434,13 @@
       "name": "clingo_location_t*",
       "c_type": "clingo_location_t*",
       "kind": "pointer",
-      "target": 121
+      "target": 117
     },
     {
       "name": "clingo_location_t",
       "c_type": "clingo_location_t",
       "kind": "alias",
-      "target": 122
+      "target": 118
     },
     {
       "name": "struct clingo_location",
@@ -14485,25 +14461,25 @@
         },
         {
           "name": "begin_line",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0
         },
         {
           "name": "end_line",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0
         },
         {
           "name": "begin_column",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0
         },
         {
           "name": "end_column",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0
         }
@@ -14513,7 +14489,7 @@
       "name": "clingo_symbol_callback_t",
       "c_type": "clingo_symbol_callback_t",
       "kind": "alias",
-      "target": 124
+      "target": 120
     },
     {
       "name": "bool(*)(clingo_symbol_t*,size_t,void*)",
@@ -14521,9 +14497,9 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        17,
-        16,
-        26
+        15,
+        14,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -14536,13 +14512,13 @@
       "name": "clingo_solve_mode_bitset_t",
       "c_type": "clingo_solve_mode_bitset_t",
       "kind": "alias",
-      "target": 10
+      "target": 9
     },
     {
       "name": "clingo_solve_event_callback_t",
       "c_type": "clingo_solve_event_callback_t",
       "kind": "alias",
-      "target": 127
+      "target": 123
     },
     {
       "name": "bool(*)(clingo_solve_event_type_t,void*,void*,bool*)",
@@ -14550,10 +14526,10 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        128,
-        26,
-        26,
-        20
+        124,
+        24,
+        24,
+        18
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -14567,25 +14543,25 @@
       "name": "clingo_solve_event_type_t",
       "c_type": "clingo_solve_event_type_t",
       "kind": "alias",
-      "target": 10
+      "target": 9
     },
     {
       "name": "clingo_solve_handle_t**",
       "c_type": "clingo_solve_handle_t **",
       "kind": "pointer",
-      "target": 105
+      "target": 101
     },
     {
       "name": "clingo_propagator_t*",
       "c_type": "const clingo_propagator_t *",
       "kind": "pointer",
-      "target": 131
+      "target": 127
     },
     {
       "name": "clingo_propagator_t",
       "c_type": "clingo_propagator_t",
       "kind": "alias",
-      "target": 132
+      "target": 128
     },
     {
       "name": "struct clingo_propagator",
@@ -14594,31 +14570,31 @@
       "fields": [
         {
           "name": "init",
-          "type": 133,
+          "type": 129,
           "c_type": "bool (*)(clingo_propagate_init_t *, void *)",
           "qualifiers": 0
         },
         {
           "name": "propagate",
-          "type": 134,
+          "type": 130,
           "c_type": "bool (*)(clingo_propagate_control_t *, const clingo_literal_t *, size_t, void *)",
           "qualifiers": 0
         },
         {
           "name": "undo",
-          "type": 135,
+          "type": 131,
           "c_type": "void (*)(const clingo_propagate_control_t *, const clingo_literal_t *, size_t, void *)",
           "qualifiers": 0
         },
         {
           "name": "check",
-          "type": 136,
+          "type": 132,
           "c_type": "bool (*)(clingo_propagate_control_t *, void *)",
           "qualifiers": 0
         },
         {
           "name": "decide",
-          "type": 137,
+          "type": 133,
           "c_type": "bool (*)(clingo_id_t, const clingo_assignment_t *, clingo_literal_t, void *, clingo_literal_t *)",
           "qualifiers": 0
         }
@@ -14630,8 +14606,8 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        51,
-        26
+        48,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -14645,10 +14621,10 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        63,
-        32,
-        16,
-        26
+        60,
+        30,
+        14,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -14664,10 +14640,10 @@
       "kind": "callback",
       "result": 4,
       "args": [
-        63,
-        32,
-        16,
-        26
+        60,
+        30,
+        14,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -14683,8 +14659,8 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        63,
-        26
+        60,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -14698,11 +14674,11 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        39,
-        45,
-        33,
-        26,
-        32
+        36,
+        42,
+        31,
+        24,
+        30
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -14717,31 +14693,31 @@
       "name": "clingo_statistics_t**",
       "c_type": "const clingo_statistics_t **",
       "kind": "pointer",
-      "target": 80
+      "target": 77
     },
     {
       "name": "void**",
       "c_type": "void **",
       "kind": "pointer",
-      "target": 26
+      "target": 24
     },
     {
       "name": "clingo_configuration_t**",
       "c_type": "clingo_configuration_t **",
       "kind": "pointer",
-      "target": 75
+      "target": 72
     },
     {
       "name": "clingo_ground_program_observer_t*",
       "c_type": "const clingo_ground_program_observer_t *",
       "kind": "pointer",
-      "target": 142
+      "target": 138
     },
     {
       "name": "clingo_ground_program_observer_t",
       "c_type": "clingo_ground_program_observer_t",
       "kind": "alias",
-      "target": 143
+      "target": 139
     },
     {
       "name": "struct clingo_ground_program_observer",
@@ -14750,115 +14726,115 @@
       "fields": [
         {
           "name": "init_program",
-          "type": 144,
+          "type": 140,
           "c_type": "bool (*)(bool, void *)",
           "qualifiers": 0
         },
         {
           "name": "begin_step",
-          "type": 145,
+          "type": 141,
           "c_type": "bool (*)(void *)",
           "qualifiers": 0
         },
         {
           "name": "end_step",
-          "type": 145,
+          "type": 141,
           "c_type": "bool (*)(void *)",
           "qualifiers": 0
         },
         {
           "name": "rule",
-          "type": 146,
+          "type": 142,
           "c_type": "bool (*)(bool, const clingo_atom_t *, size_t, const clingo_literal_t *, size_t, void *)",
           "qualifiers": 0
         },
         {
           "name": "weight_rule",
-          "type": 147,
+          "type": 143,
           "c_type": "bool (*)(bool, const clingo_atom_t *, size_t, clingo_weight_t, const clingo_weighted_literal_t *, size_t, void *)",
           "qualifiers": 0
         },
         {
           "name": "minimize",
-          "type": 148,
+          "type": 144,
           "c_type": "bool (*)(clingo_weight_t, const clingo_weighted_literal_t *, size_t, void *)",
           "qualifiers": 0
         },
         {
           "name": "project",
-          "type": 149,
+          "type": 145,
           "c_type": "bool (*)(const clingo_atom_t *, size_t, void *)",
           "qualifiers": 0
         },
         {
           "name": "output_atom",
-          "type": 150,
+          "type": 146,
           "c_type": "bool (*)(clingo_symbol_t, clingo_atom_t, void *)",
           "qualifiers": 0
         },
         {
           "name": "output_term",
-          "type": 151,
+          "type": 147,
           "c_type": "bool (*)(clingo_symbol_t, const clingo_literal_t *, size_t, void *)",
           "qualifiers": 0
         },
         {
           "name": "external",
-          "type": 152,
+          "type": 148,
           "c_type": "bool (*)(clingo_atom_t, clingo_external_type_t, void *)",
           "qualifiers": 0
         },
         {
           "name": "assume",
-          "type": 153,
+          "type": 149,
           "c_type": "bool (*)(const clingo_literal_t *, size_t, void *)",
           "qualifiers": 0
         },
         {
           "name": "heuristic",
-          "type": 154,
+          "type": 150,
           "c_type": "bool (*)(clingo_atom_t, clingo_heuristic_type_t, int, unsigned int, const clingo_literal_t *, size_t, void *)",
           "qualifiers": 0
         },
         {
           "name": "acyc_edge",
-          "type": 155,
+          "type": 151,
           "c_type": "bool (*)(int, int, const clingo_literal_t *, size_t, void *)",
           "qualifiers": 0
         },
         {
           "name": "theory_term_number",
-          "type": 156,
+          "type": 152,
           "c_type": "bool (*)(clingo_id_t, int, void *)",
           "qualifiers": 0
         },
         {
           "name": "theory_term_string",
-          "type": 157,
+          "type": 153,
           "c_type": "bool (*)(clingo_id_t, const char *, void *)",
           "qualifiers": 0
         },
         {
           "name": "theory_term_compound",
-          "type": 158,
+          "type": 154,
           "c_type": "bool (*)(clingo_id_t, int, const clingo_id_t *, size_t, void *)",
           "qualifiers": 0
         },
         {
           "name": "theory_element",
-          "type": 159,
+          "type": 155,
           "c_type": "bool (*)(clingo_id_t, const clingo_id_t *, size_t, const clingo_literal_t *, size_t, void *)",
           "qualifiers": 0
         },
         {
           "name": "theory_atom",
-          "type": 160,
+          "type": 156,
           "c_type": "bool (*)(clingo_id_t, clingo_id_t, const clingo_id_t *, size_t, void *)",
           "qualifiers": 0
         },
         {
           "name": "theory_atom_with_guard",
-          "type": 161,
+          "type": 157,
           "c_type": "bool (*)(clingo_id_t, clingo_id_t, const clingo_id_t *, size_t, clingo_id_t, clingo_id_t, void *)",
           "qualifiers": 0
         }
@@ -14871,7 +14847,7 @@
       "result": 7,
       "args": [
         7,
-        26
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -14885,7 +14861,7 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        26
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -14899,11 +14875,11 @@
       "result": 7,
       "args": [
         7,
-        70,
-        16,
-        32,
-        16,
-        26
+        67,
+        14,
+        30,
+        14,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -14922,12 +14898,12 @@
       "result": 7,
       "args": [
         7,
-        70,
-        16,
-        61,
+        67,
+        14,
         58,
-        16,
-        26
+        55,
+        14,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -14946,10 +14922,10 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        61,
         58,
-        16,
-        26
+        55,
+        14,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -14965,9 +14941,9 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        70,
-        16,
-        26
+        67,
+        14,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -14982,9 +14958,9 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        18,
-        71,
-        26
+        16,
+        68,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -14999,10 +14975,10 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        18,
-        32,
         16,
-        26
+        30,
+        14,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15018,9 +14994,9 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        71,
-        72,
-        26
+        68,
+        69,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15035,9 +15011,9 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        32,
-        16,
-        26
+        30,
+        14,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15052,13 +15028,13 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        71,
-        73,
+        68,
+        70,
         3,
-        10,
-        32,
-        16,
-        26
+        9,
+        30,
+        14,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15079,9 +15055,9 @@
       "args": [
         3,
         3,
-        32,
-        16,
-        26
+        30,
+        14,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15098,9 +15074,9 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        39,
+        36,
         3,
-        26
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15115,9 +15091,9 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        39,
+        36,
         0,
-        26
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15132,11 +15108,11 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        39,
+        36,
         3,
-        43,
-        16,
-        26
+        40,
+        14,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15153,12 +15129,12 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        39,
-        43,
-        16,
-        32,
-        16,
-        26
+        36,
+        40,
+        14,
+        30,
+        14,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15176,11 +15152,11 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        39,
-        39,
-        43,
-        16,
-        26
+        36,
+        36,
+        40,
+        14,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15197,13 +15173,13 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        39,
-        39,
-        43,
-        16,
-        39,
-        39,
-        26
+        36,
+        36,
+        40,
+        14,
+        36,
+        36,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15220,13 +15196,13 @@
       "name": "clingo_backend_type_t",
       "c_type": "clingo_backend_type_t",
       "kind": "alias",
-      "target": 10
+      "target": 9
     },
     {
       "name": "clingo_backend_t**",
       "c_type": "clingo_backend_t **",
       "kind": "pointer",
-      "target": 67
+      "target": 64
     },
     {
       "name": "clingo_ast_type_t",
@@ -15238,19 +15214,19 @@
       "name": "clingo_ast_t**",
       "c_type": "clingo_ast_t **",
       "kind": "pointer",
-      "target": 166
+      "target": 162
     },
     {
       "name": "clingo_ast_t*",
       "c_type": "clingo_ast_t*",
       "kind": "pointer",
-      "target": 167
+      "target": 163
     },
     {
       "name": "clingo_ast_t",
       "c_type": "clingo_ast_t",
       "kind": "alias",
-      "target": 168
+      "target": 164
     },
     {
       "name": "struct clingo_ast",
@@ -15262,7 +15238,7 @@
       "name": "clingo_ast_type_t*",
       "c_type": "clingo_ast_type_t *",
       "kind": "pointer",
-      "target": 164
+      "target": 160
     },
     {
       "name": "clingo_ast_attribute_t",
@@ -15274,7 +15250,7 @@
       "name": "clingo_ast_attribute_type_t*",
       "c_type": "clingo_ast_attribute_type_t *",
       "kind": "pointer",
-      "target": 172
+      "target": 168
     },
     {
       "name": "clingo_ast_attribute_type_t",
@@ -15286,7 +15262,7 @@
       "name": "clingo_ast_callback_t",
       "c_type": "clingo_ast_callback_t",
       "kind": "alias",
-      "target": 174
+      "target": 170
     },
     {
       "name": "bool(*)(clingo_ast_t*,void*)",
@@ -15294,8 +15270,8 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        166,
-        26
+        162,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15307,19 +15283,19 @@
       "name": "clingo_program_builder_t**",
       "c_type": "clingo_program_builder_t **",
       "kind": "pointer",
-      "target": 176
+      "target": 172
     },
     {
       "name": "clingo_program_builder_t*",
       "c_type": "clingo_program_builder_t*",
       "kind": "pointer",
-      "target": 177
+      "target": 173
     },
     {
       "name": "clingo_program_builder_t",
       "c_type": "clingo_program_builder_t",
       "kind": "alias",
-      "target": 178
+      "target": 174
     },
     {
       "name": "struct clingo_program_builder",
@@ -15337,13 +15313,13 @@
       "name": "clingo_options_t*",
       "c_type": "clingo_options_t *",
       "kind": "pointer",
-      "target": 181
+      "target": 177
     },
     {
       "name": "clingo_options_t",
       "c_type": "clingo_options_t",
       "kind": "alias",
-      "target": 182
+      "target": 178
     },
     {
       "name": "struct clingo_options",
@@ -15358,7 +15334,7 @@
       "result": 7,
       "args": [
         0,
-        26
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15370,13 +15346,13 @@
       "name": "clingo_application_t*",
       "c_type": "clingo_application_t *",
       "kind": "pointer",
-      "target": 185
+      "target": 181
     },
     {
       "name": "clingo_application_t",
       "c_type": "clingo_application_t",
       "kind": "alias",
-      "target": 186
+      "target": 182
     },
     {
       "name": "struct clingo_application",
@@ -15385,49 +15361,49 @@
       "fields": [
         {
           "name": "program_name",
-          "type": 187,
+          "type": 183,
           "c_type": "const char *(*)(void *)",
           "qualifiers": 0
         },
         {
           "name": "version",
-          "type": 187,
+          "type": 183,
           "c_type": "const char *(*)(void *)",
           "qualifiers": 0
         },
         {
           "name": "message_limit",
-          "type": 188,
+          "type": 184,
           "c_type": "unsigned int (*)(void *)",
           "qualifiers": 0
         },
         {
           "name": "main",
-          "type": 189,
+          "type": 185,
           "c_type": "clingo_main_function_t",
           "qualifiers": 0
         },
         {
           "name": "logger",
-          "type": 24,
+          "type": 22,
           "c_type": "clingo_logger_t",
           "qualifiers": 0
         },
         {
           "name": "printer",
-          "type": 191,
+          "type": 187,
           "c_type": "clingo_model_printer_t",
           "qualifiers": 0
         },
         {
           "name": "register_options",
-          "type": 194,
+          "type": 190,
           "c_type": "bool (*)(clingo_options_t *, void *)",
           "qualifiers": 0
         },
         {
           "name": "validate_options",
-          "type": 145,
+          "type": 141,
           "c_type": "bool (*)(void *)",
           "qualifiers": 0
         }
@@ -15439,7 +15415,7 @@
       "kind": "callback",
       "result": 0,
       "args": [
-        26
+        24
       ],
       "result_qualifiers": 1,
       "qualifiers": [
@@ -15450,9 +15426,9 @@
       "name": "unsigned int(*)(void*)",
       "c_type": "unsigned int (*)(void *)",
       "kind": "callback",
-      "result": 10,
+      "result": 9,
       "args": [
-        26
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15463,7 +15439,7 @@
       "name": "clingo_main_function_t",
       "c_type": "clingo_main_function_t",
       "kind": "alias",
-      "target": 190
+      "target": 186
     },
     {
       "name": "bool(*)(clingo_control_t*,char**,size_t,void*)",
@@ -15471,10 +15447,10 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        112,
-        19,
-        16,
-        26
+        108,
+        17,
+        14,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15488,7 +15464,7 @@
       "name": "clingo_model_printer_t",
       "c_type": "clingo_model_printer_t",
       "kind": "alias",
-      "target": 192
+      "target": 188
     },
     {
       "name": "bool(*)(clingo_model_t*,clingo_default_model_printer_t,void*,void*)",
@@ -15496,10 +15472,10 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        88,
-        193,
-        26,
-        26
+        85,
+        189,
+        24,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15513,7 +15489,7 @@
       "name": "clingo_default_model_printer_t",
       "c_type": "clingo_default_model_printer_t",
       "kind": "alias",
-      "target": 145
+      "target": 141
     },
     {
       "name": "bool(*)(clingo_options_t*,void*)",
@@ -15521,8 +15497,8 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        180,
-        26
+        176,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15534,13 +15510,13 @@
       "name": "clingo_script_t*",
       "c_type": "const clingo_script_t *",
       "kind": "pointer",
-      "target": 196
+      "target": 192
     },
     {
       "name": "clingo_script_t",
       "c_type": "clingo_script_t",
       "kind": "alias",
-      "target": 197
+      "target": 193
     },
     {
       "name": "struct clingo_script",
@@ -15549,31 +15525,31 @@
       "fields": [
         {
           "name": "execute",
-          "type": 198,
+          "type": 194,
           "c_type": "bool (*)(const clingo_location_t *, const char *, void *)",
           "qualifiers": 0
         },
         {
           "name": "call",
-          "type": 199,
+          "type": 195,
           "c_type": "bool (*)(const clingo_location_t *, const char *, const clingo_symbol_t *, size_t, clingo_symbol_callback_t, void *, void *)",
           "qualifiers": 0
         },
         {
           "name": "callable",
-          "type": 200,
+          "type": 196,
           "c_type": "bool (*)(const char *, bool *, void *)",
           "qualifiers": 0
         },
         {
           "name": "main",
-          "type": 201,
+          "type": 197,
           "c_type": "bool (*)(clingo_control_t *, void *)",
           "qualifiers": 0
         },
         {
           "name": "free",
-          "type": 202,
+          "type": 198,
           "c_type": "void (*)(void *)",
           "qualifiers": 0
         },
@@ -15591,9 +15567,9 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        120,
+        116,
         0,
-        26
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15608,13 +15584,13 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        120,
+        116,
         0,
-        17,
-        16,
-        123,
-        26,
-        26
+        15,
+        14,
+        119,
+        24,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15634,8 +15610,8 @@
       "result": 7,
       "args": [
         0,
-        20,
-        26
+        18,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15650,8 +15626,8 @@
       "kind": "callback",
       "result": 7,
       "args": [
-        112,
-        26
+        108,
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15665,7 +15641,7 @@
       "kind": "callback",
       "result": 4,
       "args": [
-        26
+        24
       ],
       "result_qualifiers": 0,
       "qualifiers": [
@@ -15676,25 +15652,25 @@
       "name": "clingo_propagator_init_callback_t",
       "c_type": "clingo_propagator_init_callback_t",
       "kind": "alias",
-      "target": 133
+      "target": 129
     },
     {
       "name": "clingo_propagator_propagate_callback_t",
       "c_type": "clingo_propagator_propagate_callback_t",
       "kind": "alias",
-      "target": 134
+      "target": 130
     },
     {
       "name": "clingo_propagator_undo_callback_t",
       "c_type": "clingo_propagator_undo_callback_t",
       "kind": "alias",
-      "target": 135
+      "target": 131
     },
     {
       "name": "clingo_propagator_check_callback_t",
       "c_type": "clingo_propagator_check_callback_t",
       "kind": "alias",
-      "target": 136
+      "target": 132
     },
     {
       "name": "clingo_comment_type_t",
@@ -15754,7 +15730,7 @@
       "name": "clingo_ast_attribute_names_t",
       "c_type": "clingo_ast_attribute_names_t",
       "kind": "alias",
-      "target": 217
+      "target": 213
     },
     {
       "name": "struct clingo_ast_attribute_names",
@@ -15763,13 +15739,13 @@
       "fields": [
         {
           "name": "names",
-          "type": 19,
+          "type": 17,
           "c_type": "const char *const *",
           "qualifiers": 3
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0
         }
@@ -15779,7 +15755,7 @@
       "name": "clingo_ast_argument_t",
       "c_type": "clingo_ast_argument_t",
       "kind": "alias",
-      "target": 219
+      "target": 215
     },
     {
       "name": "struct clingo_ast_argument",
@@ -15788,13 +15764,13 @@
       "fields": [
         {
           "name": "attribute",
-          "type": 170,
+          "type": 166,
           "c_type": "clingo_ast_attribute_t",
           "qualifiers": 0
         },
         {
           "name": "type",
-          "type": 172,
+          "type": 168,
           "c_type": "clingo_ast_attribute_type_t",
           "qualifiers": 0
         }
@@ -15804,7 +15780,7 @@
       "name": "clingo_ast_constructor_t",
       "c_type": "clingo_ast_constructor_t",
       "kind": "alias",
-      "target": 221
+      "target": 217
     },
     {
       "name": "struct clingo_ast_constructor",
@@ -15819,13 +15795,13 @@
         },
         {
           "name": "arguments",
-          "type": 222,
+          "type": 218,
           "c_type": "const clingo_ast_argument_t *",
           "qualifiers": 1
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0
         }
@@ -15835,13 +15811,13 @@
       "name": "clingo_ast_argument_t*",
       "c_type": "const clingo_ast_argument_t *",
       "kind": "pointer",
-      "target": 218
+      "target": 214
     },
     {
       "name": "clingo_ast_constructors_t",
       "c_type": "clingo_ast_constructors_t",
       "kind": "alias",
-      "target": 224
+      "target": 220
     },
     {
       "name": "struct clingo_ast_constructors",
@@ -15850,13 +15826,13 @@
       "fields": [
         {
           "name": "constructors",
-          "type": 225,
+          "type": 221,
           "c_type": "const clingo_ast_constructor_t *",
           "qualifiers": 1
         },
         {
           "name": "size",
-          "type": 16,
+          "type": 14,
           "c_type": "size_t",
           "qualifiers": 0
         }
@@ -15866,7 +15842,7 @@
       "name": "clingo_ast_constructor_t*",
       "c_type": "const clingo_ast_constructor_t *",
       "kind": "pointer",
-      "target": 220
+      "target": 216
     },
     {
       "name": "enum clingo_error_e",
@@ -16076,11 +16052,11 @@
   "globals": [
     {
       "name": "g_clingo_ast_attribute_names",
-      "type": 216
+      "type": 212
     },
     {
       "name": "g_clingo_ast_constructors",
-      "type": 223
+      "type": 219
     }
   ],
   "constants": [
@@ -16318,7 +16294,7 @@
     "__builtin_ms_va_list": "char *",
     "__builtin_va_list": "struct __va_list_tag[1]",
     "ptrdiff_t": "long",
-    "size_t": "unsigned long",
+    "size_t": "uint64_t",
     "wchar_t": "int",
     "max_align_t": "struct max_align_t",
     "__u_char": "unsigned char",
@@ -16386,12 +16362,12 @@
     "__sig_atomic_t": "int",
     "int8_t": "__int8_t",
     "int16_t": "__int16_t",
-    "int32_t": "__int32_t",
-    "int64_t": "__int64_t",
+    "int32_t": "int",
+    "int64_t": "long long",
     "uint8_t": "__uint8_t",
     "uint16_t": "__uint16_t",
-    "uint32_t": "__uint32_t",
-    "uint64_t": "__uint64_t",
+    "uint32_t": "unsigned int",
+    "uint64_t": "unsigned long long",
     "int_least8_t": "__int_least8_t",
     "int_least16_t": "__int_least16_t",
     "int_least32_t": "__int_least32_t",

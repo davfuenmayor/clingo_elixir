@@ -293,17 +293,14 @@ defmodule Clingo.ElixirExtensionsTest do
 
   test "Elixir application and global script hooks run in an isolated VM" do
     {output, status} =
-      System.cmd(
-        "timeout",
+      Clingo.TestSupport.vm(
         [
-          "20",
-          "elixir",
           "-pa",
           Path.dirname(:code.which(Clingo.Native)),
           "test/fixtures/elixir_hooks.exs"
         ],
-        env: [{"ERL_FLAGS", "+S 2:2 +SDcpu 2 +SDio 1"}],
-        stderr_to_stdout: true
+        20_000,
+        [{"ERL_FLAGS", "+S 2:2 +SDcpu 2 +SDio 1"}]
       )
 
     assert status == 0, output

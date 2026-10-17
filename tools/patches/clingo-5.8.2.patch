@@ -448,3 +448,15 @@
  	return types_s.at(static_cast<uint32>(handle_ >> 48));
  }
  StatisticObject::Type StatisticObject::type() const {
+diff --git a/libgringo/gringo/shared_mutex.hh b/libgringo/gringo/shared_mutex.hh
+--- a/libgringo/gringo/shared_mutex.hh
++++ b/libgringo/gringo/shared_mutex.hh
+@@ -19,7 +19,7 @@
+ #if GRINGO_PLATFORM_WINDOWS
+ #define WIN32_LEAN_AND_MEAN
+ #define NOMINMAX
+-#include <Windows.h>
++#include <windows.h>
+ #elif GRINGO_PLATFORM_POSIX
+ #include <pthread.h>
+ #else

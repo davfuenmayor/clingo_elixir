@@ -4,7 +4,10 @@ defmodule Clingo.CLI do
   package build time. `run!/2` captures output; run_native!/2 uses native process
   I/O and is intended for command-line applications, not notebook output capture.
   """
-  def executable, do: :clingo_elixir |> :code.priv_dir() |> to_string() |> Path.join("clingo")
+  def executable do
+    name = if :os.type() == {:win32, :nt}, do: "clingo.exe", else: "clingo"
+    :clingo_elixir |> :code.priv_dir() |> to_string() |> Path.join(name)
+  end
 
   def run!(arguments, opts \\ []) do
     Clingo.Options.cli(opts)

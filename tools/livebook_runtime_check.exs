@@ -13,7 +13,7 @@ defmodule ASPCourseRuntimeCheck do
       File.cp_r!(Path.join(root, "livebooks"), Path.join(copy, "livebooks"))
       File.cp_r!(Path.join(root, "priv"), Path.join(copy, "priv"))
 
-      for name <- ["mix.exs", "Makefile", "lib", "c_src", "tools", "_upstream"] do
+      for name <- ["mix.exs", "Makefile", "lib", "c_src", "tools", "native"] do
         File.ln_s!(Path.join(root, name), Path.join(copy, name))
       end
 
